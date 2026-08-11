@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 7,
+  "templateRepo": "upex-galaxy/agentic-qa-boilerplate",
+  "templateCommit": "78597763963061453470eebd872be393157f2adc",
+  "perComponentCommit": {
+    "skills": "20f9c3ae3c640b0c0c3949f361845eca96811b08",
+    "commands": "78597763963061453470eebd872be393157f2adc",
+    "scripts": "78597763963061453470eebd872be393157f2adc",
+    "docs": "20f9c3ae3c640b0c0c3949f361845eca96811b08",
+    "cli": "78597763963061453470eebd872be393157f2adc",
+    "vscode": "78597763963061453470eebd872be393157f2adc",
+    "husky": "78597763963061453470eebd872be393157f2adc",
+    "agents-docs": "78597763963061453470eebd872be393157f2adc",
+    "claude-config": "78597763963061453470eebd872be393157f2adc",
+    "tooling": "78597763963061453470eebd872be393157f2adc",
+    "env-template": "78597763963061453470eebd872be393157f2adc"
+  },
+  "syncedComponents": [],
+  "ignoreFileSync": {},
+  "packageJsonSync": {
+    "package.json": {
+      "scripts": {
+        "lastSyncedSha": "289cab539646230914e9c7296cda4ba2f0d6da41",
+        "appliedKeys": []
+      },
+      "devDependencies": {
+        "lastSyncedSha": "289cab539646230914e9c7296cda4ba2f0d6da41",
+        "appliedKeys": []
+      },
+      "dependencies": {
+        "lastSyncedSha": "289cab539646230914e9c7296cda4ba2f0d6da41",
+        "appliedKeys": []
+      },
+      "lint-staged": {
+        "lastSyncedSha": "289cab539646230914e9c7296cda4ba2f0d6da41",
+        "appliedKeys": []
+      }
+    }
+  },
+  "cliVersion": "7.0",
+  "lastSyncedAt": "2026-08-11T18:19:54.125Z",
+  "variableSystemVersion": 1
+}
