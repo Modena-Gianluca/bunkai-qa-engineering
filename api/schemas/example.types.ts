@@ -23,51 +23,58 @@
  * 3. Custom Types — types NOT in the spec (error shapes, test helpers, etc.)
  */
 
-import type { components, paths } from '@openapi';
+// NOTE (2026-08-15): the fictional type references below are commented out —
+// the placeholder schema/path names (`ExampleModel`, `/api/example`) do not
+// exist in the Bunkai TMS OpenAPI spec, so they would break `tsc --noEmit`.
+// This file is a reference template only; `/adapt-framework` deletes it and
+// replaces it with real domain facades (see `runs.types.ts` / `atcs.types.ts`).
+// The commented lines below document the exact facade pattern to follow.
+
+// import type { components, paths } from '@openapi';
 
 // ============================================================================
 // Schema Types (from components.schemas)
 // ============================================================================
 
-/** TODO: Replace with your actual schema name from openapi-types.ts */
-export type ExampleModel = components['schemas']['ExampleModel'];
+// /** TODO: Replace with your actual schema name from openapi-types.ts */
+// export type ExampleModel = components['schemas']['ExampleModel'];
 
-/** TODO: Replace with your actual schema name */
-export type ExampleListModel = components['schemas']['ExampleListModel'];
+// /** TODO: Replace with your actual schema name */
+// export type ExampleListModel = components['schemas']['ExampleListModel'];
 
 // ============================================================================
 // Endpoint Types - POST /api/example
 // ============================================================================
 
-/** Private helper: extracts the POST operation type for cleaner access */
-type CreateExamplePath = paths['/api/example']['post'];
+// /** Private helper: extracts the POST operation type for cleaner access */
+// type CreateExamplePath = paths['/api/example']['post'];
 
-/** Request body for creating an example resource */
-export type CreateExampleRequest = CreateExamplePath['requestBody']['content']['application/json'];
+// /** Request body for creating an example resource */
+// export type CreateExampleRequest = CreateExamplePath['requestBody']['content']['application/json'];
 
-/** Successful response (201) */
-export type CreateExampleResponse = CreateExamplePath['responses']['201']['content']['application/json'];
+// /** Successful response (201) */
+// export type CreateExampleResponse = CreateExamplePath['responses']['201']['content']['application/json'];
 
 // ============================================================================
 // Endpoint Types - GET /api/example/{id}
 // ============================================================================
 
-type GetExamplePath = paths['/api/example/{id}']['get'];
+// type GetExamplePath = paths['/api/example/{id}']['get'];
 
-/** Path parameters (e.g., { id: string }) */
-export type GetExampleParams = GetExamplePath['parameters']['path'];
+// /** Path parameters (e.g., { id: string }) */
+// export type GetExampleParams = GetExamplePath['parameters']['path'];
 
-/** Successful response (200) */
-export type GetExampleResponse = GetExamplePath['responses']['200']['content']['application/json'];
+// /** Successful response (200) */
+// export type GetExampleResponse = GetExamplePath['responses']['200']['content']['application/json'];
 
 // ============================================================================
 // Endpoint Types - PUT /api/example/{id}
 // ============================================================================
 
-type UpdateExamplePath = paths['/api/example/{id}']['put'];
+// type UpdateExamplePath = paths['/api/example/{id}']['put'];
 
-export type UpdateExampleRequest = UpdateExamplePath['requestBody']['content']['application/json'];
-export type UpdateExampleResponse = UpdateExamplePath['responses']['200']['content']['application/json'];
+// export type UpdateExampleRequest = UpdateExamplePath['requestBody']['content']['application/json'];
+// export type UpdateExampleResponse = UpdateExamplePath['responses']['200']['content']['application/json'];
 
 // ============================================================================
 // Custom Types (not in OpenAPI spec)

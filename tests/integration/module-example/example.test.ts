@@ -30,10 +30,13 @@ test.describe('PROJ-100: Example API', () => {
     const payload = api.data.createCredentials();
 
     // ACT & ASSERT - ATC handles the complete flow
-    const [_response, body, sentPayload] = await api.example.createResourceSuccessfully(payload);
+    const [_response, body, sentPayload] = await api.example.createResourceSuccessfully({
+      email: payload.email,
+      password: payload.password,
+    });
 
     // Additional test-level assertions (optional)
-    expect(body.user.email).toBe(sentPayload.email);
+    expect(body.user?.email).toBe(sentPayload.email);
   });
 
   /**

@@ -22,15 +22,22 @@
  */
 
 import type { APIResponse } from '@playwright/test';
-import type { CreateExampleRequest, CreateExampleResponse, GetExampleResponse } from '@schemas/example.types';
 import type { TestContextOptions } from '@TestContext';
 
 import { ApiBase } from '@api/ApiBase';
 import { expect } from '@playwright/test';
 import { atc } from '@utils/decorators';
 
-// Re-export types for consumers that import from ExampleApi
-export type { CreateExampleRequest, CreateExampleResponse, GetExampleResponse } from '@schemas/example.types';
+// NOTE (2026-08-15): the `@schemas/example.types` imports below were removed —
+// that facade is a reference-only template (fictional `/api/example` paths) and
+// its type aliases are commented out until `/adapt-framework` replaces them with
+// real Bunkai domain facades. This component is itself a reference template.
+
+/** Reference-only shape used by the fictional example responses below. */
+interface ExampleResource {
+  user?: { id?: string, email?: string }
+  token?: string
+}
 
 // ============================================
 // Example API Component
@@ -56,10 +63,10 @@ export class ExampleApi extends ApiBase {
    */
   @atc('PROJ-101')
   async createResourceSuccessfully(
-    payload: CreateExampleRequest,
-  ): Promise<[APIResponse, CreateExampleResponse, CreateExampleRequest]> {
+    payload: Record<string, unknown>,
+  ): Promise<[APIResponse, ExampleResource, Record<string, unknown>]> {
     // TODO: Update endpoint
-    const [response, body, sentPayload] = await this.apiPOST<CreateExampleResponse, CreateExampleRequest>(
+    const [response, body, sentPayload] = await this.apiPOST<ExampleResource, Record<string, unknown>>(
       '/api/example',
       payload,
     );
@@ -67,7 +74,7 @@ export class ExampleApi extends ApiBase {
     // Fixed assertions - validates the operation succeeded
     expect(response.status()).toBe(201);
     expect(body.user).toBeDefined();
-    expect(body.user.id).toBeDefined();
+    expect(body.user?.id).toBeDefined();
 
     // Optional: Store token for subsequent requests
     if (body.token !== undefined && body.token !== '') {
@@ -87,12 +94,12 @@ export class ExampleApi extends ApiBase {
    */
   @atc('PROJ-102')
   async createResourceWithInvalidData(
-    payload: CreateExampleRequest,
-  ): Promise<[APIResponse, Record<string, unknown>, CreateExampleRequest]> {
+    payload: Record<string, unknown>,
+  ): Promise<[APIResponse, Record<string, unknown>, Record<string, unknown>]> {
     // TODO: Update endpoint
     const [response, body, sentPayload] = await this.apiPOST<
       Record<string, unknown>,
-      CreateExampleRequest
+      Record<string, unknown>
     >('/api/example', payload);
 
     // Fixed assertions - validates error response
@@ -111,9 +118,9 @@ export class ExampleApi extends ApiBase {
    * TODO: Update endpoint path
    */
   @atc('PROJ-103')
-  async getResourceSuccessfully(resourceId: string): Promise<[APIResponse, GetExampleResponse]> {
+  async getResourceSuccessfully(resourceId: string): Promise<[APIResponse, ExampleResource]> {
     // TODO: Update endpoint
-    const [response, body] = await this.apiGET<GetExampleResponse>(`/api/example/${resourceId}`);
+    const [response, body] = await this.apiGET<ExampleResource>(`/api/example/${resourceId}`);
 
     // Fixed assertions
     expect(response.status()).toBe(200);
