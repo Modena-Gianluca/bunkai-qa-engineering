@@ -64,8 +64,24 @@ Custom-field content (ACs, ATP/ATR, scope, business rules, comments) is **only**
 - `bun run jira:sync-issues jql "<query>"` → batch. `pull --epic <KEY>` / `--story <KEY>` → scoped. `pull --sprint <active|closed|>=N|7,8,10>` → sprint-scoped; `pull --types <csv>` → add optional coverable types; `pull --no-defects` → skip defect discovery; `pull --project <KEY>` → override project key.
 - Traceability link-graph (Story↔ATP↔ATR↔TC) + Xray run status stay on `acli` / `xray-cli` — the script only mirrors field content.
 
+## Common Queries (Jira — `{{PROJECT_KEY}}`)
+
+| Need | JQL |
+|------|-----|
+| Current sprint ready for QA | `project = {{PROJECT_KEY}} AND sprint in openSprints() AND status = "{{jira.status.story.ready_for_qa}}"` |
+| All open bugs | `project = {{PROJECT_KEY}} AND type = Bug AND resolution = Unresolved ORDER BY priority DESC` |
+| My testing tasks | `project = {{PROJECT_KEY}} AND status = "{{jira.status.story.in_test}}" AND assignee = currentUser()` |
+| Recently updated | `project = {{PROJECT_KEY}} AND updated >= -1d ORDER BY updated DESC` |
+
+`bun run jira:sync-issues jql "<query>"` batches results; `acli` handles traceability link-graph + Xray run status.
+
 ## Conventions
 
 - **Prefix**: Jira project key — `{{PROJECT_KEY}}-` (declared in `.agents/project.yaml`).
 - **Names**: kebab-case for file names; `EPIC-` / `STORY-` / `DEFECT-` prefixes on folders per the canonical tree.
 - **Evidence**: `evidence/` holds ephemeral screenshots/logs (gitignored).
+
+## Discovery Gaps
+
+- Sprint cadence + workflow states not re-verified this run — confirm via `acli` before relying on the JQL above.
+- Issue types in use (Epic/Story/Bug/Defect/Improvement/Tech Story/Tech Debt) are canonical in this QA flow; verify custom types exist on the instance.
