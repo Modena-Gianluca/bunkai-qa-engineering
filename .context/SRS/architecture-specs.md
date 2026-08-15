@@ -205,7 +205,7 @@ Performance note: the founder conversation highlighted that RLS overhead becomes
 ### 4.2 Manual Run step result
 
 1. QA marks step pass in the runner (Frontend).
-2. `POST /api/v1/runs/{run_id}/steps/{run_step_id}/result`.
+2. `POST /api/v1/runs/{run_id}/steps/{run_step_id}/mark`.
 3. Route handler updates `run_steps`, recomputes parent `run_atcs.status` and `runs.progress_pct` in a transaction.
 4. Realtime broadcasts `run_steps` row change.
 5. Other tabs watching this Run update without reload.
@@ -215,7 +215,7 @@ Performance note: the founder conversation highlighted that RLS overhead becomes
 
 1. Agent authenticates with `Authorization: Bearer bk_pat_...`.
 2. `POST /api/v1/runs` with `idempotency_key` → 201 `{ run_id }`.
-3. For each step: `POST /api/v1/runs/{run_id}/steps/{step_id}/result` (same shape as the manual flow).
+3. For each step: `POST /api/v1/runs/{run_id}/steps/{step_id}/mark` (same shape as the manual flow).
 4. On failure: `POST /api/v1/bugs` with `{ run_id, atc_id, module_id, severity, ... }` → 201 `{ bug_id }`.
 5. `POST /api/v1/runs/{run_id}/finish` → 200.
 

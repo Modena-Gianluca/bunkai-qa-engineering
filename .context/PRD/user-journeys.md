@@ -147,7 +147,7 @@ A scheduled job kicks off at 02:00 UTC. The agent has a workspace-scoped Bearer 
 - *System response*: 201 with `run_id: RUN-451`. Idempotency key recognized on retry — duplicate attempt returns the same `run_id`.
 
 **Step 4 — Drive the application + report step-by-step**
-- *Agent action*: For each step, agent executes via Playwright. After each step: `POST /api/v1/runs/RUN-451/steps/{step_id}/result` with `{ status: "pass", duration_ms: 410, evidence_url: "https://s3.../screenshot.png" }`.
+- *Agent action*: For each step, agent executes via Playwright. After each step: `POST /api/v1/runs/RUN-451/steps/{step_id}/mark` with `{ status: "pass", duration_ms: 410, evidence_url: "https://s3.../screenshot.png" }`.
 - *System response*: Each POST returns 200; Bunkai updates run state. (Phase 2 — WebSocket / SSE channel will replace this polling-style stream with a push stream.)
 - *Pain point*: Polling means the UI lags. Mitigation: MVP uses Supabase Realtime row-change subscription on the `run_steps` table to push UI updates to any user watching the Run.
 

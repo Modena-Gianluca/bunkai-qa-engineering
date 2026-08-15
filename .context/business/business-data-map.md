@@ -296,7 +296,7 @@ Other relationships of note:
    │ for each step Elena marks:
    │
    ▼
-POST /api/v1/runs/{run_id}/steps/{run_step_id}/result
+POST /api/v1/runs/{run_id}/steps/{run_step_id}/mark
    │   body: {status, duration_ms?, notes?, evidence_url?, error_message?}
    │
    ▼
@@ -345,7 +345,7 @@ POST /api/v1/runs/{run_id}/steps/{run_step_id}/result
 **Flow Narrative:**
 
 1. User picks a Test, clicks "Start Run", chooses environment + executor identity = self ({{PROJECT_KEY}}-019). A single transaction creates the `runs` header plus the full per-ATC and per-step skeleton (all `pending`).
-2. For each step in the runner, user marks pass/fail/block — `POST .../steps/{run_step_id}/result` ({{PROJECT_KEY}}-020). Each call updates the leaf row AND recomputes parent `run_atcs.status` AND parent `runs.progress_pct` in the same transaction.
+2. For each step in the runner, user marks pass/fail/block — `POST .../steps/{run_step_id}/mark` ({{PROJECT_KEY}}-020). Each call updates the leaf row AND recomputes parent `run_atcs.status` AND parent `runs.progress_pct` in the same transaction.
 3. Realtime row broadcast pushes updates to every other tab watching this Run (Journey 2, Step 7: Mateo's dashboard updates live).
 4. On a `fail` result, the UI highlights a "Report Bug" CTA. Clicking it opens a side drawer with the Bug form pre-filled: `module_id` inherited from the ATC, `steps_to_reproduce` auto-populated from the steps already executed, `atc_id` and `run_id` set.
 5. User picks severity (P1–P4 keyboard shortcuts), edits title, saves → `POST /api/v1/bugs` ({{PROJECT_KEY}}-025). Transaction inserts the Bug, links it to Run + ATC + Module, appends to `activity_log`, triggers Module's `defect_count` materialized view refresh ({{PROJECT_KEY}}-027).
@@ -364,7 +364,7 @@ POST /api/v1/runs/{run_id}/steps/{run_step_id}/result
 
 - `app/api/v1/runs/route.ts` — {{PROJECT_KEY}}-019 start, {{PROJECT_KEY}}-024 finish
 - `app/api/v1/runs/[id]/abort/route.ts` — {{PROJECT_KEY}}-021
-- `app/api/v1/runs/[id]/steps/[stepId]/result/route.ts` — {{PROJECT_KEY}}-020
+- `app/api/v1/runs/[id]/steps/[stepId]/mark/route.ts` — {{PROJECT_KEY}}-020
 - `app/api/v1/bugs/route.ts` — {{PROJECT_KEY}}-025
 - Materialized view + refresh trigger: `module_defect_stats` ({{PROJECT_KEY}}-027)
 - Frontend runner: `app/(workspace)/projects/[slug]/runs/[runId]/page.tsx`
@@ -409,7 +409,7 @@ POST /api/v1/runs/{run_id}/steps/{run_step_id}/result
        (idempotency: same key in 24h returns same run_id)
                                  │
                                  ▼ (loop per step)
-   POST /api/v1/runs/{run_id}/steps/{step_id}/result
+   POST /api/v1/runs/{run_id}/steps/{step_id}/mark
        body: {status, duration_ms, evidence_url, error_message?}
        ───► 200 {run_step, derived:{run_atc_status, run_progress_pct}}
                                  │
@@ -431,7 +431,7 @@ POST /api/v1/runs/{run_id}/steps/{run_step_id}/result
 2. Middleware verifies the token via SHA-256 hash lookup in `access_tokens`, checks expiry + revocation, attaches workspace context.
 3. Agent fetches the full Test contract in one request (`?expand=...`) — ordered ATCs with their steps and assertions — so it knows the entire script up front.
 4. Agent calls `POST /runs` with an `idempotency_key` (typically the run's logical name like `2026-05-19-nightly`). If the agent retries due to a transient failure, the same key returns the original `run_id` ({{PROJECT_KEY}}-037, `idempotency_keys` table).
-5. Per step: agent drives the application via Playwright, captures evidence to R2, then `POST .../result`. The transaction is **identical** to the manual flow — same endpoint, same processing ({{PROJECT_KEY}}-020 recompute parent statuses).
+5. Per step: agent drives the application via Playwright, captures evidence to R2, then `POST .../mark`. The transaction is **identical** to the manual flow — same endpoint, same processing ({{PROJECT_KEY}}-020 recompute parent statuses).
 6. On a failure, agent fires `POST /bugs` with the same payload shape a human would submit. Bug appears in the same dashboards.
 7. Agent calls `POST .../finish` with terminal status. Run is closed.
 
