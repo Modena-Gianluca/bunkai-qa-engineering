@@ -3,13 +3,13 @@
   "templateRepo": "upex-galaxy/agentic-qa-boilerplate",
   "templateCommit": "78597763963061453470eebd872be393157f2adc",
   "perComponentCommit": {
-    "skills": "20f9c3ae3c640b0c0c3949f361845eca96811b08",
-    "commands": "78597763963061453470eebd872be393157f2adc",
-    "scripts": "78597763963061453470eebd872be393157f2adc",
+    "skills": "a31b6e1908ee69b224042d7e7a07c7f3efbebaa8",
+    "commands": "a31b6e1908ee69b224042d7e7a07c7f3efbebaa8",
+    "scripts": "a31b6e1908ee69b224042d7e7a07c7f3efbebaa8",
     "docs": "20f9c3ae3c640b0c0c3949f361845eca96811b08",
     "cli": "78597763963061453470eebd872be393157f2adc",
     "vscode": "78597763963061453470eebd872be393157f2adc",
-    "husky": "78597763963061453470eebd872be393157f2adc",
+    "husky": "a31b6e1908ee69b224042d7e7a07c7f3efbebaa8",
     "agents-docs": "78597763963061453470eebd872be393157f2adc",
     "claude-config": "78597763963061453470eebd872be393157f2adc",
     "tooling": "78597763963061453470eebd872be393157f2adc",
@@ -20,24 +20,27 @@
   "packageJsonSync": {
     "package.json": {
       "scripts": {
-        "lastSyncedSha": "289cab539646230914e9c7296cda4ba2f0d6da41",
-        "appliedKeys": []
+        "lastSyncedSha": "cd5a302ce987aa16037b9337bc3a5f266298c292",
+        "appliedKeys": [],
+        "keptKeys": {
+          "up": "bun cli/update-boilerplate.ts"
+        }
       },
       "devDependencies": {
-        "lastSyncedSha": "289cab539646230914e9c7296cda4ba2f0d6da41",
+        "lastSyncedSha": "cd5a302ce987aa16037b9337bc3a5f266298c292",
         "appliedKeys": []
       },
       "dependencies": {
-        "lastSyncedSha": "289cab539646230914e9c7296cda4ba2f0d6da41",
+        "lastSyncedSha": "cd5a302ce987aa16037b9337bc3a5f266298c292",
         "appliedKeys": []
       },
       "lint-staged": {
-        "lastSyncedSha": "289cab539646230914e9c7296cda4ba2f0d6da41",
+        "lastSyncedSha": "cd5a302ce987aa16037b9337bc3a5f266298c292",
         "appliedKeys": []
       }
     }
   },
   "cliVersion": "7.0",
-  "lastSyncedAt": "2026-08-11T18:19:54.125Z",
+  "lastSyncedAt": "2026-08-15T21:08:36.317Z",
   "variableSystemVersion": 1
 }
