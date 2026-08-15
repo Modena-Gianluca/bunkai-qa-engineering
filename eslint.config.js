@@ -28,6 +28,9 @@ export default antfu({
     '**/*.md',
     // GitHub workflows (YAML files)
     '.github/**',
+    // Local OpenCode tooling (custom commands + sync scripts) — lives outside
+    // the project's tsconfig include; not linted here.
+    '.opencode/**',
     // Generated files (auto-generated, not manually edited)
     'api/openapi-types.ts',
     // Git worktrees placed under .claude/worktrees/ are another branch's full
