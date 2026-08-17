@@ -373,7 +373,7 @@ Each line is one check: "Verify X does Y under Z". CRITICAL first, then HIGH.
 
 Things this plan could NOT ground in evidence. "I could not verify X" beats inventing X.
 
-1. **TMS modality for this QA project unconfirmed** — whether this repo's own test documentation runs Modality jira-xray or jira-native changes how the TCs backing this plan get stored. Resolve before `/test-documentation` work.
+1. **TMS modality: jira-native (resolved 2026-08-16)** — user lacks Xray admin role / XRAY API keys on upexgalaxy71; native flow (Story ATP/ATR fields + `Test` issues via acli) is live. **Pending**: request Xray API keys (Xray Settings → API Keys, needs Xray admin) → when provisioned, switch `testing.tms_cli` to `bun xray` and migrate to Modality jira-xray (re-cable TCs + ATP/ATR, no data loss).
 2. **`user-stories` / `acceptance-criteria` route CRUD completeness unverified** — handlers exist but were not fully read (api-map G4); Journey 1 assumes `POST /user-stories` and `POST /acceptance-criteria` work as full CRUD.
 3. **Notifications list surface unconfirmed** — `GET /api/v1/notifications` (top-level) not observed; only `[id]` sub-route + workspace endpoint (api-map G12).
 4. **Activity endpoint unread** — `GET /api/v1/activity` directory exists but handler untested (api-map G13); the activity timeline is assumed correct.

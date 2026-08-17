@@ -29,7 +29,7 @@ issue_tracker:
 
 testing:
   default_env: staging # Default testing environment — must match a key under `environments:` (e.g. staging)
-  tms_cli: bun xray # Test management CLI command (e.g. bun xray)
+  tms_cli: acli # Test management CLI command — Modality jira-native (no Xray API keys; user lacks Xray admin role). acli covers TCs/ATP/ATR via Story fields + Test issues. Migrate to `bun xray` (jira-xray) once XRAY_CLIENT_ID/SECRET are provisioned.
 
 qa:
   formal_blocked_gate: true # When true and the substrate exposes a `blocked` story status, FAILED stories dispatch `defect_reported` (in_test -> blocked). When false (or no `blocked` slug), the skill leaves the story in `in_test` with the linked bug — non-strict fallback. See sprint-testing/references/sprint-orchestration.md Briefing 4 Step 5.

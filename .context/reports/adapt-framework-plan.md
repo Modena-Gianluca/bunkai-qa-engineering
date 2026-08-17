@@ -45,7 +45,7 @@
 - `project_key: BK` ✓ · `project_name: Bunkai` ✓ · `webapp_domain: upexbunkai.vercel.app` ✓
 - **Fix**: `environments.<env>.db_mcp` / `api_mcp` — currently `local-dbhub`/`staging-dbhub` and `local-openapi`/`staging-openapi`, but the actual MCP servers are named `dbhub` and `openapi`. Point both envs at the existing single servers (`dbhub` / `openapi`).
 - `qa_epics.*.key` still null — resolved at runtime by skills, leave.
-- `testing.tms_cli: bun xray` — TMS modality UNCONFIRMED (jira-native vs xray). Keep `bun xray` as default; flag in Discovery Gaps.
+- `testing.tms_cli: acli` — TMS modality **RESOLVED: jira-native** (2026-08-16; user lacks Xray admin/API keys). Migrate to `bun xray` once XRAY_CLIENT_ID/SECRET exist — see Discovery Gaps.
 
 ### 4.2 `.env` (already populated for staging)
 - `STAGING_USER_EMAIL` ✓ `STAGING_USER_PASSWORD` ✓
