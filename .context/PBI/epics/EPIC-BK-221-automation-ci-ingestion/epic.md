@@ -42,7 +42,7 @@ Builds directly on ***BK-30 Manual Execution & Runs**** (run lifecycle: start, p
 | --- | ----- | ------ | -------- | ------ |
 | [BK-222](https://jira.upexgalaxy.com/browse/BK-222) | TMS-Automation API | Submit an automated run with step results | - | Medium | Backlog |
 | [BK-223](https://jira.upexgalaxy.com/browse/BK-223) | TMS-Automation API | Stream step results during an automated run | - | Medium | Backlog |
-| [BK-225](https://jira.upexgalaxy.com/browse/BK-225) | TMS-Run Reporting | Filter runs by manual or automated execution mode | - | Medium | Shift-Left QA |
+| [BK-225](https://jira.upexgalaxy.com/browse/BK-225) | TMS-Run Reporting | Filter runs by manual or automated execution mode | - | Medium | Backlog |
 | [BK-226](https://jira.upexgalaxy.com/browse/BK-226) | CI Integration | Upload a CI results file to create a run | - | Medium | Backlog |
 | [BK-227](https://jira.upexgalaxy.com/browse/BK-227) | TMS-Test | Track the automation status of a test | - | Medium | Backlog |
 | [BK-228](https://jira.upexgalaxy.com/browse/BK-228) | CI Integration | See CI-triggered runs linked to a commit and branch | - | Medium | Backlog |

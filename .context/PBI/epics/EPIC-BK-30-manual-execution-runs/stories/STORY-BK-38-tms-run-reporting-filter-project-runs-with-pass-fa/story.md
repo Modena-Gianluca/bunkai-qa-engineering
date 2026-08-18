@@ -189,7 +189,7 @@ AC, ATP, and Business Rules are included in this description because the Jira cu
 
 ### Storys (2)
 
-- [BK-225](https://jira.upexgalaxy.com/browse/BK-225): TMS-Run Reporting | Filter runs by manual or automated execution mode _(Shift-Left QA)_
+- [BK-225](https://jira.upexgalaxy.com/browse/BK-225): TMS-Run Reporting | Filter runs by manual or automated execution mode _(Backlog)_
 - [BK-34](https://jira.upexgalaxy.com/browse/BK-34): TMS-Run Execution | Start a manual run in a chosen environment _(Ready For Release)_
 
 ### Test Plan (1)

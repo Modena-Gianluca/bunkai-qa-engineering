@@ -48,7 +48,7 @@ Bunkai already lets teams execute Tests through ad-hoc manual Runs. What QA Lead
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 15/8/2026
+- **Updated:** 16/8/2026
 - **Reporter:** Ely
 - **Assignee:** Unassigned
 - **Labels:** new-feature, post-mvp

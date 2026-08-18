@@ -3,7 +3,7 @@
 **Jira Key:** [BK-225](https://jira.upexgalaxy.com/browse/BK-225)
 **Epic:** [BK-221](https://jira.upexgalaxy.com/browse/BK-221) (Automation & CI Ingestion)
 **Type:** Story
-**Status:** Shift-Left QA
+**Status:** Backlog
 **Priority:** Medium
 **Story Points:** -
 
@@ -49,9 +49,9 @@ This story activates when its dependencies are live: it extends the project runs
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 16/8/2026
+- **Updated:** 17/8/2026
 - **Reporter:** Ely
-- **Assignee:** Carlos C
+- **Assignee:** Unassigned
 
 ---
 

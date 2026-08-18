@@ -3,7 +3,7 @@
 **Jira Key:** [BK-398](https://jira.upexgalaxy.com/browse/BK-398)
 **Epic:** [BK-7](https://jira.upexgalaxy.com/browse/BK-7) (Project & Module Hierarchy)
 **Type:** Story
-**Status:** Ready For QA
+**Status:** QA Approved
 **Priority:** Medium
 **Story Points:** 5
 
@@ -116,7 +116,7 @@
 - **Created:** 12/8/2026
 - **Updated:** 16/8/2026
 - **Reporter:** Ely
-- **Assignee:** Facu Barea
+- **Assignee:** Ely
 - **Labels:** app-shell, command-palette, navigation, shift-left-2026-08-14, shift-left-reviewed
 
 ---

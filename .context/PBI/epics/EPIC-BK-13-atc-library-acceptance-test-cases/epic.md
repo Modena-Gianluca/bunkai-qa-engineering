@@ -73,19 +73,20 @@ Maps PRD EPIC-BK-004 (US 4.1..4.6) and SRS FR-010..FR-014.
 | [BK-22](https://jira.upexgalaxy.com/browse/BK-22) | TMS-ATC Usage | See a "Used in N tests" report | 3 | Medium | QA Approved |
 | [BK-23](https://jira.upexgalaxy.com/browse/BK-23) | TMS-ATC Duplicate | Duplicate an ATC with steps and assertions | 5 | Medium | QA Approved |
 | [BK-267](https://jira.upexgalaxy.com/browse/BK-267) | TMS-ATC Library | Browse, search, and filter ATCs across every project | 1 | Medium | ABORTED |
-| [BK-315](https://jira.upexgalaxy.com/browse/BK-315) | TMS-ATC Library | Export a Project's ATCs to CSV | 1 | Medium | Backlog |
+| [BK-315](https://jira.upexgalaxy.com/browse/BK-315) | TMS-ATC Library | Export a Project's ATCs to CSV | 1 | Medium | Estimation |
 | [BK-399](https://jira.upexgalaxy.com/browse/BK-399) | TMS-ATC Classification | Classify by test-design technique and priority | - | Medium | Backlog |
 | [BK-439](https://jira.upexgalaxy.com/browse/BK-439) | TMS-ATC Library | Browse every ATC in the workspace from one index | 5 | Medium | Backlog |
 | [BK-440](https://jira.upexgalaxy.com/browse/BK-440) | TMS-ATC Library | Find an ATC by name as you type | 3 | Medium | Backlog |
 | [BK-441](https://jira.upexgalaxy.com/browse/BK-441) | TMS-ATC Library | Narrow the index by Project, Module, layer and anchor | 3 | Medium | Backlog |
 | [BK-467](https://jira.upexgalaxy.com/browse/BK-467) | 🚀 TMS-ATC Library | Export a Project's ATCs to CSV | 1 | Medium | Ready For QA |
+| [BK-507](https://jira.upexgalaxy.com/browse/BK-507) | TMS-ATC Library | Bulk-edit tags, Module and layer on selected ATCs | - | Medium | Backlog |
 
 ---
 
 ## Metadata
 
 - **Created:** 19/5/2026
-- **Updated:** 7/8/2026
+- **Updated:** 17/8/2026
 - **Reporter:** Ely
 - **Assignee:** Ely
 - **Labels:** mvp, wave-2
