@@ -3,44 +3,61 @@
   "templateRepo": "upex-galaxy/agentic-qa-boilerplate",
   "templateCommit": "78597763963061453470eebd872be393157f2adc",
   "perComponentCommit": {
-    "skills": "a31b6e1908ee69b224042d7e7a07c7f3efbebaa8",
-    "commands": "a31b6e1908ee69b224042d7e7a07c7f3efbebaa8",
-    "scripts": "a31b6e1908ee69b224042d7e7a07c7f3efbebaa8",
-    "docs": "20f9c3ae3c640b0c0c3949f361845eca96811b08",
+    "skills": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
+    "commands": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
+    "scripts": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
+    "docs": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
     "cli": "78597763963061453470eebd872be393157f2adc",
     "vscode": "78597763963061453470eebd872be393157f2adc",
     "husky": "a31b6e1908ee69b224042d7e7a07c7f3efbebaa8",
-    "agents-docs": "78597763963061453470eebd872be393157f2adc",
-    "claude-config": "78597763963061453470eebd872be393157f2adc",
+    "agents-docs": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
+    "claude-config": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
     "tooling": "78597763963061453470eebd872be393157f2adc",
-    "env-template": "78597763963061453470eebd872be393157f2adc"
+    "env-template": "969abbdf21e5768b916a64c9c65858b2ef33bb3c"
   },
   "syncedComponents": [],
-  "ignoreFileSync": {},
+  "ignoreFileSync": {
+    ".gitignore": {
+      "lastSyncedSha": "d535c7c708ab6cf8cf332dd33eb2e84f4e4f4edb",
+      "appendedLines": [
+        ".claude/worktrees/"
+      ]
+    },
+    ".prettierignore": {
+      "lastSyncedSha": "e61771a092a7c3a1746513759dba547ad07ac1b6",
+      "appendedLines": [
+        ".scratch/",
+        ".session/"
+      ]
+    }
+  },
   "packageJsonSync": {
     "package.json": {
       "scripts": {
-        "lastSyncedSha": "cd5a302ce987aa16037b9337bc3a5f266298c292",
-        "appliedKeys": [],
+        "lastSyncedSha": "a129dc958ffa1c5e89f000c4fcfe8a43355c766f",
+        "appliedKeys": [
+          "git:policy",
+          "jira:url"
+        ],
         "keptKeys": {
           "up": "bun cli/update-boilerplate.ts"
         }
       },
       "devDependencies": {
-        "lastSyncedSha": "cd5a302ce987aa16037b9337bc3a5f266298c292",
+        "lastSyncedSha": "a129dc958ffa1c5e89f000c4fcfe8a43355c766f",
         "appliedKeys": []
       },
       "dependencies": {
-        "lastSyncedSha": "cd5a302ce987aa16037b9337bc3a5f266298c292",
+        "lastSyncedSha": "a129dc958ffa1c5e89f000c4fcfe8a43355c766f",
         "appliedKeys": []
       },
       "lint-staged": {
-        "lastSyncedSha": "cd5a302ce987aa16037b9337bc3a5f266298c292",
+        "lastSyncedSha": "a129dc958ffa1c5e89f000c4fcfe8a43355c766f",
         "appliedKeys": []
       }
     }
   },
   "cliVersion": "7.0",
-  "lastSyncedAt": "2026-08-15T21:08:36.317Z",
+  "lastSyncedAt": "2026-08-19T18:43:23.863Z",
   "variableSystemVersion": 1
 }
