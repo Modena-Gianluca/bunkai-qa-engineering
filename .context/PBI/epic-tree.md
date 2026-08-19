@@ -77,7 +77,7 @@ _Project: BK_
 
 ## [BK-30](https://jira.upexgalaxy.com/browse/BK-30) - Manual Execution & Runs
 
-**Status:** Planning | **Stories:** 8 | **Points:** 38
+**Status:** Planning | **Stories:** 8 | **Points:** 40
 
 - [BK-34](https://jira.upexgalaxy.com/browse/BK-34) TMS-Run Execution | Start a manual run in a chosen environment _(8 pts, Ready For Release)_
 - [BK-35](https://jira.upexgalaxy.com/browse/BK-35) TMS-Run Execution | Mark each step pass, fail, or block _(8 pts, QA Approved)_
@@ -85,7 +85,7 @@ _Project: BK_
 - [BK-37](https://jira.upexgalaxy.com/browse/BK-37) TMS-Run History | View a test's past runs, filterable by outcome _(5 pts, Ready For QA)_
 - [BK-38](https://jira.upexgalaxy.com/browse/BK-38) TMS-Run Reporting | Filter project runs with pass/fail totals _(3 pts, QA Approved)_
 - [BK-39](https://jira.upexgalaxy.com/browse/BK-39) TMS-Run Execution | Finish a run with a final verdict _(5 pts, Ready For Release)_
-- [BK-269](https://jira.upexgalaxy.com/browse/BK-269) TMS-Run Execution | Automatically abort abandoned runs after inactivity _(1 pts, Estimation)_
+- [BK-269](https://jira.upexgalaxy.com/browse/BK-269) TMS-Run Execution | Automatically abort abandoned runs after inactivity _(3 pts, Ready For Dev)_
 - [BK-442](https://jira.upexgalaxy.com/browse/BK-442) TMS-Run History | Compare a run against the previous run of the same test _(- pts, Backlog)_
 
 ## [BK-31](https://jira.upexgalaxy.com/browse/BK-31) - Bugs & Defect Heatmap

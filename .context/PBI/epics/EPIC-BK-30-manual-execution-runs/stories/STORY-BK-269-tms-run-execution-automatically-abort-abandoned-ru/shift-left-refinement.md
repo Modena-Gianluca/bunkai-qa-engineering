@@ -13,7 +13,7 @@
 |-------|-------|
 | **Refined on** | 2026-08-17 |
 | **Refined by** | QA — Shift-Left batch session |
-| **Story Points** | 1 |
+| **Story Points** | 3 |
 | **Epic** | BK-30 (Manual Execution & Runs) |
 | **Priority** | Medium |
 

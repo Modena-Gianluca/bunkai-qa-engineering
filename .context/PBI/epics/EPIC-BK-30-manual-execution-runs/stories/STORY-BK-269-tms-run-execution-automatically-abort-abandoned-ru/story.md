@@ -3,9 +3,9 @@
 **Jira Key:** [BK-269](https://jira.upexgalaxy.com/browse/BK-269)
 **Epic:** [BK-30](https://jira.upexgalaxy.com/browse/BK-30) (Manual Execution & Runs)
 **Type:** Story
-**Status:** Estimation
+**Status:** Ready For Dev
 **Priority:** Medium
-**Story Points:** 1
+**Story Points:** 3
 
 ---
 
@@ -109,7 +109,7 @@
 - **Created:** 5/8/2026
 - **Updated:** 17/8/2026
 - **Reporter:** Ely
-- **Assignee:** Gianluca Módena
+- **Assignee:** Ely
 - **Labels:** shift-left-2026-08-17, shift-left-reviewed
 
 ---
