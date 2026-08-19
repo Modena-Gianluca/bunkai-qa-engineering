@@ -32,6 +32,28 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 // ============================================
+// .env fallback — Bun should auto-load .env, but if API_BASE_URL is missing
+// after config import, read it manually from the .env file.
+// ============================================
+if (!process.env.API_BASE_URL) {
+  const envPath = resolve(import.meta.dir, '..', '.env');
+  if (existsSync(envPath)) {
+    const envContent = readFileSync(envPath, 'utf-8');
+    for (const line of envContent.split('\n')) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) { continue; }
+      const eqIdx = trimmed.indexOf('=');
+      if (eqIdx === -1) { continue; }
+      const key = trimmed.slice(0, eqIdx).trim();
+      const val = trimmed.slice(eqIdx + 1).trim();
+      if (key === 'API_BASE_URL' && val && !process.env.API_BASE_URL) {
+        process.env.API_BASE_URL = val;
+      }
+    }
+  }
+}
+
+// ============================================
 // Logging (must be defined early for validation errors)
 // ============================================
 
@@ -124,10 +146,11 @@ function extractTokenFromResponse(body: Record<string, unknown>): {
   expiresIn: number
   refreshToken: string | null
 } {
+  const pat = body.pat as Record<string, unknown> | undefined;
   return {
-    accessToken: String(body.access_token ?? ''),
-    tokenType: String(body.token_type ?? 'Bearer'),
-    expiresIn: Number(body.expires_in ?? 86400),
+    accessToken: String(pat?.token ?? body.access_token ?? ''),
+    tokenType: String(pat?.token_type ?? body.token_type ?? 'Bearer'),
+    expiresIn: Number(pat?.expires_in ?? body.expires_in ?? 86400),
     refreshToken: body.refresh_token ? String(body.refresh_token) : null,
   };
 }
@@ -141,7 +164,8 @@ function extractTokenFromResponse(body: Record<string, unknown>): {
 // ============================================
 
 async function authenticate(): Promise<ApiState | null> {
-  const url = `${config.apiUrl}${config.auth.loginEndpoint}`;
+  const apiBase = process.env.API_BASE_URL || config.apiUrl.replace(/\/api$/, '');
+  const url = `${apiBase}/api/v1/auth/signin`;
   const { email, password } = config.testUser;
 
   if (!email || !password) {
@@ -204,6 +228,7 @@ async function authenticate(): Promise<ApiState | null> {
 // ============================================
 
 function saveApiState(apiState: ApiState): void {
+  ensureAuthDir();
   const apiStatePath = config.auth.apiStatePath;
   writeFileSync(apiStatePath, JSON.stringify(apiState, null, 2));
   log(`Token saved to ${apiStatePath}`, 'success');
