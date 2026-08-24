@@ -90,10 +90,10 @@ The skill writes into these fields when creating TCs. Add them to the Test issue
 | Description | Rich text (default) | Yes | Full TC template (Gherkin or steps + metadata) |
 | Priority | Select (default) | Yes | Critical / High / Medium / Low |
 | Labels | Multi-select (default) | Yes | `regression`, `smoke`, `e2e`, `automation-candidate`, etc. |
-| Components | Multi-select (default) | Optional | Module grouping |
+| Components | Multi-select (default) | Yes | Affected product module — mandatory on every Test (defect-management doctrine Part 3) |
 | Epic Link | Epic picker | Yes | Points to the Regression Epic |
 | Test Status | Select (custom) | Yes | `NOT RUN` / `PASSED` / `FAILED` / `BLOCKED` — the Execution Status per `tms-conventions.md` §IQL |
-| Workflow Status | (workflow) | Yes | `Draft` / `In Design` / `Ready` / … / `Automated` / `Deprecated` |
+| Workflow Status | (workflow) | Yes | `Draft` / `In Design` / `READY` / … / `AUTOMATED` / `DEPRECATED` |
 | Automation Candidate | Checkbox (custom) | Yes | Boolean flag — redundant with labels but easier to filter |
 | Linked Issues | Links (default) | Yes | "is tested by" → Story, "is blocked by" → Bug |
 
@@ -102,7 +102,7 @@ Create the two custom fields:
 1. Settings → Issues → Custom fields → Add field → Select List (single choice) → Name `Test Status` → Options `NOT RUN`, `PASSED`, `FAILED`, `BLOCKED`. Associate with the Test issue type.
 2. Add field → Checkbox → Name `Automation Candidate`. Associate with the Test issue type.
 
-After creating the fields, run `bun run jira:sync-fields --force` so the numeric IDs Jira assigned are auto-discovered into `.agents/jira-fields.json` under their slug. Reference them from skills via `{{jira.<slug>}}` — never paste the raw `customfield_NNNNN` ID into a skill or doc (workspace-portability rule, CLAUDE.md §1.12).
+After creating the fields, run `bun run jira:sync-fields --force` so the numeric IDs Jira assigned are auto-discovered into `.agents/jira-fields.json` under their slug. Reference them from skills via `{{jira.<slug>}}` — never paste the raw `customfield_NNNNN` ID into a skill or doc (workspace-portability rule, AGENTS.md §1.12).
 
 ### 3.3 Configure ATP and ATR custom fields on the Story issue type
 
@@ -180,7 +180,7 @@ At the end of setup, `.context/master-test-plan.md` must contain a TMS section t
 - Link types available: is tested by / tests, is blocked by / blocks
 ```
 
-If any answer is missing, the skills fall back to the Phase 0 resolution probes (`CLAUDE.md` → `master-test-plan.md` → list issue types → ask the user). Making the answers explicit here is what saves every future session from re-asking.
+If any answer is missing, the skills fall back to the Phase 0 resolution probes (`AGENTS.md` → `master-test-plan.md` → list issue types → ask the user). Making the answers explicit here is what saves every future session from re-asking.
 
 ---
 

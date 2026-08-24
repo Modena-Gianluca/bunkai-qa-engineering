@@ -3,24 +3,45 @@
   "templateRepo": "upex-galaxy/agentic-qa-boilerplate",
   "templateCommit": "78597763963061453470eebd872be393157f2adc",
   "perComponentCommit": {
-    "skills": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
-    "commands": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
-    "scripts": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
-    "docs": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
+    "skills": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
+    "commands": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
+    "scripts": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
+    "docs": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
     "cli": "78597763963061453470eebd872be393157f2adc",
     "vscode": "78597763963061453470eebd872be393157f2adc",
-    "husky": "a31b6e1908ee69b224042d7e7a07c7f3efbebaa8",
-    "agents-docs": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
-    "claude-config": "969abbdf21e5768b916a64c9c65858b2ef33bb3c",
+    "husky": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
+    "agents-docs": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
+    "claude-config": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
     "tooling": "78597763963061453470eebd872be393157f2adc",
-    "env-template": "969abbdf21e5768b916a64c9c65858b2ef33bb3c"
+    "env-template": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
+    "agent-compatibility": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
+    "codex-config": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47",
+    "agent-root-config": "0c1b4e11856bdd2a288d657f5863a9cbf816cc47"
   },
   "syncedComponents": [],
   "ignoreFileSync": {
     ".gitignore": {
-      "lastSyncedSha": "d535c7c708ab6cf8cf332dd33eb2e84f4e4f4edb",
+      "lastSyncedSha": "c5dd162728278252c192d3ff34a9fd487ba34165",
       "appendedLines": [
-        ".claude/worktrees/"
+        ".claude/worktrees/",
+        ".context/reports/*",
+        "!.context/reports/README.md",
+        ".env*",
+        "!.env.example",
+        ".context/PBI/*",
+        "!.context/PBI/README.md",
+        "!.context/PBI/templates/",
+        "!.context/PBI/epics/",
+        ".context/PBI/epics/*",
+        "!.context/PBI/epics/*/",
+        ".context/PBI/epics/*/*",
+        "!.context/PBI/epics/*/test-specs/",
+        ".agents/skills/*-workspace/",
+        ".agents/skills/playwright-cli/",
+        ".agents/skills/playwright-best-practices/",
+        ".agents/skills/resend-cli/",
+        "!skills-lock.json",
+        "!**/skills-lock.json"
       ]
     },
     ".prettierignore": {
@@ -34,30 +55,36 @@
   "packageJsonSync": {
     "package.json": {
       "scripts": {
-        "lastSyncedSha": "a129dc958ffa1c5e89f000c4fcfe8a43355c766f",
+        "lastSyncedSha": "f043848877ffcc7e5865cedd022766333074efcc",
         "appliedKeys": [
           "git:policy",
-          "jira:url"
+          "jira:url",
+          "agents:compat",
+          "agents:compat:check",
+          "codex",
+          "context:hydrate",
+          "jira:components",
+          "tests:map"
         ],
         "keptKeys": {
           "up": "bun cli/update-boilerplate.ts"
         }
       },
       "devDependencies": {
-        "lastSyncedSha": "a129dc958ffa1c5e89f000c4fcfe8a43355c766f",
+        "lastSyncedSha": "f043848877ffcc7e5865cedd022766333074efcc",
         "appliedKeys": []
       },
       "dependencies": {
-        "lastSyncedSha": "a129dc958ffa1c5e89f000c4fcfe8a43355c766f",
+        "lastSyncedSha": "f043848877ffcc7e5865cedd022766333074efcc",
         "appliedKeys": []
       },
       "lint-staged": {
-        "lastSyncedSha": "a129dc958ffa1c5e89f000c4fcfe8a43355c766f",
+        "lastSyncedSha": "f043848877ffcc7e5865cedd022766333074efcc",
         "appliedKeys": []
       }
     }
   },
   "cliVersion": "7.0",
-  "lastSyncedAt": "2026-08-19T18:43:23.863Z",
+  "lastSyncedAt": "2026-08-24T22:03:13.629Z",
   "variableSystemVersion": 1
 }

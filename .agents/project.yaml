@@ -32,6 +32,7 @@ testing:
   tms_cli: acli # Test management CLI command — Modality jira-native (no Xray API keys; user lacks Xray admin role). acli covers TCs/ATP/ATR via Story fields + Test issues. Migrate to `bun xray` (jira-xray) once XRAY_CLIENT_ID/SECRET are provisioned.
 
 qa:
+  qa_artifact_label: QA-Process # label applied to QA process epics so sync-jira-issues indexes them under qa-artifacts/ instead of product epics
   formal_blocked_gate: true # When true and the substrate exposes a `blocked` story status, FAILED stories dispatch `defect_reported` (in_test -> blocked). When false (or no `blocked` slug), the skill leaves the story in `in_test` with the linked bug — non-strict fallback. See sprint-testing/references/sprint-orchestration.md Briefing 4 Step 5.
   # QA process epics — buckets that hold QA artifacts so they never pollute product epics/roadmap.
   # FOUR QA-process epics form the QA-governance cluster: Test Plans parent to `master_test_plan_epic`;
