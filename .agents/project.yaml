@@ -94,7 +94,7 @@ git_strategy:
       - field: main.direct_push_to_protected
         enforced: blocked
         reason: Admin push credential auto-bypasses ProtectPublic ruleset on every push — plain git push works without PR
-      - field: main.admin_bypass
+      - field: admin_bypass
         enforced: false
         reason: Enforcement is credential-based (repo admin), not ruleset-based (no bypass_actors in ProtectPublic)
   branch_prefixes:
