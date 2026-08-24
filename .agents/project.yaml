@@ -91,10 +91,10 @@ git_strategy:
     admin_bypass: true # normal flow here: the admin push credential auto-bypasses the ProtectPublic ruleset on every push (no flag needed). "Bypassed rule violations" is expected — never open a PR.
     require_pr_reviews: 1 # null | 0 | N — min approvals before merge to a protected branch (enforced by ProtectPublic ruleset)
     accepted_divergences:
-      - field: direct_push_to_protected
+      - field: main.direct_push_to_protected
         enforced: blocked
         reason: Admin push credential auto-bypasses ProtectPublic ruleset on every push — plain git push works without PR
-      - field: admin_bypass
+      - field: main.admin_bypass
         enforced: false
         reason: Enforcement is credential-based (repo admin), not ruleset-based (no bypass_actors in ProtectPublic)
   branch_prefixes:
