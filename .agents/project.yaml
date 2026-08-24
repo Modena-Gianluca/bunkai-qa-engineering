@@ -89,7 +89,10 @@ git_strategy:
   policy: # how strictly protected branches are guarded (set by Strategy Setup Q4; defaults are safe)
     direct_push_to_protected: allowed # forbidden | confirm | allowed (solo-main = allowed)
     admin_bypass: true # normal flow here: the admin push credential auto-bypasses the ProtectPublic ruleset on every push (no flag needed). "Bypassed rule violations" is expected — never open a PR.
-    require_pr_reviews: 0 # null | 0 | N — min approvals before merge to a protected branch (informational)
+    require_pr_reviews: 1 # null | 0 | N — min approvals before merge to a protected branch (enforced by ProtectPublic ruleset)
+    accepted_divergences:
+      direct_push_to_protected: 'Admin push credential auto-bypasses ProtectPublic ruleset on every push — plain git push works without PR'
+      admin_bypass: 'Enforcement is credential-based (repo admin), not ruleset-based (no bypass_actors in ProtectPublic)'
   branch_prefixes:
     precedence: [feat, fix, refactor, test, docs, chore]
     naming_with_key: '{prefix}/{ISSUE-KEY}-{kebab-slug}'
