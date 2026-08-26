@@ -3,7 +3,7 @@
 **Jira Key:** [BK-269](https://jira.upexgalaxy.com/browse/BK-269)
 **Epic:** [BK-30](https://jira.upexgalaxy.com/browse/BK-30) (Manual Execution & Runs)
 **Type:** Story
-**Status:** Ready For Dev
+**Status:** Ready For QA
 **Priority:** Medium
 **Story Points:** 3
 
@@ -100,6 +100,7 @@
 - [Out Of Scope](./out-of-scope.md)
 - [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
+- [Implementation Plan (Dev)](./implementation-plan.md)
 - [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
 
 ---
@@ -107,9 +108,9 @@
 ## Metadata
 
 - **Created:** 5/8/2026
-- **Updated:** 17/8/2026
+- **Updated:** 24/8/2026
 - **Reporter:** Ely
-- **Assignee:** Ely
+- **Assignee:** Gianluca Módena
 - **Labels:** shift-left-2026-08-17, shift-left-reviewed
 
 ---

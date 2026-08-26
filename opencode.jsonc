@@ -26,12 +26,14 @@
     "context7": {
       "type": "local",
       "command": ["npx", "-y", "@upstash/context7-mcp@4.0.3"],
-      "enabled": true
+      "enabled": true,
+      "timeout": 15000
     },
     "tavily": {
       "type": "remote",
       "url": "https://mcp.tavily.com/mcp/",
       "enabled": true,
+      "timeout": 10000,
       "headers": {
         "Authorization": "Bearer {env:TAVILY_API_KEY}"
       }
@@ -50,12 +52,14 @@
         "--viewport-size",
         "1920x1080"
       ],
-      "enabled": true
+      "enabled": true,
+      "timeout": 15000
     },
     "dbhub": {
       "type": "local",
       "command": ["bunx", "-y", "@bytebase/dbhub@1.2.1", "--config", "dbhub.toml"],
-      "enabled": true
+      "enabled": true,
+      "timeout": 15000
     },
     // SCHEMA-READ-ONLY: no API_TOKEN / Authorization header is injected here.
     // The OpenAPI MCP is used ONLY to discover endpoints + read schemas
@@ -67,6 +71,7 @@
       "type": "local",
       "command": ["bunx", "-y", "@ivotoby/openapi-mcp-server@1.16.1", "--tools", "dynamic"],
       "enabled": true,
+      "timeout": 15000,
       "environment": {
         "API_BASE_URL": "{env:API_BASE_URL}",
         "OPENAPI_SPEC_PATH": "{env:OPENAPI_SPEC_PATH}"
@@ -76,6 +81,7 @@
       "type": "remote",
       "url": "https://mcp.postman.com/mcp",
       "enabled": true,
+      "timeout": 10000,
       "headers": {
         "Authorization": "Bearer {env:POSTMAN_API_KEY}"
       }
