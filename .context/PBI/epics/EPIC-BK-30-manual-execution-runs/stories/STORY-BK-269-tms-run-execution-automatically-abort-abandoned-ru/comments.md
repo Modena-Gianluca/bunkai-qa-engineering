@@ -442,5 +442,59 @@ The scheduler has recorded ***6 successful ticks*** since deploy, most recently 
 
 ---
 
+### Gianluca Módena - 27/8/2026, 18:32:05
+
+## QA Testing Complete — BK-269 (Extended Coverage)
+
+***Environment***: Staging
+***Result***: PASSED (13/13 manual scenarios verified + 4 deferred to automation)
+
+### TEST DATA USED
+
+| Run ID | Purpose | Pre-Sweep | Post-Sweep |
+|---|---|---|---|
+| ae6662c5 | Idle run, step marked 5h ago | running | aborted (swept) |
+| 01f81d35 | Active run (control) | running | running (untouched) |
+| 0380a859 | Passed run (control) | passed | passed (untouched) |
+| 86436da3 | Manually aborted (person reason) | aborted | aborted (untouched) |
+| a612f547 | Failed run (control) | failed | failed (untouched) |
+| 97246c9d | Running, 0 steps marked | running | aborted (swept) |
+
+### VERIFIED BEHAVIORS
+
+| # | Scenario | Method | Result |
+|---|----------|--------|---|
+| 1.1 | Close idle running Run | DB + cron sweep | PASSED |
+| 1.2 | Don't close active Run | DB + API | PASSED |
+| 1.3 | Idle time from executed_at | DB | PASSED |
+| 2.1 | Skip passed Run | DB + sweep | PASSED |
+| 2.2 | Skip failed Run | DB + sweep | PASSED |
+| 3.1 | Skip manually aborted Run | DB + sweep | PASSED |
+| 4.1 | Widget removes swept Run | API | PASSED |
+| 4.2 | Widget count decrements | API | PASSED |
+| 5.1 | Idempotent | DB | PASSED |
+| 6.1 | Reason text exact format | DB | PASSED |
+| 6.2 | Audit row system-originated | DB | PASSED |
+| E2.1 | Close Run with 0 steps marked | DB + sweep | PASSED |
+| E3.1 | Never sweep non-running | DB + sweep | PASSED |
+
+### DEFERRED TO AUTOMATION (4 — justified)
+
+| Scenario | Why deferred |
+|----------|-------------|
+| E1.1/E1.2 Race condition | Requires two concurrent DB transactions (FOR UPDATE SKIP LOCKED) |
+| 8.1 Threshold floor | No EXECUTE privilege on sweep function from QA role |
+| 9.1 Notification delivery | Realtime-based system, no API to read notification inbox |
+
+### KEY FINDINGS
+
+- pg_cron cadence confirmed (15min ticks at 20:45 and 21:00 UTC)
+- coalesce(max(executed*at), started*at) fallback verified on 0-step run
+- Sweep never overwrites person-typed abort reasons
+- Activity log correctly marks sweep-originated rows (null actor, via=sweep)
+
+
+---
+
 
 _Synced from Jira by sync-jira-issues_

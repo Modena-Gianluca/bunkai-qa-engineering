@@ -106,10 +106,18 @@
 
 ---
 
+## Traceability
+
+### Test Set (1)
+
+- [BK-639](https://jira.upexgalaxy.com/browse/BK-639): ATS: BK-269: Automatically abort abandoned runs after inactivity _(Designing)_
+
+---
+
 ## Metadata
 
 - **Created:** 5/8/2026
-- **Updated:** 26/8/2026
+- **Updated:** 27/8/2026
 - **Reporter:** Ely
 - **Assignee:** Gianluca Módena
 - **Labels:** shift-left-2026-08-17, shift-left-reviewed

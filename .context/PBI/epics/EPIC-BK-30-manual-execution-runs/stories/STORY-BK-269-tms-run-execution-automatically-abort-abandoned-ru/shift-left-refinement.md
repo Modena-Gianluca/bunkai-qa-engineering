@@ -67,7 +67,7 @@
 | # | Location | Question for PO/Dev | Impact | Suggested clarification |
 |---|----------|---------------------|--------|-------------------------|
 | 1 | Scope vs Out-of-Scope | Threshold is "configurable" but value is "out-of-scope" — where does the sweep read the value? | Cannot test threshold behavior | "Threshold read from `[config source]` with default of `[X hours]`" |
-| 2 | Scope | Is the sweep a cron job, serverless function, or API call? Frequency? | Affects timing/concurrency testing | Specify trigger mechanism and frequency |
+| 2 | Scope | Is the sweep a cron job, serverless function, or API call? Frequency? | Affects timing/concurrency testing | Specify trigger mechanism and frequency — *Resolved by AI Product Owner ruling (2026-08-24): in-DB pg_cron, no Edge Function* |
 | 3 | AC7 | What is the exact system-generated reason text? | Cannot assert exact reason string | Provide the exact template |
 | 4 | AC9 | How does sweep identify workspace boundaries? | Confirms data model assumption | Confirm `runs.workspace_id` FK exists |
 
@@ -83,12 +83,12 @@
 
 | # | Scenario | Expected behavior | Criticality | Action |
 |---|----------|-------------------|-------------|--------|
-| 1 | Sweep runs while step is being marked (race condition) | Step mark wins, sweep skips — or sweep wins, step mark rejected | **High** | `NEEDS PO/DEV CONFIRMATION` |
+| 1 | Sweep runs while step is being marked (race condition) | Step mark wins, sweep skips — or sweep wins, step mark rejected | **High** | **Resolved** — `FOR UPDATE SKIP LOCKED`, zero new code |
 | 2 | Run "running" but last step marked "blocked" | Sweep should still close — "blocked" counts as inactive | Medium | Add to AC |
-| 3 | Run has 0 steps marked (no activity at all) | Sweep should close — no activity = abandoned | **High** | `NEEDS PO/DEV CONFIRMATION` |
+| 3 | Run has 0 steps marked (no activity at all) | Sweep should close — no activity = abandoned | **High** | **Resolved** — yes, close it. Idle time = `coalesce(max(executed_at), started_at)` |
 | 4 | Sweep fails mid-batch (server crash) | Next sweep picks up remaining runs | Medium | Confirm idempotency |
 | 5 | Run "pending" or "created" (never started) | Sweep should NOT touch — only "running" qualifies | Medium | Confirm scope |
-| 6 | Threshold misconfigured to 0 | Sweep closes ALL running runs immediately | Low | `NEEDS PO/DEV CONFIRMATION` |
+| 6 | Threshold misconfigured to 0 | Sweep closes ALL running runs immediately | Low | **Resolved** — `p_threshold_hours < 1` raises `45215 sweep_threshold_invalid` |
 | 7 | Sweep updates `updated_at` on abort | Self-reference: next sweep sees aborted run as "recently active" | **High** | Confirm dedicated timestamp |
 
 ### Contradictions
@@ -120,7 +120,7 @@
 | **Priority** | Critical |
 
 ```gherkin
-Given A Run in "running" status with last_step_activity_at older than the configured inactivity threshold
+Given A Run in "running" status whose idle time (coalesce of last step's executed_at or run's started_at) exceeds the configured inactivity threshold
 When  The scheduled sweep executes
 Then  Run status becomes "aborted"
   And Run finish_time is set to sweep execution timestamp
@@ -263,7 +263,7 @@ Then  Workspace A's Run becomes "aborted"
   And Workspace B's Run remains "running" unchanged
 ```
 
-### New scenarios — NEEDS PO/DEV CONFIRMATION
+### New scenarios — Resolved by AI Product Owner ruling (2026-08-24)
 
 #### Scenario E1: Should handle sweep-step mark race condition
 
@@ -271,7 +271,7 @@ Then  Workspace A's Run becomes "aborted"
 |-----------|-------|
 | **Type** | Edge |
 | **Priority** | High |
-| **Status** | `NEEDS PO/DEV CONFIRMATION` |
+| **Status** | ~~`NEEDS PO/DEV CONFIRMATION`~~ **Resolved by AI Product Owner ruling (2026-08-24)** |
 
 ```gherkin
 Given Sweep is executing while a step is being marked on the same Run
@@ -280,13 +280,15 @@ Then  Either (a) step mark wins, sweep skips
   Or  (b) sweep wins, step mark rejected with terminal guard
 ```
 
+> **Resolution:** The winner is decided by commit order. Both operations serialize on the same `runs` row lock (`bunkai_abort_run` takes `FOR UPDATE` on the runs header; `bunkai_mark_run_step` takes `FOR UPDATE OF r` on the same header). The sweep-loses branch (step wins): the sweep re-evaluates the inactivity predicate under the lock and finds the step was just marked → skips. The sweep-wins branch (sweep commits first): the step mark finds the Run is no longer `running` → raises `45212 run_step_marking_closed` (HTTP 409). **Zero new code** — existing `FOR UPDATE SKIP LOCKED` already handles this.
+
 #### Scenario E2: Should close runs with 0 steps marked
 
 | Attribute | Value |
 |-----------|-------|
 | **Type** | Edge |
 | **Priority** | High |
-| **Status** | `NEEDS PO/DEV CONFIRMATION` |
+| **Status** | ~~`NEEDS PO/DEV CONFIRMATION`~~ **Resolved by AI Product Owner ruling (2026-08-24)** |
 
 ```gherkin
 Given A Run was created but no steps were ever marked (no activity at all)
@@ -295,13 +297,15 @@ Then  Run is closed as "aborted"
   And 0 steps = no activity = abandoned
 ```
 
+> **Resolution:** Yes, it is closed. Idle time falls back to `coalesce(max(run_steps.executed_at), runs.started_at)`. A Run with zero `run_steps` rows cannot exist (`bunkai_create_run` raises `45202 no_executable_steps`), but "0-step run" means **zero steps marked** — every `run_steps` row sits at `pending`. That Run is the archetypal abandoned Run and is the primary target of this story.
+
 #### Scenario E3: Should NOT close runs in "pending" or "created" status
 
 | Attribute | Value |
 |-----------|-------|
 | **Type** | Negative |
 | **Priority** | Medium |
-| **Status** | `NEEDS PO/DEV CONFIRMATION` |
+| **Status** | ~~`NEEDS PO/DEV CONFIRMATION`~~ **Resolved** — vocabulary corrected to `running | passed | failed | aborted` |
 
 ```gherkin
 Given A Run in "pending" or "created" status (not yet started)
@@ -309,6 +313,8 @@ When  Sweep executes
 Then  Run untouched
   And Sweep only targets "running" status
 ```
+
+> **SUPERSEDED by AI Product Owner ruling (2026-08-24):** The Run-grain status vocabulary is exactly `running | passed | failed | aborted`. There is **no** `pending` or `created` Run status — a Run is created directly in `running` (`bunkai_create_run` inserts the literal `running`). The previous wording asserted a state the database refuses to store. E3 is rewritten as an exhaustive outline: `passed`, `failed`, `aborted` are the only non-`running` values. See acceptance-criteria.md Scenario E3.1.
 
 ---
 
@@ -370,25 +376,25 @@ Then  Run untouched
 
 | # | Edge case | In original Story? | Criticality | Action |
 |---|-----------|:------------------:|-------------|--------|
-| 1 | Sweep-step mark race condition | No | **High** | `NEEDS PO/DEV CONFIRMATION` — add concurrency AC |
-| 2 | 0-step run (created but never started marking) | No | **High** | `NEEDS PO/DEV CONFIRMATION` — confirm qualifies as abandoned |
+| 1 | Sweep-step mark race condition | No | **High** | **Resolved** — `FOR UPDATE SKIP LOCKED`, zero new code |
+| 2 | 0-step run (created but never started marking) | No | **High** | **Resolved by AI Product Owner ruling (2026-08-24):** Yes, it is closed. Idle time = `coalesce(max(executed_at), started_at)`. A Run with zero `run_steps` rows cannot exist, but "0-step run" means zero steps marked — all pending. That is the archetypal abandoned Run. |
 | 3 | Sweep fails mid-batch (server crash) | No | Medium | Confirm idempotency covers partial execution |
-| 4 | Threshold misconfigured to 0 | No | Low | `NEEDS PO/DEV CONFIRMATION` — minimum threshold guard? |
-| 5 | Sweep updates `updated_at` causing self-reference on next run | No | **High** | Confirm sweep uses `finish_time`, not `updated_at` for inactivity check |
-| 6 | Run "blocked" status (step blocked, not pass/fail) | No | Medium | Confirm "blocked" runs qualify as inactive |
+| 4 | Threshold misconfigured to 0 | No | Low | ~~`NEEDS PO/DEV CONFIRMATION` — minimum threshold guard?~~ **Resolved by AI Product Owner ruling (2026-08-24):** `p_threshold_hours < 1` raises `45215 sweep_threshold_invalid`. Default is 4, operational value is a literal in `cron.schedule`. |
+| 5 | Sweep updates `updated_at` causing self-reference on next run | No | **High** | **Resolved by AI Product Owner ruling (2026-08-24):** The self-reference problem is avoided entirely by not using `runs.updated_at` for the idle check. The sweep uses `coalesce(max(run_steps.executed_at), runs.started_at)` — `executed_at` is written only by the mark, never by the sweep. `runs.updated_at` is only relevant for the `runs_set_updated_at` trigger which fires on the sweep's own abort, but since the idle check never reads `updated_at`, this is a non-issue. |
+| 6 | Run "blocked" status (step blocked, not pass/fail) | No | Medium | Confirm "blocked" runs qualify as inactive — "blocked" is a step-level verdict, not a Run status. A Run with blocked steps is still `running` and qualifies for sweep. |
 
 ---
 
 ## Story Quality Assessment
 
-**Verdict**: `Needs Improvement`
+**Verdict**: ~~`Needs Improvement`~~ **All questions resolved by AI Product Owner ruling (2026-08-24)**
 
 | Finding | Impact |
 |---------|--------|
-| Story is clear on WHAT (abort idle runs) and WHY (accurate dashboards) but lacks HOW details critical for testing | Testing gaps |
-| 3 PO open questions BLOCK sprint planning: threshold value, sweep trigger mechanism, exact reason text | Cannot finalize ATP |
-| 1 data-model question: timestamp column for inactivity check | Implementation risk |
-| Edge cases around race conditions and 0-step runs need explicit ACs | Coverage gaps |
+| ~~Story is clear on WHAT (abort idle runs) and WHY (accurate dashboards) but lacks HOW details critical for testing~~ | ~~Testing gaps~~ **Resolved** — mechanism, threshold, timestamp, and reason text all decided |
+| ~~3 PO open questions BLOCK sprint planning: threshold value, sweep trigger mechanism, exact reason text~~ | ~~Cannot finalize ATP~~ **Resolved** — all 3 answered by ruling |
+| ~~1 data-model question: timestamp column for inactivity check~~ | ~~Implementation risk~~ **Resolved** — `coalesce(max(executed_at), started_at)`, no schema change |
+| ~~Edge cases around race conditions and 0-step runs need explicit ACs~~ | ~~Coverage gaps~~ **Resolved** — E1/E2/E3 rewritten with scored decisions |
 
 ---
 
@@ -408,9 +414,9 @@ Then  Run untouched
 
 | # | Answer |
 |---|--------|
-| 1 | **4 hours**. Env var `SWEEP_INACTIVITY_THRESHOLD_HOURS` with default 4. Config UI out-of-scope for this Story. |
-| 2 | `"Auto-closed by inactivity sweep — no step activity for {threshold}h (closed at {YYYY-MM-DD HH:MM} UTC)"` |
-| 3 | **Supabase Edge Function** triggered by **pg_cron** every **15 minutes**. Calls `POST /api/v1/admin/sweep/run-timeout` with service-role key. |
+| 1 | **4 hours**. ~~Env var `SWEEP_INACTIVITY_THRESHOLD_HOURS` with default 4.~~ **SUPERSEDED by AI Product Owner ruling (2026-08-24):** Threshold is a `p_threshold_hours int default 4` parameter on the SQL function, operational value passed as a literal in `cron.schedule`. A `SECURITY DEFINER` function running inside Postgres has no `process.env` — env var is not implementable. |
+| 2 | `"Auto-closed by inactivity sweep — no step activity for {threshold}h (closed at {YYYY-MM-DD HH:MM} UTC)"` **SUPERSEDED by AI Product Owner ruling (2026-08-24):** Em-dash replaced by colon for storage safety (string is stored, transported, and asserted by tests): `"Auto-closed by inactivity sweep: no step activity for {N}h (closed {YYYY-MM-DD HH:MM} UTC)"`. |
+| 3 | ~~Supabase Edge Function triggered by pg_cron every 15 minutes. Calls `POST /api/v1/admin/sweep/run-timeout` with service-role key.~~ **SUPERSEDED by AI Product Owner ruling (2026-08-24):** in-DB `pg_cron` invokes a `SECURITY DEFINER` SQL function directly. No Edge Function, no HTTP route, no service-role key, no `CRON_SECRET`. Cadence: every 15 minutes. |
 
 ---
 
@@ -430,7 +436,7 @@ Then  Run untouched
 
 | # | Answer |
 |---|--------|
-| 1 | Add dedicated column `last_step_activity_at` to `runs` table. Updated only when step is marked, never by sweep. Sweep query: `SELECT id FROM runs WHERE status = 'running' AND last_step_activity_at < NOW() - interval '{threshold} hours'` |
+| 1 | ~~Add dedicated column `last_step_activity_at` to `runs` table. Updated only when step is marked, never by sweep. Sweep query: `SELECT id FROM runs WHERE status = 'running' AND last_step_activity_at < NOW() - interval '{threshold} hours'`~~ **SUPERSEDED by AI Product Owner ruling (2026-08-24):** No schema change. Use `coalesce(max(run_steps.executed_at), runs.started_at)` — `executed_at` is written only by the mark (`0042:155`), never by abort/finish. Fallback to `runs.started_at` (not null, default now()). The dedicated column would require modifying `bunkai_mark_run_step` to write `runs`, firing `runs_set_updated_at` mid-run for the first time and changing `runs.updated_at` semantics for shipped code. |
 | 2 | **Yes**, calls same `abortRun(runId, reason)` function. Same cascade, rollup, realtime broadcast, terminal guard. |
 | 3 | **Identical to manual abort (BK-36)**. `run_atcs` computed from child `run_steps`; pending `run_steps` set to "skipped"; `runs` status→"aborted" + `finish_time` set + reason set; `progress_pct` recomputed; realtime broadcast fires. |
 
@@ -441,8 +447,8 @@ Then  Run untouched
 | # | Current state | Suggested change | Benefit |
 |---|---------------|------------------|---------|
 | 1 | "configurable inactivity threshold" + "choosing threshold value" (out-of-scope) | Explicitly state: "Threshold read from `[config]` with default of `[X]`h. Config UI deferred." | Eliminates ambiguity for Dev + QA |
-| 2 | "no step activity recorded" (AC1) | Specify: "no step marked and `last_step_activity_at` older than threshold" | Eliminates timestamp source ambiguity |
-| 3 | "reason shown identifies closure as automatic sweep" (AC7) | Provide exact reason template string | Enables precise test assertion |
+| 2 | "no step activity recorded" (AC1) | ~~Specify: "no step marked and `last_step_activity_at` older than threshold"~~ **Resolved:** "no step marked and `coalesce(max(executed_at), started_at)` older than threshold" — no dedicated column |
+| 3 | "reason shown identifies closure as automatic sweep" (AC7) | ~~Provide exact reason template string~~ **Resolved:** exact template is `Auto-closed by inactivity sweep: no step activity for {N}h (closed {YYYY-MM-DD HH:MM} UTC)` — colon replaces em-dash for storage safety |
 
 ---
 
@@ -458,11 +464,11 @@ Then  Run untouched
 
 - [ ] Review BK-36 (manual abort) test coverage — sweep reuses same logic
 - [ ] Confirm `runs` table schema has `workspace_id` and appropriate timestamp columns
-- [ ] Add `last_step_activity_at` column via Supabase migration
+- [x] ~~Add `last_step_activity_at` column via Supabase migration~~ **SUPERSEDED:** no schema change needed — use `coalesce(max(executed_at), started_at)`
 
 ### During implementation
 
-- [ ] API-level testing: trigger sweep endpoint (or mock cron), verify run status transitions
+- [ ] ~~API-level testing: trigger sweep endpoint (or mock cron), verify run status transitions~~ **Updated:** invoke `select public.bunkai_sweep_abandoned_runs(4);` directly (no HTTP endpoint — sweep runs in-DB)
 - [ ] Workspace isolation: two workspaces, verify sweep scopes correctly
 - [ ] Idempotency: run sweep twice on same set, verify no double-abort errors
 
@@ -488,6 +494,7 @@ Then  Run untouched
 
 - [x] PO answers Critical Questions (threshold value, reason text, trigger mechanism) — **CONFIRMED 2026-08-17**
 - [x] Dev answers Technical Questions (timestamp column, abort code path, cascade behavior) — **CONFIRMED 2026-08-17**
+- [x] AI Product Owner & AI Tech Lead ruling supersedes PO/Dev responses on 3 points (mechanism, timestamp, threshold config) — **2026-08-24** (see comments.md lines 137-384)
 - [ ] Story enters sprint at status `ready_for_dev` once estimated
 - [ ] When Story reaches `ready_for_qa`, `/sprint-testing` will short-circuit refinement (label `shift-left-reviewed` detected)
 
