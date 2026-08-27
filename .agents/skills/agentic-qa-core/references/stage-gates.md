@@ -76,6 +76,9 @@ answered YES or a justified N/A) — not vibes. "N/A" is a valid answer only whe
 [ ] Newly-discovered partition/boundary/transition folded back into the outline set
 [ ] Evidence captured under the PBI folder; outline/Test status updated
 [ ] Bugs filed with story + AC traceability where found
+[ ] All ATP scenarios have terminal status (PASS / FAIL / SKIP+N/A-justified) in
+    test-session-memory.md — no unchecked scenario may remain; orchestrator verifies
+    this against the ATP before advancing to Stage 3
 ```
 
 ### sprint-testing — Stage 3 Reporting
