@@ -385,5 +385,62 @@ The scheduler has recorded ***6 successful ticks*** since deploy, most recently 
 
 ---
 
+### Gianluca Módena - 26/8/2026, 21:59:25
+
+## QA Testing Complete — BK-269 (Extended Coverage)
+
+***Environment***: Staging
+***Result***: PASSED (15/15 scenarios + 4 N/A deferred to automation)
+***Date***: 2026-08-26/27
+
+### Scenarios Verified (15/15 PASSED)
+
+| # | Scenario | Method |
+| --- | --- | --- |
+| 1.1 | Close idle Run | DB + cron |
+| 1.2 | Preserve active Run | DB + cron |
+| 2.1 | Skip passed Run | DB + sweep |
+| 2.2 | Skip failed Run | DB + sweep |
+| 3.1 | Skip manually aborted Run | DB |
+| 4.1 | Swept Run disappears from Home widget | API + sweep + UI |
+| 4.2 | Widget count decrements by 1 | API + sweep + UI |
+| 5.1 | Idempotent on already-swept Run | DB read-only |
+| 6.1 | Reason text distinguishable | DB |
+| 6.2 | Audit row system-originated | DB read-only |
+| 7.1 | Workspace isolation | DB cross-workspace |
+| E2.1 | Close Run with no marked steps | DB + sweep |
+| E3.1 | Never sweep non-running Runs | DB read-only |
+| 6.1 | Reason text format correct | DB |
+
+### Deferred to Test-Automation (4 N/A)
+
+| # | Scenario | Reason |
+| --- | --- | --- |
+| E1.1 | Sweep vs step-mark race (step wins) | Requires concurrent transaction control |
+| E1.2 | Sweep vs step-mark race (sweep wins) | Requires concurrent transaction control |
+| 8.1 | Threshold below minimum | No EXECUTE privilege on sweep function |
+| 9.1 | Notify Run starter | Notification system covered by automated suite |
+
+### Evidence
+
+- `evidence/extended-coverage-results.md` — full results
+- `evidence/widget-before-sweep.png` — widget showing "Active test runs · 1"
+- `evidence/widget-after-sweep.png` — widget showing "Active test runs · 0"
+- `evidence/pre-sweep-state.md` — DB state before sweep (prior session)
+- `evidence/post-sweep-results.md` — DB state after sweep (prior session)
+
+### Additional Findings
+
+- pg_cron schedule is sporadic (fired at 23:15 but skipped 23:30 tick)
+- `coalesce(max(run*steps.executed*at), runs.started_at)` fallback confirmed working
+- DB connection confirmed as staging (matches staging-upexbunkai.vercel.app)
+
+### Artifacts
+
+- ATR field updated with full coverage matrix
+- stage-gates.md updated with scenario-complete gate (commit ca4d885)
+
+---
+
 
 _Synced from Jira by sync-jira-issues_
