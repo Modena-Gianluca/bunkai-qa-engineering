@@ -4,7 +4,6 @@
 **Priority:** Medium
 **Status:** Ready For QA
 **Components:** None
-**Fix Type:** Bugfix
 
 ---
 
@@ -12,9 +11,9 @@
 
 ## Summary
 
-Two assertions in `lib/atcs/search-isolation.test.ts` (BK-20) fail against the current shared Supabase project: an active workspace member searching a word taken from ***their own ATC*** does not get that ATC back from `bunkai*search*atcs`.
+Two assertions in `lib/atcs/search-isolation.test.ts` ([https://jira.upexgalaxy.com/browse/BK-20#icft=BK-20](https://jira.upexgalaxy.com/browse/BK-20#icft=BK-20)) fail against the current shared Supabase project: an active workspace member searching a word taken from ***their own ATC*** does not get that ATC back from `bunkai*search*atcs`.
 
-Found incidentally while running the full suite during BK-400. ***Not caused by BK-400*** — confirmed below.
+Found incidentally while running the full suite during [https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400](https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400). ***Not caused by BK-400*** — confirmed below.
 
 ## Steps to Reproduce
 
@@ -46,18 +45,18 @@ Received: false
 
 A member searching a token drawn from an ATC in their own workspace and project gets that ATC back. That is the positive half of the isolation contract — the negative half (other workspaces / other projects return nothing) still passes, which is why this reads as a false-negative rather than a leak.
 
-## Not a BK-400 regression — evidence
+## Not a [https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400](https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400) regression — evidence
 
 Confirmed pre-existing, not introduced by the auth work:
 
-- The failing file and the `bunkai*search*atcs` RPC are untouched by BK-400, which only changes `app/auth/***`, `lib/auth/***` and `package.json`.
-- Re-ran the file with the BK-400 changes ***stashed*** (base branch code): the same two assertions still fail, 3 pass / 2 fail, identical output.
+- The failing file and the `bunkai*search*atcs` RPC are untouched by [https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400](https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400), which only changes `app/auth/***`, `lib/auth/***` and `package.json`.
+- Re-ran the file with the [https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400](https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400) changes ***stashed*** (base branch code): the same two assertions still fail, 3 pass / 2 fail, identical output.
 
 ## Impact
 
 - No data leak. The isolation assertions that guard cross-workspace and cross-project exposure still pass; only the "you can find your own thing" direction fails.
 - If it reflects real runtime behaviour rather than a test-seeding issue, ***ATC full-text search returns nothing for legitimately matching ATCs***, which would make the Projects toolbar search look broken to a user.
-- The suite has been red for these two for some time and nothing surfaced it, because there is no `test` script wired into `repo:check` — BK-400 added `"test": "bun test"`, so this is now runnable by name.
+- The suite has been red for these two for some time and nothing surfaced it, because there is no `test` script wired into `repo:check` — [https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400](https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400) added `"test": "bun test"`, so this is now runnable by name.
 
 ## First thing to check
 
@@ -68,7 +67,7 @@ Whether the seeded ATC is actually indexed at the moment the RPC runs — i.e. w
 ## Metadata
 
 - **Created:** 12/8/2026
-- **Updated:** 12/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Ely
 - **Labels:** atc, search, test-failure

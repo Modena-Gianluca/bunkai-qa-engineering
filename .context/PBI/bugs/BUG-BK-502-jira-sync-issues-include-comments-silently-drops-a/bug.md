@@ -2,12 +2,8 @@
 
 **Jira Key:** [BK-502](https://jira.upexgalaxy.com/browse/BK-502)
 **Priority:** Medium
-**Status:** Open
+**Status:** Ready For QA
 **Components:** None
-**Severity:** Mayor
-**Error Type:** Functional
-**Test Environment:** Dev
-**Fix Type:** Bugfix
 
 ---
 
@@ -15,7 +11,7 @@
 
 ## Summary
 
-`bun run jira:sync-issues get <KEY> --include-comments` ***silently ignores the ****`--include-comments`**** flag for ****`Bug`**** and ****`Improvement`**** work types***. The command reports success, writes the issue file, and drops every comment. `Defect` is unaffected.
+`bun run jira:sync-issues get <KEY> --include-comments` ***silently ignores the**** `--include-comments` ****flag for**** `Bug` ****and**** `Improvement` ****work types***. The command reports success, writes the issue file, and drops every comment. `Defect` is unaffected.
 
 Every automated routine in this repo reads the local `.context/PBI/` cache to decide whether a ticket has an open question, a QA rejection, or a published ruling. For `Bug` and `Improvement` that read is blind, and it fails ***silently*** — the cache looks complete.
 
@@ -68,7 +64,7 @@ Control: `Defect` work items (`coverable: true`) do produce a populated `comment
 
 `scripts/sync-jira-issues.ts`, `syncStandaloneIssue()` (~line 2848). It routes to `syncCoverableStandalone()` only when `entry.coverable` is true (~2869-2871). That coverable path is the one that honours `options.includeComments` and calls `fetchComments()` (~2833-2836).
 
-Non-coverable types fall through to a plain branch (~2874-2889) that ***never references ****`options.includeComments`**** and never calls ***`fetchComments()`. `fetchComments()` has only two call sites in the whole script: `syncStory()` (~2181) and `syncCoverableStandalone()` (~2833).
+Non-coverable types fall through to a plain branch (~2874-2889) that ***never references**** `options.includeComments` ****and never calls*** `fetchComments()`. `fetchComments()` has only two call sites in the whole script: `syncStory()` (~2181) and `syncCoverableStandalone()` (~2833).
 
 Which types land in the broken branch is set by `.agents/jira-required.yaml`:
 
@@ -82,7 +78,7 @@ Which types land in the broken branch is set by `.agents/jira-required.yaml`:
 
 The flag is accepted and ignored, so callers cannot tell the data is missing — this is a silent-corruption defect, not a visible failure.
 
-Six of the nine currently-open defect-class tickets are `Bug` or `Improvement` (BK-176, BK-182, BK-200, BK-265, BK-400, BK-401), so their comment trails are invisible to any tooling trusting the cache. This is not theoretical: the two highest-value findings in the 2026-08-17 audit — BK-400's "activation still pending, cross-device magic-link sign-in still broken in production today" and BK-466's two named-but-unfiled follow-ups — live in comments that the cache does not contain. A `story` run on 2026-08-16 hit two false blockers traceable to the same blind read.
+Six of the nine currently-open defect-class tickets are `Bug` or `Improvement` ([https://jira.upexgalaxy.com/browse/BK-176#icft=BK-176](https://jira.upexgalaxy.com/browse/BK-176#icft=BK-176), [https://jira.upexgalaxy.com/browse/BK-182#icft=BK-182](https://jira.upexgalaxy.com/browse/BK-182#icft=BK-182), [https://jira.upexgalaxy.com/browse/BK-200#icft=BK-200](https://jira.upexgalaxy.com/browse/BK-200#icft=BK-200), [https://jira.upexgalaxy.com/browse/BK-265#icft=BK-265](https://jira.upexgalaxy.com/browse/BK-265#icft=BK-265), [https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400](https://jira.upexgalaxy.com/browse/BK-400#icft=BK-400), [https://jira.upexgalaxy.com/browse/BK-401#icft=BK-401](https://jira.upexgalaxy.com/browse/BK-401#icft=BK-401)), so their comment trails are invisible to any tooling trusting the cache. This is not theoretical: the two highest-value findings in the 2026-08-17 audit — BK-400's "activation still pending, cross-device magic-link sign-in still broken in production today" and BK-466's two named-but-unfiled follow-ups — live in comments that the cache does not contain. A `story` run on 2026-08-16 hit two false blockers traceable to the same blind read.
 
 Unticketed since 2026-08-09.
 
@@ -99,9 +95,9 @@ Filed by the scheduled `bug` delivery routine under the `autonomous-delivery` sk
 ## Metadata
 
 - **Created:** 17/8/2026
-- **Updated:** 17/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
-- **Assignee:** Ely
+- **Assignee:** Benjamin Segovia
 
 ---
 

@@ -5,8 +5,7 @@
 **Type:** Story
 **Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 8
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -56,14 +55,8 @@ As a Workspace member, I want to create a Project inside a Workspace so that I c
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
+- [Mockup](./mockup.md)
 - [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
-- [Acceptance Test Results (QA)](./acceptance-test-results.md)
 
 ---
 
@@ -71,9 +64,9 @@ As a Workspace member, I want to create a Project inside a Workspace so that I c
 
 ### Bugs (3)
 
-- [BK-54](https://jira.upexgalaxy.com/browse/BK-54): BK-8: Reserved project slugs are not rejected (AC-11) — created with HTTP 201 _(Duplicated)_
-- [BK-56](https://jira.upexgalaxy.com/browse/BK-56): BK-8: Non-Latin (CJK/Cyrillic) project names rejected as name_no_alphanumeric _(Duplicated)_
 - [BK-55](https://jira.upexgalaxy.com/browse/BK-55): BK-8: Project detail route /projects/{slug} is not workspace-scoped _(Duplicated)_
+- [BK-56](https://jira.upexgalaxy.com/browse/BK-56): BK-8: Non-Latin (CJK/Cyrillic) project names rejected as name_no_alphanumeric _(Duplicated)_
+- [BK-54](https://jira.upexgalaxy.com/browse/BK-54): BK-8: Reserved project slugs are not rejected (AC-11) — created with HTTP 201 _(Duplicated)_
 
 ### Storys (2)
 
@@ -85,7 +78,7 @@ As a Workspace member, I want to create a Project inside a Workspace so that I c
 ## Metadata
 
 - **Created:** 19/5/2026
-- **Updated:** 24/7/2026
+- **Updated:** 18/8/2026
 - **Reporter:** Ely
 - **Assignee:** Ely
 - **Labels:** hierarchy, mvp, shift-left-2026-05-28, shift-left-reviewed, wave-1

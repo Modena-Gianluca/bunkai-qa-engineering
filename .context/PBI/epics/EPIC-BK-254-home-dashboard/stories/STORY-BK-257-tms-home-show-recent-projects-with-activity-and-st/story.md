@@ -30,16 +30,14 @@ Renders into `home.jsx` (master-design-plan.md §4.2), the "Recent projects" sec
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
+- [Mockup](./mockup.md)
 
 ---
 
 ## Metadata
 
 - **Created:** 31/7/2026
-- **Updated:** 4/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Unassigned
 - **Labels:** p2

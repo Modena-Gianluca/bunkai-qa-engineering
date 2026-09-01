@@ -2,75 +2,67 @@
 
 > Jira field: `customfield_10165` · [View in Jira](https://jira.upexgalaxy.com/browse/BK-15)
 
-## Spec Implementation Plan (Dev) — [https://jira.upexgalaxy.com/browse/BK-15#icft=BK-15](https://jira.upexgalaxy.com/browse/BK-15#icft=BK-15)
+# Acceptance Test Results — [https://jira.upexgalaxy.com/browse/BK-15#icft=BK-15](https://jira.upexgalaxy.com/browse/BK-15#icft=BK-15)
 
-Manage Acceptance Criteria under a User Story: AC CRUD with stable, gap-free ordering plus a ready-to-test gate. Three confirmed design decisions: add `user_stories.status`, atomic SECURITY DEFINER rebalance functions with a partial unique index, and up/down arrow reordering.
+***Story***: TMS-AC | Manage criteria under a user story
+***Environment***: Staging — [https://staging-upexbunkai.vercel.app](https://staging-upexbunkai.vercel.app/)
+***Date***: 2026-06-18
+***QA Engineer***: Maibeth
 
-### AC -> implementation map
+## Executive Summary
 
-- AC1 Add AC appears first: `bunkai*insert*acceptance_criterion` defaults position to tail; first AC lands at position 1. Scoped POST route.
-- AC2 Insert preserves order: insert function shifts active siblings at or after the target by +1 via the negative-parking trick (collision-free under the partial unique index).
-- AC3 Reorder re-numbers with no gaps: `bunkai*move*acceptance_criterion` re-threads the active set into contiguous 1..N with the moved row at the target slot.
-- AC4 Zero ACs cannot be marked ready to test: gate inside PATCH /user-stories/{id} counts active ACs; zero -> 409 `ac*required*for*ready*to_test`.
-- AC5 Title under 3 chars rejected: Zod `criterionTitleError` (min 3, max 200) returns `title*too*short` -> 422 validation_failed.
-- AC6 Removing the last AC blocks ready-to-test again: `bunkai*archive*acceptance*criterion` closes the gap and, when it removes the last active AC of a ready*to_test story, reverts that story to draft and reports it.
+28/36 TCs PASSED (77.8%). 1 TC FAILED (BUG-1: byte cap decimal vs binary). 1 SKIPPED (TC-30, blocked on [https://jira.upexgalaxy.com/browse/BK-18#icft=BK-18](https://jira.upexgalaxy.com/browse/BK-18#icft=BK-18)). 3 NEEDS_CONFIRMATION resolved as expected behavior. Feature is stable and meets all Critical and High AC requirements.
 
-### Slice 1 — Migration 0017 (additive)
+## Result Matrix
 
-- Add `user*stories.status text not null default 'draft'` with a check constraint in (draft, ready*to_test).
-- Drop the FULL unique `acceptance*criteria*user*story*id*position*key`; create a PARTIAL unique index on (user*story*id, position) WHERE archived*at IS NULL, plus an active-list index on (user*story*id) WHERE archived*at IS NULL.
-- Three SECURITY DEFINER plpgsql functions, all `set search*path = ''`, workspace-gated through `bunkai*can*write*workspace` (resolves workspace from user*stories.project*id -> projects.workspace_id), each ending with `revoke execute ... from public, anon`:
+| ***Category**** | ****Total**** | ****Passed**** | ****Failed**** | ****Obs**** | ****Skip*** |
+| --- | --- | --- | --- | --- | --- |
+| Positive | 9 | 9 | 0 | 0 | 0 |
+| Negative | 10 | 9 | 0 | 1 | 0 |
+| Boundary | 7 | 5 | 1 | 1 | 0 |
+| Integration | 5 | 5 | 0 | 0 | 0 |
+| API | 5 | 4 | 0 | 1 | 0 |
+| ***Total**** | ****36**** | ****28**** | ****1**** | ****4**** | ****1*** |
 
-- `bunkai*insert*acceptance*criterion(p*user*story*id, p*title, p*description default null, p_position default null)` returns jsonb.
-- `bunkai*move*acceptance*criterion(p*id, p*new*position)` returns jsonb.
-- `bunkai*archive*acceptance*criterion(p*id)` returns jsonb (criterion plus user*story*reverted flag).
+Observations: TC-07 (edit works as designed), TC-09 (add to ready*to*test does not change status), TC-19 (409 on re-archive — NEEDS_CONFIRMATION), TC-21 (edge arrows disabled — confirmed working as designed).
 
-- Rebalance is collision-free via negative-parking: park shifting active rows to negative positions, then restore to the final positive slots, so the partial unique index never sees a transient duplicate.
-- Advisor lint 0029 on these DEFINER functions is the accepted project posture.
-- After apply: `bun run types:gen` then patch `lib/types.ts` (new functions plus the status column).
+## Critical AC Coverage
 
-### Slice 2 — Validation and error helpers
+| ***AC**** | ****Scenario**** | ****Result*** |
+| --- | --- | --- |
+| AC1 | Add first AC — position 1 | PASSED |
+| AC2 | Insert preserves order, contiguous | PASSED |
+| AC3 | Reorder re-numbers, no gaps | PASSED |
+| AC4 | Zero ACs blocks ready-to-test (409) | PASSED |
+| AC5 | Title < 3 chars rejected (422) | PASSED |
+| AC6 | Remove last AC — story auto-reverts to draft | PASSED |
 
-- `lib/acceptance-criteria/validation.ts`: `criterionTitleError` (min 3, max 200), `MAX*AC*DESCRIPTION_BYTES` = 50 KB, mirroring the user-story helpers. Framework-agnostic, unit-tested.
-- `lib/acceptance-criteria/errors.ts`: `mapCriterionRpcError` mapping 42501 -> 403 not*a*member, P0002 -> 404, default -> 500; plus a `titleMessage` table.
+## Defects Found
 
-### Slice 3 — API routes (mirror the [https://jira.upexgalaxy.com/browse/BK-14#icft=BK-14](https://jira.upexgalaxy.com/browse/BK-14#icft=BK-14) scoped-create / flat-mutate split)
+- ***BUG-1*** (pending filing): Description byte cap uses 50,000 bytes (50 x 1000) instead of 51,200 bytes (50 x 1024). Medium severity. TC-25 FAILED.
+- ***BUG-2*** (NEEDS*CONFIRMATION): Re-archive returns 409 `already*archived` instead of expected 404. May be intentional design. Awaiting Dev/PO confirmation.
 
-- `app/api/v1/user-stories/[id]/acceptance-criteria/route.ts`: POST creates via the insert function (title required, optional Markdown detail sanitized on save, optional position); GET lists active ACs ordered by position ascending.
-- `app/api/v1/acceptance-criteria/[id]/route.ts`: GET reads one active AC; PATCH updates title/description through an RLS update and/or position through the move function; DELETE archives through the archive function.
-- Hybrid error model: house `code` plus granular `details.reason`. 50 KB byte-cap guard on description (server side), mirroring [https://jira.upexgalaxy.com/browse/BK-14#icft=BK-14](https://jira.upexgalaxy.com/browse/BK-14#icft=BK-14).
-- Conditional RPC args object omits nulls (Supabase typegen types text params as non-nullable).
+## NEEDS_CONFIRMATION Items Resolved
 
-### Slice 4 — Ready-to-test gate on the User Story route
+- TC-07 (edit AC via PATCH): works, same validation applies — resolved, no AC change needed
+- TC-09 (add AC to ready*to*test story): status unchanged — confirmed working as designed
+- TC-21 (edge arrows): disabled at boundary positions — confirmed working as designed
+- TC-19 (re-archive 409 vs 404): actual = 409 `already_archived`. Awaiting Dev confirmation
+- TC-34 (GET archived AC): 404 confirmed — matches ATP expectation
 
-- Extend `app/api/v1/user-stories/[id]/route.ts` PATCH: add `status` to the schema (enum draft, ready*to*test). When moving to ready*to*test, count active ACs; zero -> 409 `ac*required*for*ready*to_test`. Keep the existing no-op short-circuit.
-- Surface `status` in STORY_COLUMNS and the GET payload.
+## DB Validation
 
-### Slice 5 — UI (up/down reorder, no drag-drop)
+DEFERRED — DBHUB** connection not configured. API response fields used as indirect validation (archived*at, position, user*story*reverted, status all verified via API layer).
 
-- AC management panel under the selected User Story: ordered, numbered list of ACs; add form (title plus optional MarkdownEditor detail with the 50 KB overCap submit-gate); per-AC edit, remove, and up/down arrow buttons calling PATCH position.
-- User-story status badge plus a Mark ready to test / Back to draft toggle. With zero ACs the toggle is blocked and shows the at-least-one-AC message. Tokens: signal-blocked amber for the gate warning. No window.prompt (inline input).
-- Mirror create-module and user-story form styling and the Sidebar action patterns; keep the design system.
+## Evidence
 
-### Slice 6 — OpenAPI and tests
+9 screenshots captured in `evidence/`. Key evidence:
 
-- Register the new routes in the OpenAPI generation (`bun run openapi:gen`) and run `bun run api:sync`.
-- Unit tests for the validation helpers (title bounds, byte cap). Manual smoke: add three ACs, reorder via arrows, archive, and verify the ready-to-test gate both directions.
-
-### Verification
-
-- `bun run lint:check`, `bun run types:check`, `bun test`, and `bun run build` all green before PR.
-
-### Out of scope
-
-- Authoring the parent User Story ([https://jira.upexgalaxy.com/browse/BK-14#icft=BK-14](https://jira.upexgalaxy.com/browse/BK-14#icft=BK-14)), the Markdown editor itself ([https://jira.upexgalaxy.com/browse/BK-16#icft=BK-16](https://jira.upexgalaxy.com/browse/BK-16#icft=BK-16)), linking ATCs to ACs (ATC epic), and AC change history.
-
-## Review Workload Forecast
-
-Estimated: ~900 additions + ~40 deletions = ~940 total lines
-400-line budget risk: High
-Chain strategy: size-exception (single cohesive story; solo-owner admin merge; matches [https://jira.upexgalaxy.com/browse/BK-10#icft=BK-10](https://jira.upexgalaxy.com/browse/BK-10#icft=BK-10) ~1435 and [https://jira.upexgalaxy.com/browse/BK-14#icft=BK-14](https://jira.upexgalaxy.com/browse/BK-14#icft=BK-14) ~900 precedent shipped as single PRs)
-Decision needed before apply: No
+- BK-15-smoke-panel-open.png
+- BK-15-TC10-gate-blocked-zero-acs-pass.png
+- BK-15-TC06-gate-allowed-with-acs.png
+- BK-15-TC27-auto-revert-to-draft-pass.png
+- BK-15-TC21-edge-arrows-disabled-pass.png
 
 ---
 _Synced from Jira by sync-jira-issues_

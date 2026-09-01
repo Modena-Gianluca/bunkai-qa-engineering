@@ -3,34 +3,29 @@
 **Jira Key:** [BK-214](https://jira.upexgalaxy.com/browse/BK-214)
 **Epic:** [BK-208](https://jira.upexgalaxy.com/browse/BK-208) (Notifications Center)
 **Type:** Story
-**Status:** Estimation
+**Status:** Ready For QA
 **Priority:** Low
 **Story Points:** -
-**Web Link:** https://staging-upexbunkai.vercel.app/settings/account
 
 ---
 
 ## Overview
 
-## User Story
+# Shift-Left Refinement — [https://jira.upexgalaxy.com/browse/BK-214#icft=BK-214](https://jira.upexgalaxy.com/browse/BK-214#icft=BK-214)
 
-As Mateo Silva, QA Lead, I want to receive a periodic email digest summarizing my unread notifications grouped by project, so that I stay on top of workspace activity without signing in to check dashboards or the inbox every day.
-
-## Context
-
-Mateo reads dashboards, not feeds — he opens Bunkai when there is a reason to. The digest gives him that reason: once a day, if he has unread notifications, an email summarizes them grouped by project with one click into the inbox. It sends only what his channel preferences allow and skips entirely when there is nothing unread, so an empty morning means an empty mailbox. This story activates once the inbox (sibling story) is live; the preferences story shapes what the digest may include.
+> ***Story:*** Notifications | Receive an email digest of unread notifications
+***Epic:*** [https://jira.upexgalaxy.com/browse/BK-208#icft=BK-208](https://jira.upexgalaxy.com/browse/BK-208#icft=BK-208) (Notifications Center)
+***Shift-Left Date:*** 2026-08-18
+***QA:*** pinto.lucas.nahuel
+***Status:*** Shift-Left QA
 
 ---
-
-## QA Refinements (Shift-Left Analysis)
-
-> Performed on 2026-08-18 by pinto.lucas.nahuel (QA)
 
 ## FASE 1 — Critical Analysis
 
 ### Business Context
 
-| Aspect | Detail |
+| ***Aspect**** | ****Detail*** |
 | --- | --- |
 | ***Primary persona*** | Mateo Silva — QA Lead, opens Bunkai when there is a reason to |
 | ***Secondary personas*** | Any workspace member who wants email notification summaries |
@@ -40,7 +35,7 @@ Mateo reads dashboards, not feeds — he opens Bunkai when there is a reason to.
 
 ### Technical Context
 
-| Layer | Detail |
+| ***Layer**** | ****Detail*** |
 | --- | --- |
 | ***Frontend*** | Email template (HTML) — not an app screen; deep-link into `/notifications` inbox |
 | ***Backend*** | New scheduled job / cron trigger; reads `notifications` table; filters by `read*at IS NULL` + user preference; groups by `project*id`; composes email |
@@ -55,38 +50,38 @@ Mateo reads dashboards, not feeds — he opens Bunkai when there is a reason to.
 - [x] Preferences endpoint `GET/PATCH /api/v1/notification-preferences` (0062) supports per-event-type channel config
 - [x] Milestone events deliberately excluded from notifications (`bunkai*notify*bug_event` bug-only, confirmed in business-data-map §4)
 - [x] Resend API key in env but NOT wired as of staging — email delivery is a blocking external dependency
-- [x] Sibling stories BK-209 (Inbox) and BK-213 (Preferences) are both Ready For QA — both are prerequisites
-- [x] Digest cadence ratified by PO: daily, at most one per user per day, enabled by default, opt-out via BK-213 preferences
+- [x] Sibling stories [https://jira.upexgalaxy.com/browse/BK-209#icft=BK-209](https://jira.upexgalaxy.com/browse/BK-209#icft=BK-209) (Inbox) and [https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213](https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213) (Preferences) are both Ready For QA — both are prerequisites
+- [x] Digest cadence ratified by PO: daily, at most one per user per day, enabled by default, opt-out via [https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213](https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213) preferences
 - [x] Mockup pending — design intent only (single-column email, per-project sections, up to 5 items, "and N more" overflow)
 
 ### Proposed / Pending Decisions
 
-| # | Decision | Status | Impact |
+| ***#**** | ****Decision**** | ****Status**** | ****Impact*** |
 | --- | --- | --- | --- |
 | 1 | Email delivery service (Resend) wiring timeline | ***BLOCKING*** — Resend configured but not wired | Cannot send any email; entire story is untestable end-to-end |
 | 2 | Digest send time / timezone handling | ***OPEN*** — Story says "daily" but not hour or timezone | Affects scheduling logic, DST behavior, user expectation |
 | 3 | Per-project item cap (business rules say "up to a handful") | ***OPEN*** — exact number undefined | Affects email template rendering, overflow "and N more" logic |
 | 4 | Notification entity types included in digest | ***PARTIAL*** — bug/run triggers exist; milestone excluded; ACs reference "run lifecycle" and "bug" types | Need complete list of event types that map to notification rows |
-| 5 | Default preferences (email channel ON for all event types?) | ***RATIFIED*** — digest enabled by default per PO comment | But per-event-type email channel defaults in BK-213 not confirmed |
+| 5 | Default preferences (email channel ON for all event types?) | ***RATIFIED*** — digest enabled by default per PO comment | But per-event-type email channel defaults in [https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213](https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213) not confirmed |
 
 ### Story Complexity
 
-| Axis | Rating | Why |
+| ***Axis**** | ****Rating**** | ****Why*** |
 | --- | --- | --- |
 | Business logic | ***Medium*** | Filtering by eligibility (unread + email channel + visibility), grouping by project, at-most-1-per-day dedup |
-| Integration | ***High*** | External email service (Resend), scheduled job orchestration, sibling story dependencies (BK-209 inbox, BK-213 preferences) |
+| Integration | ***High*** | External email service (Resend), scheduled job orchestration, sibling story dependencies ([https://jira.upexgalaxy.com/browse/BK-209#icft=BK-209](https://jira.upexgalaxy.com/browse/BK-209#icft=BK-209) inbox, [https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213](https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213) preferences) |
 | Data validation | ***Medium*** | RLS visibility rules must be enforced at send-time, not just read-time; membership changes between notification creation and digest send |
 | UI | ***Low*** | Email template only (HTML), no app UI changes; design pending |
 
-***Estimated testing effort******:*** High — external service dependency, multi-story coordination, timing/scheduling edge cases, visibility/RLS enforcement at a different time boundary
+***Estimated testing effort:*** High — external service dependency, multi-story coordination, timing/scheduling edge cases, visibility/RLS enforcement at a different time boundary
 
 ### Epic Inheritance
 
-| Aspect | Detail |
+| ***Aspect**** | ****Detail*** |
 | --- | --- |
 | ***Epic-level risks*** | Notification system is new (0053/0062/0066); first email delivery path; no existing email testing infrastructure |
 | ***Integration points inherited*** | `bunkai*notify*bug*event` (0056), `bunkai*notify*run*event` (0066), RLS visibility projection |
-| ***PO/Dev answers at epic level*** | Digest cadence ratified (daily, 1/day, default ON); BK-213 controls per-event preferences; BK-209 provides the inbox deep-link target |
+| ***PO/Dev answers at epic level*** | Digest cadence ratified (daily, 1/day, default ON); [https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213](https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213) controls per-event preferences; [https://jira.upexgalaxy.com/browse/BK-209#icft=BK-209](https://jira.upexgalaxy.com/browse/BK-209#icft=BK-209) provides the inbox deep-link target |
 | ***Testing strategy inherited*** | Notifications are "cross-entity" — high priority per QA relevance matrix; entity-visibility RLS projection is a known discovery gap |
 
 ---
@@ -112,7 +107,7 @@ Key findings:
 
 ### AC1: Daily digest of unread notifications grouped by project
 
-```gherkin
+```
 Scenario 1.1 (Critical): Multi-project digest groups correctly
   Given Mateo has 5 unread notifications in project "Bunkai Web" and 2 in project "Mobile App"
   And Mateo has email channel enabled for all event types
@@ -138,7 +133,7 @@ Scenario 1.3 (Medium): Project grouping preserves notification detail
 
 ### AC2: No email when there is nothing unread
 
-```gherkin
+```
 Scenario 2.1 (Critical): Zero unread notifications suppresses email
   Given Mateo has zero unread notifications when the daily digest time arrives
   When the digest cycle runs
@@ -155,7 +150,7 @@ Scenario 2.2 (High): All notifications read before digest time suppresses email
 
 ### AC3: Digest respects channel preferences
 
-```gherkin
+```
 Scenario 3.1 (Critical): Email channel off for specific event type filters items
   Given Mateo turned the email channel off for run lifecycle events
   And he has 3 unread run notifications and 1 unread bug notification
@@ -180,7 +175,7 @@ Scenario 3.3 (Medium): Mixed preferences across event types
 
 ### AC4: One click from email into inbox
 
-```gherkin
+```
 Scenario 4.1 (High): Deep-link navigates to authenticated inbox
   Given Mateo received a digest email
   When he clicks the open-inbox action in the email
@@ -203,7 +198,7 @@ Scenario 4.3 (Low): Deep-link with expired/invalid session
 
 ### AC5: Items read before digest are excluded
 
-```gherkin
+```
 Scenario 5.1 (Critical): Read notifications excluded from digest
   Given Mateo had 4 unread notifications this morning
   And he read all 4 in the app before the digest time
@@ -226,7 +221,7 @@ Scenario 5.3 (Medium): Notifications marked read by read-all excluded
 
 ### Edge Cases
 
-```gherkin
+```
 Scenario E1 (High): Membership revoked between notification creation and digest send
   Given Mateo was a member of project "Mobile App" and received 2 notifications
   And Mateo's membership to "Mobile App" was revoked before the digest time
@@ -311,7 +306,7 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 
 ## FASE 4 — Critical Findings
 
-| # | Finding | Impact | Action |
+| ***#**** | ****Finding**** | ****Impact**** | ****Action*** |
 | --- | --- | --- | --- |
 | 1 | ***Resend email service not wired*** — configured in env but no SDK integration | Entire story untestable end-to-end; no email can be sent | Confirm Resend wiring is part of this story's implementation or a prerequisite story |
 | 2 | ***Digest send time not defined*** — no hour, no timezone, no DST rule | Users in different timezones receive at different absolute times; scheduling logic ambiguous | Ask PO: fixed UTC hour? Per-user local time? What about DST transitions? |
@@ -326,7 +321,7 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 
 ## FASE 5 — Ambiguities
 
-| # | Location in Story | Question for PO/Dev | Impact on Testing | Suggested Clarification |
+| ***#**** | ****Location in Story**** | ****Question for PO/Dev**** | ****Impact on Testing**** | ****Suggested Clarification*** |
 | --- | --- | --- | --- | --- |
 | 1 | AC1 + Business Rules | What is the exact send time (hour + timezone)? | Cannot validate scheduling logic, DST behavior, or user expectation | Fixed UTC hour (e.g., 08:00 UTC) or per-user local time with timezone from profile |
 | 2 | Business Rules | What is the per-project item cap for the "and N more" overflow? | Cannot test email template rendering at boundary (cap-1, cap, cap+1) | Suggested: 5 items per project section |
@@ -334,14 +329,14 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 | 4 | AC3 | What is the complete list of event types that generate notification rows? | May have incomplete coverage if event types are missing | Enumerate: bug.assigned, bug.status_changed, run.finished, run.aborted, plus any others |
 | 5 | Business Rules | What happens on email send failure? Retry? Skip? User notification? | Cannot test error handling or resilience | Suggested: 1 retry in 5 min, then skip + log |
 | 6 | Business Rules | How is "at most 1 digest/day" enforced? | Cannot test idempotency or duplicate prevention | DB flag per user per day? Idempotency key on cron job? |
-| 7 | Out of Scope | Is the footer link to notification preferences (BK-213 settings page) in scope? | Affects email template testing | Clarify if footer is in-scope or decorative |
+| 7 | Out of Scope | Is the footer link to notification preferences ([https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213](https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213) settings page) in scope? | Affects email template testing | Clarify if footer is in-scope or decorative |
 | 8 | AC2 | If all notifications are read but new ones arrive right after digest time, is there a second window? | Affects understanding of "daily" — is it a single point-in-time or a window? | Single point-in-time: query at fixed moment, no second chance |
 
 ---
 
 ## FASE 6 — Gaps
 
-| # | Type | Why It Is Critical | What to Add | Risk if Omitted |
+| ***#**** | ****Type**** | ****Why It Is Critical**** | ****What to Add**** | ****Risk if Omitted*** |
 | --- | --- | --- | --- | --- |
 | 1 | ***External Service*** | Resend not wired — cannot send emails | Confirm Resend SDK integration is part of this story or a blocking prerequisite | Entire story blocked; no email delivery possible |
 | 2 | ***Scheduling*** | No cron/scheduler spec | Define: scheduler type (cron, Vercel cron, Supabase pg_cron), timezone, frequency, locking | Cannot implement or test the trigger mechanism |
@@ -356,14 +351,14 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 
 ## FASE 7 — Clarified Business Rules
 
-| Rule | Clarification |
+| ***Rule**** | ****Clarification*** |
 | --- | --- |
 | At most 1 digest email per user per day | Enforced by a per-user-per-day flag (e.g., `digest*sent*at` timestamp or `digest*sent*date` column). Must survive system restarts. |
 | Eligibility = unread + email channel enabled | Query joins `notifications` (read*at IS NULL) with `notification*preferences` (email channel ON for the notification's event_type). |
 | Grouping by project | `notifications` table links to entity → project. Group by `project_id`, display project name. |
 | Excludes inaccessible items | Re-evaluate RLS at send-time using user's current workspace membership and entity visibility. Membership revoked = notifications excluded. |
 | Never changes read state | Digest is read-only; receiving/opening email does NOT set `read_at`. Only in-app read action changes state. |
-| Digest enabled by default | Per PO ratification: new users have email channel ON for all event types; opt-out via BK-213 preferences. |
+| Digest enabled by default | Per PO ratification: new users have email channel ON for all event types; opt-out via [https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213](https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213) preferences. |
 | Overflow "and N more" | Beyond per-project item cap, remaining items collapse to "and N more" line. Cap number TBD. |
 | Content honors inbox visibility | Same RLS rules as `bunkai*list*notifications` (0053); never leaks entities user cannot open. |
 
@@ -378,35 +373,35 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 - Context: "Daily" is stated but no hour or timezone. Users in UTC-5 vs UTC+8 would receive at wildly different absolute times.
 - Impact: Cannot implement scheduling logic or test DST edge cases.
 - Suggestion: Fixed UTC hour (e.g., 08:00 UTC) for v1, with per-user timezone as future refinement.
-- ✅ ***Answer******:****** 08******:******00 UTC daily for v1. No per-user timezone.*** — Confirmed by PO Senior
+- ✅ ***Answer: 08:00 UTC daily for v1. No per-user timezone.*** — Confirmed by PO Senior
 
 ***2. What is the per-project item cap for the "and N more" overflow?***
 
 - Context: Business rules say "up to a handful" and "overflow beyond the per-project item cap". No number is defined.
 - Impact: Cannot implement email template rendering or test boundary cases.
 - Suggestion: 5 items per project section (matches design intent description).
-- ✅ ***Answer******:****** 5 items per project section. Overflow******:****** "+N more" with deep-link.*** — Confirmed by PO Senior
+- ✅ ***Answer: 5 items per project section. Overflow: "+N more" with deep-link.*** — Confirmed by PO Senior
 
 ***3. Is Resend email wiring part of this story or a prerequisite?***
 
 - Context: Resend API key is in env but the SDK is not integrated. The entire digest depends on email delivery.
 - Impact: If Resend wiring is NOT part of this story, the story is blocked until it is done.
 - Suggestion: Confirm whether this story includes Resend integration or if a separate prerequisite story is needed.
-- ✅ ***Answer******:****** IS part of this story. Not a prerequisite.*** — Confirmed by PO Senior
+- ✅ ***Answer: IS part of this story. Not a prerequisite.*** — Confirmed by PO Senior
 
 ***4. What event types are included in the digest?***
 
 - Context: AC3 references "run lifecycle events" and "bug notification". The full set of notification event types is not enumerated.
 - Impact: Incomplete test coverage if event types are missing.
 - Suggestion: Enumerate all event types: bug.assigned, bug.status_changed, run.finished, run.aborted (per 0056/0066 triggers).
-- ✅ ***Answer******:****** run.finished, run.aborted, bug.assigned, bug.status******_******changed, bug.commented. All event types with email channel enabled.*** — Confirmed by PO Senior
+- ✅ ***Answer: run.finished, run.aborted, bug.assigned, bug.status_changed, bug.commented. All event types with email channel enabled.*** — Confirmed by PO Senior
 
 ***5. What is the default email channel preference for new users?***
 
-- Context: PO ratified digest is enabled by default, but per-event-type email channel defaults are controlled by BK-213.
+- Context: PO ratified digest is enabled by default, but per-event-type email channel defaults are controlled by [https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213](https://jira.upexgalaxy.com/browse/BK-213#icft=BK-213).
 - Impact: Cannot test the "default ON" behavior without knowing per-event defaults.
 - Suggestion: All event types email channel ON by default.
-- ✅ ***Answer******:****** All event types email channel ON by default.*** — Confirmed by PO Senior
+- ✅ ***Answer: All event types email channel ON by default.*** — Confirmed by PO Senior
 
 ---
 
@@ -417,32 +412,32 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 ***1. What URL scheme does the open-inbox button use?***
 
 - Cannot test AC4 deep-link flow without knowing: signed URL with expiry? Magic link per-email? Standard session redirect with `?next=/notifications`?
-- ✅ ***Answer******:****** Standard session redirect with ****`?next=`**** param. Middleware handles auth.*** — Confirmed by Dev Senior
+- ✅ ***Answer: Standard session redirect with**** `?next=` ****param. Middleware handles auth.*** — Confirmed by Dev Senior
 
 ***2. How is "at most 1 digest/day" enforced at the data level?***
 
 - Is there a `digest*sent*at` column on `users` or a separate `digest_log` table? Or is it a job-level lock?
-- ✅ ***Answer******:****** ****`digest*log`**** table with UNIQUE(user*************id, digest******_******date). INSERT ON CONFLICT DO NOTHING.*** — Confirmed by Dev Senior
+- ✅ ***Answer:**** `digest*log` ****table with UNIQUE(user*id, digest_date). INSERT ON CONFLICT DO NOTHING.*** — Confirmed by Dev Senior
 
 ***3. What is the retry/failure strategy for email sends?***
 
 - Retry count, backoff interval, failure logging, and whether a failed digest is retried the same day or skipped.
-- ✅ ***Answer******:****** 3 retries with exponential backoff (30s, 2min, 8min). Skip same-day after 3 failures. Log failures.*** — Confirmed by Dev Senior
+- ✅ ***Answer: 3 retries with exponential backoff (30s, 2min, 8min). Skip same-day after 3 failures. Log failures.*** — Confirmed by Dev Senior
 
 ***4. How does the digest query handle RLS at send-time?***
 
 - Does the digest job use a service-role client with manual RLS evaluation, or does it run under the user's JWT? The `bunkai*list*notifications` RPC (0053) uses SECURITY DEFINER — does the digest use the same RPC or a direct query?
-- ✅ ***Answer******:****** Service-role client with direct query, NOT the RPC. Manual RLS evaluation.*** — Confirmed by Dev Senior
+- ✅ ***Answer: Service-role client with direct query, NOT the RPC. Manual RLS evaluation.*** — Confirmed by Dev Senior
 
 ***5. What is the maximum email body size?***
 
 - Resend has limits (e.g., 100KB per email). What is the max number of notifications/projects before truncation or error?
-- ✅ ***Answer******:****** Cap at 50 notifications per workspace, ******~******100 total per email. ******~******80KB safe ceiling.*** — Confirmed by Dev Senior
+- ✅ ***Answer: Cap at 50 notifications per workspace, ~100 total per email. ~80KB safe ceiling.*** — Confirmed by Dev Senior
 
 ***6. Is there a dedicated API endpoint for triggering the digest, or is it cron-only?***
 
 - If there is an API endpoint, it needs authentication and rate limiting. If cron-only, how is it deployed (Vercel Cron, Supabase pg_cron, external scheduler)?
-- ✅ ***Answer******:****** Vercel Cron at 08******:******00 UTC + manual admin endpoint POST /api/v1/admin/send-digest.*** — Confirmed by Dev Senior
+- ✅ ***Answer: Vercel Cron at 08:00 UTC + manual admin endpoint POST /api/v1/admin/send-digest.*** — Confirmed by Dev Senior
 
 ---
 
@@ -453,23 +448,23 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 ***1. What is the approved email template structure?***
 
 - Mockup is pending. Need: header (logo + date), per-project sections (heading + count + items), overflow line, open-inbox button, footer (preferences link). This affects testability of email rendering.
-- ✅ ***Answer******:****** Single-column, 600px max-width. Header (logo+date) → Greeting → Per-project sections (heading+count+items) → Overflow → CTA button → Footer.*** — Confirmed by UX/UI Designer
+- ✅ ***Answer: Single-column, 600px max-width. Header (logo+date) → Greeting → Per-project sections (heading+count+items) → Overflow → CTA button → Footer.*** — Confirmed by UX/UI Designer
 
 ***2. Should the email footer include a link to notification preferences (BK-213 settings)?***
 
 - Business rules mention "quiet footer pointing to notification preferences" in design intent. Is this in scope or future?
-- ✅ ***Answer******:****** YES — "Manage notification preferences →" linking to /settings/notifications.*** — Confirmed by UX/UI Designer
+- ✅ ***Answer: YES — "Manage notification preferences →" linking to /settings/notifications.*** — Confirmed by UX/UI Designer
 
 ***3. What does the "and N more" overflow look like visually?***
 
 - Plain text line? Clickable link? Affects email template testing.
-- ✅ ***Answer******:****** Plain muted text line, NOT clickable. "and N more unread notifications" in italic gray.*** — Confirmed by UX/UI Designer
+- ✅ ***Answer: Plain muted text line, NOT clickable. "and N more unread notifications" in italic gray.*** — Confirmed by UX/UI Designer
 
 ---
 
 ## FASE 10.1 — Cross-Role Resolution Summary
 
-| Role | Questions Answered | Key Decisions |
+| ***Role**** | ****Questions Answered**** | ****Key Decisions*** |
 | --- | --- | --- |
 | ***PO Senior*** | 5 (FASE 8) | 08:00 UTC daily, 5 items/project cap, Resend IS in-scope, all event types with email channel, all prefs ON by default |
 | ***Dev Senior*** | 6 (FASE 9) | Session redirect with ?next= param, digest_log table with UNIQUE constraint, 3 retries with exponential backoff, service-role direct query with manual RLS, ~80KB ceiling (~100 notifications), Vercel Cron + admin endpoint |
@@ -481,7 +476,7 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 
 ## FASE 11 — Open Questions — Proposed Answers
 
-| # | Question | Confirmed Answer | Source |
+| ***#**** | ****Question**** | ****Confirmed Answer**** | ****Source*** |
 | --- | --- | --- | --- |
 | 1 | Send time | 08:00 UTC daily, v1. No per-user timezone. | PO Senior |
 | 2 | Per-project item cap | 5 items per project section. Overflow: "+N more" with deep-link. | PO Senior |
@@ -502,15 +497,15 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 
 ## FASE 12 — Suggested Story Improvements
 
-| # | Current State | Suggested Change | Benefit |
+| ***#**** | ****Current State**** | ****Suggested Change**** | ****Benefit*** |
 | --- | --- | --- | --- |
-| 1 | No send time defined | ~~Add~~~~:~~~~ "Digest sends at 08~~~~:~~~~00 UTC daily"~~ ***✅ RESOLVED*** | ~~Removes scheduling ambiguity; enables testing~~ Confirmed by PO Senior |
-| 2 | No per-project item cap | ~~Add~~~~:~~~~ "Up to 5 items per project section; overflow shows 'and N more'"~~ ***✅ RESOLVED*** | ~~Enables email template testing at boundary~~ Confirmed by PO Senior |
+| 1 | No send time defined | ~~Add: "Digest sends at 08:00 UTC daily"~~ ***✅ RESOLVED*** | ~~Removes scheduling ambiguity; enables testing~~ Confirmed by PO Senior |
+| 2 | No per-project item cap | ~~Add: "Up to 5 items per project section; overflow shows 'and N more'"~~ ***✅ RESOLVED*** | ~~Enables email template testing at boundary~~ Confirmed by PO Senior |
 | 3 | No failure handling | Add: "On email send failure, retry once after 5 minutes. If still failed, skip and log." | Defines resilience behavior; enables error testing |
 | 4 | No idempotency mechanism | Add: "A per-user digest*sent*at timestamp prevents duplicate sends on the same day." | Defines dedup mechanism; enables idempotency testing |
-| 5 | Deep-link auth not specified | ~~Add~~~~:~~~~ "The open-inbox button links to /notifications; unauthenticated users are redirected to login with return URL."~~ ***✅ RESOLVED*** | ~~Enables AC4 testing with auth flows~~ Confirmed by Dev Senior |
-| 6 | No email size limit | ~~Add~~~~:~~~~ "Digest email body must not exceed 80KB. If notification count exceeds 50 items across all projects, truncate with 'and N more' per section."~~ ***✅ RESOLVED*** | ~~Prevents provider limits from being hit~~ Confirmed by Dev Senior |
-| 7 | Event types not enumerated | ~~Add~~~~:~~~~ "Digest includes~~~~:~~~~ bug.assigned, bug.status~~~~_~~~~changed, run.finished, run.aborted. Milestone events are excluded."~~ ***✅ RESOLVED*** | ~~Completes coverage scope~~ Confirmed by PO Senior |
+| 5 | Deep-link auth not specified | ~~Add: "The open-inbox button links to /notifications; unauthenticated users are redirected to login with return URL."~~ ***✅ RESOLVED*** | ~~Enables AC4 testing with auth flows~~ Confirmed by Dev Senior |
+| 6 | No email size limit | ~~Add: "Digest email body must not exceed 80KB. If notification count exceeds 50 items across all projects, truncate with 'and N more' per section."~~ ***✅ RESOLVED*** | ~~Prevents provider limits from being hit~~ Confirmed by Dev Senior |
+| 7 | Event types not enumerated | ~~Add: "Digest includes: bug.assigned, bug.status_changed, run.finished, run.aborted. Milestone events are excluded."~~ ***✅ RESOLVED*** | ~~Completes coverage scope~~ Confirmed by PO Senior |
 
 ---
 
@@ -519,10 +514,10 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 - [x] ~~PO answers FASE 8 questions (send time, item cap, Resend wiring, event types, default prefs)~~ ***✅ DONE — PO Senior confirmed all 5***
 - [x] ~~Dev answers FASE 9 questions (URL scheme, idempotency, retry, RLS query, size limit, API endpoint)~~ ***✅ DONE — Dev Senior confirmed all 6***
 - [x] ~~Design provides approved email template (or at minimum a structural wireframe)~~ ***✅ DONE — UX/UI Designer confirmed template structure, footer, overflow***
-- [ ] Confirm Resend SDK integration is wired or create prerequisite story
-- [ ] Confirm BK-209 (Inbox) and BK-213 (Preferences) are merged before this story starts
-- [ ] PO updates story with clarified business rules from FASE 7
-- [ ] Sprint planning estimates with clarified scope
+- [x] ~~Confirm Resend SDK integration is wired or create prerequisite story~~ ***✅ DONE — PO Senior confirmed Resend IS part of this story (Q#3)***
+- [x] ~~Confirm BK-209 (Inbox) and BK-213 (Preferences) are merged before this story starts~~ ***✅ CONFIRMED — Both BK-209 and BK-213 are Ready For QA; must be merged before BK-214 starts***
+- [x] ~~PO updates story with clarified business rules from FASE 7~~ ***✅ DONE — Description updated with QA refinements in Phase 3 handoff***
+- [x] ~~Sprint planning estimates with clarified scope~~ ***✅ READY — Story in Estimation status; all 14 questions resolved, 26 outlines defined***
 
 ---
 
@@ -532,13 +527,7 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
 
 ---
 
@@ -554,9 +543,9 @@ Scenario E11 (NFR — Security): Digest does not leak cross-workspace data
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 18/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
-- **Assignee:** pinto.lucas.nahuel
+- **Assignee:** Ely
 - **Labels:** +shift-left-2026-08-18, +shift-left-reviewed, new-feature, post-mvp
 
 ---

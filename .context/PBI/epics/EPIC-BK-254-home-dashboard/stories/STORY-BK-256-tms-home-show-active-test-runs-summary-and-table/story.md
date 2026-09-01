@@ -3,7 +3,7 @@
 **Jira Key:** [BK-256](https://jira.upexgalaxy.com/browse/BK-256)
 **Epic:** [BK-254](https://jira.upexgalaxy.com/browse/BK-254) (Home Dashboard)
 **Type:** Story
-**Status:** Ready For QA
+**Status:** Ready For Release
 **Priority:** Medium
 **Story Points:** -
 
@@ -30,20 +30,25 @@ Renders into `home.jsx` (master-design-plan.md §4.2), the "Active test runs" se
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
+- [Mockup](./mockup.md)
 - [Implementation Plan (Dev)](./implementation-plan.md)
+
+---
+
+## Traceability
+
+### Defect (1)
+
+- [BK-620](https://jira.upexgalaxy.com/browse/BK-620): Bunkai Runs/Tests: a Test created in Project A leaks into Project B's Explorer and is runnable from there (422 is only the downstream symptom) _(Open)_
 
 ---
 
 ## Metadata
 
 - **Created:** 31/7/2026
-- **Updated:** 4/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
-- **Assignee:** Unassigned
+- **Assignee:** Carlos C
 - **Labels:** p2
 
 ---

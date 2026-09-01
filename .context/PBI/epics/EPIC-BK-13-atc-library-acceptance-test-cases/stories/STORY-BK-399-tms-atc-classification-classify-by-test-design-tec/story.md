@@ -40,22 +40,10 @@ EPIC BK-13's Out of Scope section defers "ATC parameterization editors (equivale
 
 ---
 
-## Fields
-
-> Each rich-text field is a separate file in this folder.
-
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-
----
-
 ## Metadata
 
 - **Created:** 12/8/2026
-- **Updated:** 12/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Unassigned
 - **Labels:** atc-classification, atc-library, discovery-2026-08-12

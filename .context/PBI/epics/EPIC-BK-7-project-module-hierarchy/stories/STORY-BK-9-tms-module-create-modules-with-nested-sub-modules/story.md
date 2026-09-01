@@ -5,8 +5,7 @@
 **Type:** Story
 **Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 13
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -72,13 +71,7 @@
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
@@ -92,9 +85,9 @@
 ### Storys (4)
 
 - [BK-8](https://jira.upexgalaxy.com/browse/BK-8): TMS-Project | Create a project inside a workspace _(Ready For Release)_
-- [BK-10](https://jira.upexgalaxy.com/browse/BK-10): TMS-Module | Rename and soft-delete a module _(Ready For Release)_
 - [BK-11](https://jira.upexgalaxy.com/browse/BK-11): TMS-Module | Move a module to a different parent _(Ready For Release)_
-- [BK-14](https://jira.upexgalaxy.com/browse/BK-14): TMS-US | Manage user stories anchored to a module _(QA Approved)_
+- [BK-14](https://jira.upexgalaxy.com/browse/BK-14): TMS-US | Manage user stories anchored to a module _(Ready For Release)_
+- [BK-10](https://jira.upexgalaxy.com/browse/BK-10): TMS-Module | Rename and soft-delete a module _(Ready For Release)_
 
 ### Improvement (1)
 

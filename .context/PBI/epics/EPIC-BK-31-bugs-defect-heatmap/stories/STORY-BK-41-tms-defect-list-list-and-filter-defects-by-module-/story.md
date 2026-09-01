@@ -5,8 +5,7 @@
 **Type:** Story
 **Status:** In Test
 **Priority:** Medium
-**Story Points:** 2
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -136,13 +135,7 @@ Archived/soft-deleted module defects are hidden by default in [https://jira.upex
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
@@ -150,15 +143,15 @@ Archived/soft-deleted module defects are hidden by default in [https://jira.upex
 
 ### Storys (2)
 
-- [BK-40](https://jira.upexgalaxy.com/browse/BK-40): TMS-Defect Filing | File a defect from a failing run step _(QA Approved)_
 - [BK-258](https://jira.upexgalaxy.com/browse/BK-258): TMS-Home | Show open bug count and severity breakdown _(Ready For QA)_
+- [BK-40](https://jira.upexgalaxy.com/browse/BK-40): TMS-Defect Filing | File a defect from a failing run step _(Ready For Release)_
 
 ---
 
 ## Metadata
 
 - **Created:** 28/5/2026
-- **Updated:** 6/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** micaelavirgagarcia
 - **Labels:** shift-left-2026-06-27, shift-left-reviewed

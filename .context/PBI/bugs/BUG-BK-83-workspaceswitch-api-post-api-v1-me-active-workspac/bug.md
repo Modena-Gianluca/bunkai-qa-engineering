@@ -3,11 +3,7 @@
 **Jira Key:** [BK-83](https://jira.upexgalaxy.com/browse/BK-83)
 **Priority:** Medium
 **Status:** Closed
-**Components:** Tenancy & Identity
-**Severity:** Moderada
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai Workspaces
 
 ---
 
@@ -77,24 +73,18 @@ HTTP 200 with body containing the new active workspace details:
 
 ---
 
-## 🔍 Root Cause
-
-**Category:** Code Error
-
----
-
 ## Related Issues
 
-- blocks: [BK-6](https://jira.upexgalaxy.com/browse/BK-6) - TMS-Workspace | Switch between workspaces
 - relates to: [BK-118](https://jira.upexgalaxy.com/browse/BK-118) - TMS-Workspace: API: POST /api/v1/me/active-workspace returns legacy fields {ok, active_workspace_id} alongside fix fields
 - relates to: [BK-262](https://jira.upexgalaxy.com/browse/BK-262) - PAT | Enforce capability scopes on every non-ATC route
+- blocks: [BK-6](https://jira.upexgalaxy.com/browse/BK-6) - TMS-Workspace | Switch between workspaces
 
 ---
 
 ## Metadata
 
 - **Created:** 6/6/2026
-- **Updated:** 2/8/2026
+- **Updated:** 20/8/2026
 - **Reporter:** Luis Eduardo Flores Villarroel
 - **Assignee:** Luis Eduardo Flores Villarroel
 - **Labels:** api, bug, exploratory-testing, tenancy

@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Backlog
 **Priority:** Medium
-**Story Points:** 3
+**Story Points:** -
 
 ---
 
@@ -27,23 +27,11 @@
 
 ## Context
 
-Third and last of the three slices BK-267 was split into by the AI Product Owner ruling (comment 12315) and partitioned architecturally by the AI Tech Lead ruling (comment 12316) on BK-267. Covers BK-267's AC-05, AC-06, AC-07. Depends on both prior slices: the browse surface to filter, and the search field's URL-state machinery that this slice's "Clear all" extends.
+Third and last of the three slices [https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267](https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267) was split into by the AI Product Owner ruling (comment 12315) and partitioned architecturally by the AI Tech Lead ruling (comment 12316) on [https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267](https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267). Covers BK-267's AC-05, AC-06, AC-07. Depends on both prior slices: the browse surface to filter, and the search field's URL-state machinery that this slice's "Clear all" extends.
 
 ## Provenance
 
-Materialized from BK-267 (AI Product Owner ruling, comment 12315; AI Tech Lead ruling, comment 12316), 2026-08-13.
-
----
-
-## Fields
-
-> Each rich-text field is a separate file in this folder.
-
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
+Materialized from [https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267](https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267) (AI Product Owner ruling, comment 12315; AI Tech Lead ruling, comment 12316), 2026-08-13.
 
 ---
 
@@ -59,7 +47,7 @@ Materialized from BK-267 (AI Product Owner ruling, comment 12315; AI Tech Lead r
 ## Metadata
 
 - **Created:** 13/8/2026
-- **Updated:** 13/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Unassigned
 

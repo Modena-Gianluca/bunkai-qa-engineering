@@ -12,5 +12,11 @@
 - Every export request and every download of a ready archive is recorded in the workspace Activity Stream — an export is itself an auditable event, and an Owner reaching for compliance evidence needs the export's own trail to exist
 - An export never changes the workspace's data. It is a read of the workspace, and running one leaves every record exactly as it was
 
+## Confirmed via Shift-Left PO/Dev answers (2026-08-24)
+
+- The download window is ***7 days (168 hours)*** from the moment the archive becomes ready.
+- The "at most one export in flight" rule is scoped ***per workspace***, not per Owner — an Owner with two workspaces may have two exports preparing at once, one per workspace.
+- A Personal Access Token can ***never*** request or download a workspace export. This action is cookie-session (Owner) only, regardless of PAT scope.
+
 ---
 _Synced from Jira by sync-jira-issues_

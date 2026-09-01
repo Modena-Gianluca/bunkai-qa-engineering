@@ -5,8 +5,7 @@
 **Type:** Story
 **Status:** Ready For QA
 **Priority:** Medium
-**Story Points:** 8
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -22,10 +21,7 @@ As a QA Lead, I want to see the acceptance criteria and modules that have no tes
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
@@ -45,7 +41,7 @@ As a QA Lead, I want to see the acceptance criteria and modules that have no tes
 ## Metadata
 
 - **Created:** 1/6/2026
-- **Updated:** 1/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Carlos Alberto Chiavassa
 - **Labels:** new-feature, shift-left-2026-06-26, shift-left-reviewed

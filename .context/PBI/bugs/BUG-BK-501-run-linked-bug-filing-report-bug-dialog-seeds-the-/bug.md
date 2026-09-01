@@ -4,10 +4,6 @@
 **Priority:** Medium
 **Status:** Duplicated
 **Components:** None
-**Severity:** Moderada
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
 
 ---
 
@@ -21,11 +17,11 @@ This is the adjacent defect that BK-466's own close-out comment named and deferr
 
 > `lib/runs/report-bug-view.ts:58` seeds an unfiltered legacy `javascript:` URL — adjacent defect, separate ticket.
 
-BK-466 fixed the ***render**** path (the anchor's `href`). This is the ****prefill*** path. Different function, different failure, still open.
+[https://jira.upexgalaxy.com/browse/BK-466#icft=BK-466](https://jira.upexgalaxy.com/browse/BK-466#icft=BK-466) fixed the ***render**** path (the anchor's `href`). This is the ****prefill*** path. Different function, different failure, still open.
 
 ## Steps to reproduce
 
-1. Have a run step whose `evidence_url` was stored with a non-`http(s)` scheme. This is not hypothetical: `lib/bugs/validation.ts` tightened filing-time validation only under BK-337 (TQ5), and its own comment states the render-time allowlist "stays the load-bearing control for ***rows already stored before this tightened***". There is no DB `CHECK` constraint on the column, an accepted residual risk recorded on BK-466.
+1. Have a run step whose `evidence_url` was stored with a non-`http(s)` scheme. This is not hypothetical: `lib/bugs/validation.ts` tightened filing-time validation only under [https://jira.upexgalaxy.com/browse/BK-337#icft=BK-337](https://jira.upexgalaxy.com/browse/BK-337#icft=BK-337) (TQ5), and its own comment states the render-time allowlist "stays the load-bearing control for ***rows already stored before this tightened***". There is no DB `CHECK` constraint on the column, an accepted residual risk recorded on [https://jira.upexgalaxy.com/browse/BK-466#icft=BK-466](https://jira.upexgalaxy.com/browse/BK-466#icft=BK-466).
 2. Fail that step in the runner.
 3. Click ***Report bug*** on the failed step.
 4. Submit the dialog without touching the evidence field.
@@ -42,7 +38,7 @@ The dialog seeds the raw value. Submit fails with a validation error on `evidenc
 
 `lib/runs/report-bug-view.ts:58`
 
-```ts
+```
 evidenceUrls: stepEvidenceUrl ? [stepEvidenceUrl] : [],
 ```
 
@@ -65,7 +61,7 @@ Line 4 is the control: an `https:` evidence URL through the identical path passe
 
 ## Impact
 
-Blocks the first submit of the run-linked bug-filing flow for any affected step. Recoverable — the tester can delete the seeded evidence row and resubmit — so this is a confusing-but-recoverable failure rather than a hard block, on the primary path of BK-40 ("File a defect from a failing run step").
+Blocks the first submit of the run-linked bug-filing flow for any affected step. Recoverable — the tester can delete the seeded evidence row and resubmit — so this is a confusing-but-recoverable failure rather than a hard block, on the primary path of [https://jira.upexgalaxy.com/browse/BK-40#icft=BK-40](https://jira.upexgalaxy.com/browse/BK-40#icft=BK-40) ("File a defect from a failing run step").
 
 ## Suggested fix
 
@@ -74,12 +70,6 @@ Apply the existing `isHttpUrl` allowlist at seed time in `buildReportBugPrefill`
 ## Filing provenance
 
 Filed by the scheduled `bug` delivery routine under the `autonomous-delivery` skill's citation gate (`SKILL.md:45`, anti-pattern A28). All four citation limbs recorded: live reproduction above; two differently-worded backlog searches (`summary ~ "prefill"`, `summary ~ "report bug"`, both scoped to Bug/Defect/Improvement) returning zero matches; root cause at `lib/runs/report-bug-view.ts:58`; expected behaviour quoted from BK-466's close-out comment and from `lib/bugs/validation.ts`. Per A28 the filing run may not implement this defect — it is left for a later run so the QA retest remains a real checkpoint.
-
----
-
-## 🔍 Root Cause
-
-**Category:** Code Error
 
 ---
 

@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** ABORTED
 **Priority:** Medium
-**Story Points:** 1
+**Story Points:** -
 
 ---
 
@@ -36,7 +36,7 @@
 
 ### Critical gaps before sprint
 
-- API contract: `GET /api/v1/atcs/search` requires `project_id` (BK-20) — a new cross-project endpoint or optional parameter is needed before implementation.
+- API contract: `GET /api/v1/atcs/search` requires `project_id` ([https://jira.upexgalaxy.com/browse/BK-20#icft=BK-20](https://jira.upexgalaxy.com/browse/BK-20#icft=BK-20)) — a new cross-project endpoint or optional parameter is needed before implementation.
 - Design file: `.context/designs/bunkai-test-management-tool/bk-13-atc-library-global/atc-library-global.html` does not exist locally. UI assertions are ungrounded without it.
 - Route: No `/atc-library` page exists yet in `app/(app)/`.
 
@@ -52,11 +52,6 @@
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
 
 ---

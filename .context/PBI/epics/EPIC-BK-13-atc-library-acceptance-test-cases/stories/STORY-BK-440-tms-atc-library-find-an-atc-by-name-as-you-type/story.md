@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Backlog
 **Priority:** Medium
-**Story Points:** 3
+**Story Points:** -
 
 ---
 
@@ -28,29 +28,17 @@
 
 ## Context
 
-Second of the three slices BK-267 was split into by the AI Product Owner ruling (comment 12315) and partitioned architecturally by the AI Tech Lead ruling (comment 12316) on BK-267. Covers BK-267's AC-03, the "/" and Esc scenarios of AC-04 only, and the no-match scenario of AC-08. Depends on the prior slice: without its route, list, and read, there is nothing to narrow.
+Second of the three slices [https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267](https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267) was split into by the AI Product Owner ruling (comment 12315) and partitioned architecturally by the AI Tech Lead ruling (comment 12316) on [https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267](https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267). Covers BK-267's AC-03, the "/" and Esc scenarios of AC-04 only, and the no-match scenario of AC-08. Depends on the prior slice: without its route, list, and read, there is nothing to narrow.
 
-***AC-04 amendment (binding, not an omission)******:*** the Cmd+K / Ctrl+K scenario in BK-267's AC-04 is retired and does not carry into this slice — see Out of Scope for the reasoning.
+***AC-04 amendment (binding, not an omission):*** the Cmd+K / Ctrl+K scenario in BK-267's AC-04 is retired and does not carry into this slice — see Out of Scope for the reasoning.
 
-***Search-target amendment (binding, not an omission)******:**** this slice matches ATC ****name*** only, not ATC id, resolving a disagreement between BK-267's own design artifacts in the PO's favor.
+***Search-target amendment (binding, not an omission):**** this slice matches ATC ****name*** only, not ATC id, resolving a disagreement between BK-267's own design artifacts in the PO's favor.
 
 ## Provenance
 
-Materialized from BK-267 (AI Product Owner ruling, comment 12315; AI Tech Lead ruling, comment 12316), 2026-08-13.
+Materialized from [https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267](https://jira.upexgalaxy.com/browse/BK-267#icft=BK-267) (AI Product Owner ruling, comment 12315; AI Tech Lead ruling, comment 12316), 2026-08-13.
 
-***Sizing — two independent estimates on record, both stated******:**** the AI Tech Lead ruling (comment 12316) sizes this slice at ****3 SP****; the AI Product Owner ruling (comment 12315) independently proposed ****2 SP***. Story Points recorded on this ticket follow the Tech Lead's estimate (sizing is the Tech Lead's remit, not the PO's), with the PO's dissenting estimate kept on record here rather than silently dropped.
-
----
-
-## Fields
-
-> Each rich-text field is a separate file in this folder.
-
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
+***Sizing — two independent estimates on record, both stated:**** the AI Tech Lead ruling (comment 12316) sizes this slice at ****3 SP****; the AI Product Owner ruling (comment 12315) independently proposed ****2 SP***. Story Points recorded on this ticket follow the Tech Lead's estimate (sizing is the Tech Lead's remit, not the PO's), with the PO's dissenting estimate kept on record here rather than silently dropped.
 
 ---
 
@@ -67,7 +55,7 @@ Materialized from BK-267 (AI Product Owner ruling, comment 12315; AI Tech Lead r
 ## Metadata
 
 - **Created:** 13/8/2026
-- **Updated:** 13/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Unassigned
 

@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For Dev
 **Priority:** Medium
-**Story Points:** 5
+**Story Points:** -
 
 ---
 
@@ -25,11 +25,6 @@ Real conversations include wrong URLs, typos, and messages sent to the wrong cha
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
 
 ---
@@ -45,9 +40,9 @@ Real conversations include wrong URLs, typos, and messages sent to the wrong cha
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 14/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
-- **Assignee:** Janetzi Jackiewicz
+- **Assignee:** Ely
 - **Labels:** shift-left-2026-07-16, shift-left-reviewed
 
 ---

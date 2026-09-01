@@ -3,11 +3,7 @@
 **Jira Key:** [BK-84](https://jira.upexgalaxy.com/browse/BK-84)
 **Priority:** Highest
 **Status:** Closed
-**Components:** Tenancy & Identity
-**Severity:** Crítica
-**Error Type:** Integration
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai API Tokens
 
 ---
 
@@ -88,43 +84,19 @@ Not yet confirmed – pending dev triage. Best current hypothesis: environment/c
 
 ---
 
-## 🐞 Actual Result
-
-PAT is honored only for an apparent Identity-tier whitelist (/me, /workspaces) and rejected everywhere else with 401 {"code":"unauthorized","message":"You must be signed in."} – including routes entirely unrelated to Imports (Projects, Modules, Tokens), which rules out an Imports-specific cause. Re-tested with a second freshly-minted PAT – identical 401s (rules out token staleness/expiry/clock-skew). DB-verified the token is genuinely valid: access*tokens row revoked*at IS NULL, no expiry, last*used*at populated.
-
----
-
-## ✅ Expected Result
-
-The PAT should authenticate uniformly across all requireAuth-protected routes, per the documented contract in api/schemas/auth.types.ts:70,81 ("PAT token (bk*pat**) for Bearer auth on requireAuth endpoints").
-
----
-
-## 🔍 Root Cause
-
-**Category:** Code Error
-
----
-
-## 🧫 Evidence
-
-Canonical repro record: .context/PBI/epics/EPIC-BK-12-user-stories-acceptance-criteria/stories/STORY-BK-17-async-one-way-jira-import-by-jql-adf-markdown-idem/test-session-memory.md, section "Smoke Test Verdict - 2026-06-07T13:53Z - NO-GO (BLOCKING)". Raw request/response captures: /tmp/bk17-atp/{login.json, login2.json, me.json, post*probe.json, post*probe2.json, known*job2.json, malformed.json, create*proj.json, create_mod.json, tokens.json}.
-
----
-
 ## Related Issues
 
 - is blocked by: [BK-17](https://jira.upexgalaxy.com/browse/BK-17) - Jira Import | Pull Jira issues by JQL
 - is duplicated by: [BK-93](https://jira.upexgalaxy.com/browse/BK-93) - BK-7: Module: PAT bearer token rejected on module/workspace resource endpoints (401)
-- is duplicated by: [BK-92](https://jira.upexgalaxy.com/browse/BK-92) - BK-7: Module: PAT bearer token rejected on module/workspace resource endpoints (401)
 - relates to: [BK-262](https://jira.upexgalaxy.com/browse/BK-262) - PAT | Enforce capability scopes on every non-ATC route
+- is duplicated by: [BK-92](https://jira.upexgalaxy.com/browse/BK-92) - BK-7: Module: PAT bearer token rejected on module/workspace resource endpoints (401)
 
 ---
 
 ## Metadata
 
 - **Created:** 7/6/2026
-- **Updated:** 2/8/2026
+- **Updated:** 20/8/2026
 - **Reporter:** Andrés Daniel Cumare Morales
 - **Assignee:** Andrés Daniel Cumare Morales
 - **Labels:** auth, blocker, bug, integration, staging

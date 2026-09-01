@@ -3,11 +3,7 @@
 **Jira Key:** [BK-176](https://jira.upexgalaxy.com/browse/BK-176)
 **Priority:** Low
 **Status:** Ready For QA
-**Components:** Account & Settings
-**Severity:** Menor
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai Account
 
 ---
 
@@ -70,12 +66,6 @@ After successful sign-out, the user should be immediately redirected to `/login`
 
 ---
 
-## 🔍 Root Cause
-
-**Category:** Code Error
-
----
-
 ## Related Issues
 
 - is caused by: [BK-86](https://jira.upexgalaxy.com/browse/BK-86) - Account | View my identity, role, and sign out
@@ -85,7 +75,7 @@ After successful sign-out, the user should be immediately redirected to `/login`
 ## Metadata
 
 - **Created:** 23/6/2026
-- **Updated:** 31/7/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Andrés Daniel Cumare Morales
 - **Assignee:** Andrés Daniel Cumare Morales
 - **Labels:** account-settings, bug, exploratory-testing

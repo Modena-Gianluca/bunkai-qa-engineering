@@ -30,5 +30,12 @@ Atte.
 
 ---
 
+### Gianluca Módena - 17/8/2026, 01:01:49
+
+Hola @@Ely 
+Te quería avisar de un error mío con ésta US. En vez de asignárme la original del backlog y transicionarla a Shift-Left QA, me confundí con la opción de autoclonación y terminé creando creando la copia con su Test Plan ([https://jira.upexgalaxy.com/browse/BK-468#icft=BK-468](https://jira.upexgalaxy.com/browse/BK-468#icft=BK-468)) y Test Execution ([https://jira.upexgalaxy.com/browse/BK-469#icft=BK-469](https://jira.upexgalaxy.com/browse/BK-469#icft=BK-469)), que quedaron asignados a mí. Te quería pedir porfavor si no las eliminas. Desde ya muchas gracias y disculpa por la confusión. 
+
+---
+
 
 _Synced from Jira by sync-jira-issues_

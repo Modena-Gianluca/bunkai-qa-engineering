@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For QA
 **Priority:** Medium
-**Story Points:** 8
+**Story Points:** -
 
 ---
 
@@ -149,7 +149,7 @@ Backend ≈5, Frontend ≈5, Design = small non-blocking spike — converged tea
 
 ## C1 — RESOLVED (2026-08-05)
 
-***Decision***: `scope.md` wins. BK-206 (assign test plans / track milestone readiness) remains in Backlog and has not started; this Story's own `scope.md` already defines the release-1 deliverable as "Milestone detail view with its details and an empty plans area." BK-205 ships the detail view WITHOUT the Attach-plans button, readiness card, or attached-plans table — those arrive with the sibling story. The combined mockup (`milestones-board.html`) is the target end-state once BK-206 also ships, not part of this Story's Definition of Done.
+***Decision***: `scope.md` wins. [https://jira.upexgalaxy.com/browse/BK-206#icft=BK-206](https://jira.upexgalaxy.com/browse/BK-206#icft=BK-206) (assign test plans / track milestone readiness) remains in Backlog and has not started; this Story's own `scope.md` already defines the release-1 deliverable as "Milestone detail view with its details and an empty plans area." [https://jira.upexgalaxy.com/browse/BK-205#icft=BK-205](https://jira.upexgalaxy.com/browse/BK-205#icft=BK-205) ships the detail view WITHOUT the Attach-plans button, readiness card, or attached-plans table — those arrive with the sibling story. The combined mockup (`milestones-board.html`) is the target end-state once [https://jira.upexgalaxy.com/browse/BK-206#icft=BK-206](https://jira.upexgalaxy.com/browse/BK-206#icft=BK-206) also ships, not part of this Story's Definition of Done.
 
 ***Made concrete***: a new AC scenario was added — "Should open a milestone's detail view showing only its own details and an empty plans area" (`@scope-boundary`) — so Frontend and QA have a testable definition of the reduced state, not just prose in `scope.md`.
 
@@ -161,13 +161,7 @@ Backend ≈5, Frontend ≈5, Design = small non-blocking spike — converged tea
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
 
 ---
 
@@ -182,7 +176,7 @@ Backend ≈5, Frontend ≈5, Design = small non-blocking spike — converged tea
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 5/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Carlos Alcala
 - **Labels:** new-feature, post-mvp, shift-left-2026-07-22, shift-left-2026-08-04, shift-left-reviewed

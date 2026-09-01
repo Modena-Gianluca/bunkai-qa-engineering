@@ -4,7 +4,6 @@
 **Priority:** High
 **Status:** Ready For QA
 **Components:** None
-**Fix Type:** Bugfix
 
 ---
 
@@ -41,19 +40,19 @@ Opening a valid, unexpired magic link signs the user in, on any device, and land
 
 ## Technical Analysis
 
-********Root cause******:****** the magic-link rail is built on the PKCE flow, which is device-bound by construction.****
+******Root cause:**** ****the magic-link rail is built on the PKCE flow, which is device-bound by construction.****
 
 - `POST /api/v1/auth/magic-link` (`app/api/v1/auth/magic-link/route.ts:36,44`) builds its client with `createClient()` from `lib/supabase/server.ts:10`, which is `@supabase/ssr`'s `createServerClient`.
-- `@supabase/ssr`*** hard-codes ****`flowType: "pkce"`**** on every ****`createServerClient`**** instance**** — confirmed in the library source. So `signInWithOtp` generates a PKCE challenge and stores the ****code verifier in a browser cookie*** (`sb-<ref>-auth-token-code-verifier`, verified present after a UI request).
+- `@supabase/ssr` ***hard-codes**** `flowType: "pkce"` ****on every**** `createServerClient` ****instance**** — confirmed in the library source. So `signInWithOtp` generates a PKCE challenge and stores the ****code verifier in a browser cookie*** (`sb-<ref>-auth-token-code-verifier`, verified present after a UI request).
 - The emailed link therefore carries a `pkce_`-prefixed token and redirects to `/auth/callback?code=...`.
 - `app/auth/callback/route.ts:51` completes sign-in with `exchangeCodeForSession(code)`, which ***requires that verifier cookie to be present in the browser making the request***.
 - Open the mail anywhere else and the cookie does not exist → the exchange throws `PKCE code verifier not found in storage`.
 
-********Aggravating factor******:****** the failure is silent.***** **`otp*exchange*failed`** is produced at **`app/auth/callback/route.ts:61`** and is ******never consumed*** — a repo-wide search for the string finds only that one line, with no handler in any login page or toast map. The user gets a bare login page.
+******Aggravating factor:**** ****the failure is silent.**** `otp*exchange*failed` **is produced at** `app/auth/callback/route.ts:61` **and is** ******never consumed**** — a repo-wide search for the string finds only that one line, with no handler in any login page or toast map. The user gets a bare login page.
 
-********Scope confirmed by testing (staging)******:****
+******Scope confirmed by testing (staging):****
 
-| Scenario | Result |
+| ***Scenario**** | ****Result*** |
 | --- | --- |
 | Request and open the link in the ***same*** browser | :white*check*mark: signs in, lands on `/onboarding` |
 | Request in one browser, open in ***another*** (clean profile) | :x: `otp*exchange*failed`, not signed in, no message |
@@ -61,18 +60,18 @@ Opening a valid, unexpired magic link signs the user in, on any device, and land
 
 ## Impact
 
-- ***Affected users******:*** anyone who opens the sign-in mail on a different device or browser than they requested it from — the normal magic-link use case, and the one the feature exists to serve.
-- ***Blocked functionality******:*** magic-link is one of the three advertised sign-in methods (BK-2). Password and OAuth are unaffected and were verified working.
-- ***Business impact******:*** a user who cannot sign in and is given no error message has no path forward and no reason to suspect the device switch is the cause. High friction on a first-run experience.
-- ***Not a security issue******:*** no session is created, nothing leaks. The raw SDK message in the query string is noise, not a disclosure.
+- ***Affected users:*** anyone who opens the sign-in mail on a different device or browser than they requested it from — the normal magic-link use case, and the one the feature exists to serve.
+- ***Blocked functionality:*** magic-link is one of the three advertised sign-in methods ([https://jira.upexgalaxy.com/browse/BK-2#icft=BK-2](https://jira.upexgalaxy.com/browse/BK-2#icft=BK-2)). Password and OAuth are unaffected and were verified working.
+- ***Business impact:*** a user who cannot sign in and is given no error message has no path forward and no reason to suspect the device switch is the cause. High friction on a first-run experience.
+- ***Not a security issue:*** no session is created, nothing leaks. The raw SDK message in the query string is noise, not a disclosure.
 
 ## Proposed Fix
 
-Move the magic-link rail off the browser-bound PKCE exchange and onto Supabase's ***stateless ****`token_hash`**** verification***, which is the documented pattern for server-side email-link verification and works from any device:
+Move the magic-link rail off the browser-bound PKCE exchange and onto Supabase's ***stateless**** `token_hash` ****verification***, which is the documented pattern for server-side email-link verification and works from any device:
 
 1. `/auth/callback` also accepts `token*hash` + `type` and completes sign-in with `verifyOtp({ type, token*hash })` — no cookie required. The existing `code` branch stays for OAuth, which is legitimately same-browser.
 2. The magic-link route sends the mail through a non-PKCE client, so no pointless verifier cookie is minted.
-3. The Supabase ***magic-link email template*** links to `{{ .RedirectTo }}&token*hash={{ .TokenHash }}&type=magiclink` instead of `{{ .ConfirmationURL }}`. Using `.RedirectTo` (not `.SiteURL`) keeps the link environment-correct, since `site*url` on this project is pinned to `http://localhost:3000` while one project backs local, staging and production.
+3. The Supabase ***magic-link email template*** links to {{{{ .RedirectTo }}&token*hash={{ .TokenHash }}&type=magiclink}} instead of {{{{ .ConfirmationURL }}}}. Using `.RedirectTo` (not `.SiteURL`) keeps the link environment-correct, since `site*url` on this project is pinned to `http://localhost:3000` while one project backs local, staging and production.
 4. Render `otp*exchange*failed` / an invalid-link state in the login UI so a failure is never silent again.
 
 > ***NOTE:**** Step 3 is Supabase ****dashboard/API configuration shared by every environment***, so it must not be flipped until the code in steps 1-2 is live in production — otherwise production magic links break in the window between.
@@ -87,7 +86,7 @@ Move the magic-link rail off the browser-bound PKCE exchange and onto Supabase's
 ## Metadata
 
 - **Created:** 12/8/2026
-- **Updated:** 12/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Ely
 - **Labels:** auth, magic-link, pkce, staging

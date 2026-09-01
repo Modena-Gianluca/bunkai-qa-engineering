@@ -3,10 +3,9 @@
 **Jira Key:** [BK-229](https://jira.upexgalaxy.com/browse/BK-229)
 **Epic:** [BK-224](https://jira.upexgalaxy.com/browse/BK-224) (Billing & Plans)
 **Type:** Story
-**Status:** Ready For QA
+**Status:** Ready For Release
 **Priority:** High
-**Story Points:** 8
-**Web Link:** https://staging-upexbunkai.vercel.app/settings/account
+**Story Points:** -
 
 ---
 
@@ -16,7 +15,7 @@
 
 ### Critical Gaps Identified
 
-| # | Gap | Technique | Severity | Decision |
+| ***#**** | ****Gap**** | ****Technique**** | ****Severity**** | ****Decision*** |
 | --- | --- | --- | --- | --- |
 | G1 | AC4 tests "member not owner/admin" but business rules say admins CAN view | Decision Table | HIGH | ***Admin CAN view billing.*** AC4 corrected to include admin=shown. |
 | G2 | AC2 tests warning at 9/10 but no test for 10/10 (limit-reached) | State-Transition | HIGH | ***Added reached limit (10/10) and exceeded limit (11/10).*** |
@@ -27,7 +26,7 @@
 | G7 | No AC for workspace with 0 active members | Boundary | LOW | ***Added zero active members scenario.*** |
 | G8 | No AC for workspace with Enterprise plan | State-Transition | MEDIUM | ***Added Enterprise plan scenario.*** |
 | G9 | No AC for loading/error state when billing API fails | Edge Case | MEDIUM | ***Added API failure scenario.*** |
-| G10 | No AC for auto-refresh of meters | Edge Case | LOW | ***Decision******:****** Fetch on mount only. No auto-refresh.*** |
+| G10 | No AC for auto-refresh of meters | Edge Case | LOW | ***Decision:**** ****Fetch on mount only. No auto-refresh.*** |
 
 ### PO/Dev Decisions Applied
 
@@ -40,7 +39,7 @@
 
 ### Refined Acceptance Criteria (14 Scenarios)
 
-***AC1******:****** Owner sees plan details and meters (paid workspace)***
+***AC1:**** ****Owner sees plan details and meters (paid workspace)***
 
 - Given Mateo is owner of workspace on Team/Enterprise plan
 - When he opens Billing in Settings
@@ -48,13 +47,13 @@
 - And seat meter shows active members vs limit
 - And usage meters show projects and run history retention
 
-***AC2******:****** Usage meter shows correct state***
+***AC2:**** ****Usage meter shows correct state***
 
 - Given workspace with used/limit ratio
 - When Mateo opens Billing
 - Then meter shows normal (<80%), warning (80-99%), or limit-reached (100%+) state
 
-***AC3******:****** Free workspace shows limits and upgrade entry***
+***AC3:**** ****Free workspace shows limits and upgrade entry***
 
 - Given workspace on Free plan
 - When Mateo opens Billing
@@ -62,30 +61,30 @@
 - And "No active subscription" instead of renewal date
 - And option to upgrade to paid plan
 
-***AC4******:****** Access control***
+***AC4:**** ****Access control***
 
 - Owner: billing shown
 - Admin: billing shown
 - Member: billing NOT shown
 
-***AC5******:****** Seat meter counts active members only***
+***AC5:**** ****Seat meter counts active members only***
 
 - Pending invitations do NOT consume seats
 - Suspended members do NOT consume seats
 - Only `status = 'active'` counts
 
-***AC6******:****** Enterprise plan displays correctly***
+***AC6:**** ****Enterprise plan displays correctly***
 
 - Shows "Custom" price
 - Shows "Unlimited" for seat and project limits
 
-***AC7******:****** Error state handling***
+***AC7:**** ****Error state handling***
 
 - Billing API fails: show error toast + retry button
 
 ### ATP DRAFT (14 Outlines)
 
-| # | Outline | Type |
+| ***#**** | ****Outline**** | ****Type*** |
 | --- | --- | --- |
 | 1 | should show plan name, price, and renewal date for Team workspace | Positive |
 | 2 | should show plan name, Custom price, and renewal date for Enterprise workspace | Positive |
@@ -102,7 +101,7 @@
 | 13 | should show limit-reached state when exceeding seat limit | Boundary |
 | 14 | should handle billing API failure gracefully | Negative |
 
-***Coverage******:****** 5 Positive / 2 Negative / 7 Boundary = 14 outlines***
+***Coverage:**** ****5 Positive / 2 Negative / 7 Boundary = 14 outlines***
 
 ---
 
@@ -110,31 +109,44 @@
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
 
 ---
 
 ## Traceability
 
+### Test Execution (1)
+
+- [BK-739](https://jira.upexgalaxy.com/browse/BK-739): ATR: BK-229: Story Testing _(ACTIVE)_
+
+### Defect (1)
+
+- [BK-741](https://jira.upexgalaxy.com/browse/BK-741): Billing overview stuck in loading state on API timeout (>10s) _(Closed)_
+
 ### Storys (3)
 
-- [BK-230](https://jira.upexgalaxy.com/browse/BK-230): Billing | Upgrade to a paid plan _(Estimation)_
-- [BK-87](https://jira.upexgalaxy.com/browse/BK-87): Settings | Open a settings hub and view my account _(Ready For QA)_
 - [BK-232](https://jira.upexgalaxy.com/browse/BK-232): Billing | See plan-limit warnings with an upgrade path _(Backlog)_
+- [BK-230](https://jira.upexgalaxy.com/browse/BK-230): Billing | Upgrade to a paid plan _(Ready For QA)_
+- [BK-87](https://jira.upexgalaxy.com/browse/BK-87): Settings | Open a settings hub and view my account _(Ready For Release)_
+
+### Improvement (1)
+
+- [BK-740](https://jira.upexgalaxy.com/browse/BK-740): Billing nav entry visible to members (BK-229) _(Closed)_
+
+### Test Plan (1)
+
+- [BK-738](https://jira.upexgalaxy.com/browse/BK-738): ATP: BK-229: Billing view my workspace plan seats and usage _(Planning)_
+
+### Test Set (1)
+
+- [BK-737](https://jira.upexgalaxy.com/browse/BK-737): ATS: BK-229: Billing view my workspace plan seats and usage _(Designing)_
 
 ---
 
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 16/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** pinto.lucas.nahuel
 - **Labels:** shift-left-2026-08-13, shift-left-reviewed

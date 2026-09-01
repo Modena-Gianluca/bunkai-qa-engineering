@@ -3,10 +3,9 @@
 **Jira Key:** [BK-3](https://jira.upexgalaxy.com/browse/BK-3)
 **Epic:** [BK-1](https://jira.upexgalaxy.com/browse/BK-1) (Tenancy & Identity)
 **Type:** Story
-**Status:** QA Approved
+**Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 8
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -135,21 +134,15 @@ See comment "Shift-Left Refinement Mirror" on this issue for the full refined AC
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
+- [Mockup](./mockup.md)
 - [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
-- [Acceptance Test Results (QA)](./acceptance-test-results.md)
 
 ---
 
 ## Metadata
 
 - **Created:** 19/5/2026
-- **Updated:** 24/7/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Andrés Daniel Cumare Morales
 - **Labels:** auth, mvp, shift-left-2026-05-26, shift-left-reviewed, wave-1

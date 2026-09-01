@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For QA
 **Priority:** Medium
-**Story Points:** 1
+**Story Points:** -
 
 ---
 
@@ -27,18 +27,14 @@ No export capability exists anywhere in the product today. The existing Jira imp
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
+- [Mockup](./mockup.md)
 
 ---
 
 ## Metadata
 
 - **Created:** 14/8/2026
-- **Updated:** 17/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Gianluca Módena
 - **Labels:** Aurora, AutoDeployed, DeployedInQA, atc, csv-export, mvp

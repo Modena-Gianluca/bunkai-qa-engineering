@@ -3,7 +3,7 @@
 **Jira Key:** [BK-1](https://jira.upexgalaxy.com/browse/BK-1)
 **Priority:** Medium
 **Status:** Planning
-**Total Story Points:** 73
+**Total Story Points:** 0
 
 ---
 
@@ -107,23 +107,32 @@ Per-story acceptance criteria live in Gherkin form on each child story. Edge cas
 
 | Key | Story | Points | Priority | Status |
 | --- | ----- | ------ | -------- | ------ |
-| [BK-2](https://jira.upexgalaxy.com/browse/BK-2) | Authentication | Sign up and sign in with email magic-link | 5 | Medium | Ready For Release |
-| [BK-3](https://jira.upexgalaxy.com/browse/BK-3) | Authentication | Sign up and sign in via OAuth (GitHub / Google) | 8 | Medium | QA Approved |
+| [BK-2](https://jira.upexgalaxy.com/browse/BK-2) | Authentication | Sign up and sign in with email magic-link | - | Medium | Ready For Release |
+| [BK-3](https://jira.upexgalaxy.com/browse/BK-3) | Authentication | Sign up and sign in via OAuth (GitHub / Google) | - | Medium | Ready For Release |
 | [BK-4](https://jira.upexgalaxy.com/browse/BK-4) | TMS-Workspace | Create a workspace | - | Medium | Ready For Release |
-| [BK-5](https://jira.upexgalaxy.com/browse/BK-5) | TMS-Workspace | Invite a teammate with a role | 13 | Medium | Ready For Release |
-| [BK-6](https://jira.upexgalaxy.com/browse/BK-6) | TMS-Workspace | Switch between workspaces | 5 | Medium | Ready For Release |
+| [BK-5](https://jira.upexgalaxy.com/browse/BK-5) | TMS-Workspace | Invite a teammate with a role | - | Medium | Ready For Release |
+| [BK-6](https://jira.upexgalaxy.com/browse/BK-6) | TMS-Workspace | Switch between workspaces | - | Medium | Ready For Release |
 | [BK-166](https://jira.upexgalaxy.com/browse/BK-166) | Authentication | Sign up and sign in with email and password | - | Medium | Ready For Release |
-| [BK-262](https://jira.upexgalaxy.com/browse/BK-262) | PAT | Enforce capability scopes on every non-ATC route | 21 | Medium | ABORTED |
-| [BK-497](https://jira.upexgalaxy.com/browse/BK-497) | PAT | Require every API route to declare its capability posture | 5 | Medium | Ready For QA |
-| [BK-498](https://jira.upexgalaxy.com/browse/BK-498) | PAT | Enforce capability scopes on the authoring domain | 8 | Medium | Ready For Dev |
-| [BK-499](https://jira.upexgalaxy.com/browse/BK-499) | PAT | Enforce capability scopes on read, identity and notification routes | 8 | Medium | Backlog |
+| [BK-262](https://jira.upexgalaxy.com/browse/BK-262) | PAT | Enforce capability scopes on every non-ATC route | - | Medium | ABORTED |
+| [BK-497](https://jira.upexgalaxy.com/browse/BK-497) | PAT | Require every API route to declare its capability posture | - | Medium | Ready For Release |
+| [BK-498](https://jira.upexgalaxy.com/browse/BK-498) | PAT | Enforce capability scopes on the authoring domain | - | Medium | Ready For Release |
+| [BK-499](https://jira.upexgalaxy.com/browse/BK-499) | PAT | Enforce capability scopes on read, identity and notification routes | - | Medium | Ready For Release |
+| [BK-572](https://jira.upexgalaxy.com/browse/BK-572) | TMS-Workspace | Remove a teammate from a workspace | - | Medium | Backlog |
+| [BK-667](https://jira.upexgalaxy.com/browse/BK-667) | API Contract | Make the five remaining create endpoints safe to retry | - | Medium | Backlog |
+| [BK-743](https://jira.upexgalaxy.com/browse/BK-743) | Authentication | Rate-limit repeated email-existence checks | - | Medium | Backlog |
+
+---
+
+## Planning
+
+- [Module Context (QA)](./module-context.md)
 
 ---
 
 ## Metadata
 
 - **Created:** 19/5/2026
-- **Updated:** 11/7/2026
+- **Updated:** 23/8/2026
 - **Reporter:** Ely
 - **Assignee:** Ely
 - **Labels:** mvp, wave-1

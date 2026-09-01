@@ -4,11 +4,7 @@
 **Related Story:** [BK-182](https://jira.upexgalaxy.com/browse/BK-182) - Bearer run creation cannot resolve active workspace
 **Priority:** High
 **Status:** Closed
-**Components:** Tenancy & Identity
-**Severity:** Mayor
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai Workspaces
 
 ---
 
@@ -24,7 +20,7 @@ This violates BK-6's own Business Rule: **"All subsequent API responses MUST ref
 
 1. `POST /api/v1/auth/signin` with valid credentials → capture the session cookie AND the `pat.token` from the response body.
 2. `GET /api/v1/me` using the ***Bearer PAT*** in `Authorization: Bearer <pat.token>` → note `active*workspace*id` (call it `W1`).
-3. `POST /api/v1/me/active-workspace` with `{ "workspace_id": "<W2>" }` (a different workspace the same user is an active member of), using the same Bearer header → response is `200 { id: W2, slug, name, role }`.
+3. `POST /api/v1/me/active-workspace` with {{{ "workspace_id": "<W2>" }}} (a different workspace the same user is an active member of), using the same Bearer header → response is {{200 { id: W2, slug, name, role }}}.
 4. `GET /api/v1/me` again, still using the ***same Bearer PAT*** → `active*workspace*id` is still `W1`, NOT `W2`.
 5. Control check: repeat steps 1-4 using ***cookie-session auth only*** (no `Authorization` header, same cookie jar) → step 4 correctly returns `active*workspace*id: W2`.
 
@@ -34,7 +30,7 @@ This violates BK-6's own Business Rule: **"All subsequent API responses MUST ref
 
 ## Expected Result
 
-Per BK-6 Business Rules and AC ("Successful workspace switch" scenario): **"every subsequent API call is scoped to Workspace B"**, with no carve-out for the authentication mechanism used. `GET /me` (and any other scoped endpoint) should report the new `active*workspace*id` regardless of whether the caller authenticates via cookie or Bearer PAT.
+Per [https://jira.upexgalaxy.com/browse/BK-6#icft=BK-6](https://jira.upexgalaxy.com/browse/BK-6#icft=BK-6) Business Rules and AC ("Successful workspace switch" scenario): **"every subsequent API call is scoped to Workspace B"**, with no carve-out for the authentication mechanism used. `GET /me` (and any other scoped endpoint) should report the new `active*workspace*id` regardless of whether the caller authenticates via cookie or Bearer PAT.
 
 ## Impact
 
@@ -64,30 +60,6 @@ Not diagnosed yet — this repo is the QA test-automation framework, not the app
 
 ---
 
-## 🐞 Actual Result
-
-GET /me via Bearer PAT keeps reporting the pre-switch `active*workspace*id` after a 200 switch response (`auth.source: "bearer"`). See Description for full repro + curl evidence.
-
----
-
-## ✅ Expected Result
-
-GET /me should report the new `active*workspace*id` for Bearer-authenticated calls too, per BK-6 Business Rules ("All subsequent API responses MUST reflect data scoped to the new active workspace") and AC ("every subsequent API call is scoped to Workspace B") — no auth-mechanism exception documented.
-
----
-
-## 🚩 Workaround
-
-Unconfirmed. Cookie-session auth (browser/UI clients) is NOT affected — only Bearer/PAT-authenticated clients hit this. No confirmed mitigation for PAT-based clients yet.
-
----
-
-## 🧫 Evidence
-
-Reproduced via raw curl against staging (bypassing Playwright entirely) — see Evidence section in Description. Also caught by the new KATA regression test `tests/integration/workspace/switchActiveWorkspace.test.ts` (`@atc('BK-250')`), which fails deterministically against staging.
-
----
-
 ## Related Issues
 
 - causes: [BK-6](https://jira.upexgalaxy.com/browse/BK-6) - TMS-Workspace | Switch between workspaces
@@ -98,7 +70,7 @@ Reproduced via raw curl against staging (bypassing Playwright entirely) — see 
 ## Metadata
 
 - **Created:** 6/8/2026
-- **Updated:** 13/8/2026
+- **Updated:** 20/8/2026
 - **Reporter:** Luis Eduardo Flores Villarroel
 - **Assignee:** Luis Eduardo Flores Villarroel
 

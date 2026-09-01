@@ -13,9 +13,9 @@
 
 ## User story
 
-********As a**** Senior QA Engineer
-********I want to******** compare a Run against the immediately preceding Run of the same Test
-****So that******** I can tell at a glance which failures are new, which were already failing, and which are now fixed, instead of re-reading two Runs side by side
+******As a**** **Senior QA Engineer*
+**********I want to****** ****compare a Run against the immediately preceding Run of the same Test***
+**So that**** I can tell at a glance which failures are new, which were already failing, and which are now fixed, instead of re-reading two Runs side by side
 
 ## Definition of done
 
@@ -31,8 +31,8 @@ After a regression pass, Bunkai can say "eleven steps failed". It cannot say whi
 ## Current state (verified at `origin/staging`)
 
 - No Run-comparison surface exists anywhere in the product. Nothing renders a delta between two Runs.
-- BK-37 (**TMS-Run History | View a test's past runs, filterable by outcome**) is the closest sibling and the natural host: it already lists a Test's terminal Runs newest-first and filtered by outcome. It enumerates Runs individually and computes no relationship between any two of them. This story adds the comparison that history list currently stops short of.
-- BK-45 and BK-48 (Traceability chain) render only the latest Run result per row, by design. They are not a comparison surface and are not changed by this story.
+- [https://jira.upexgalaxy.com/browse/BK-37#icft=BK-37](https://jira.upexgalaxy.com/browse/BK-37#icft=BK-37) (**TMS-Run History | View a test's past runs, filterable by outcome**) is the closest sibling and the natural host: it already lists a Test's terminal Runs newest-first and filtered by outcome. It enumerates Runs individually and computes no relationship between any two of them. This story adds the comparison that history list currently stops short of.
+- [https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45](https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45) and [https://jira.upexgalaxy.com/browse/BK-48#icft=BK-48](https://jira.upexgalaxy.com/browse/BK-48#icft=BK-48) (Traceability chain) render only the latest Run result per row, by design. They are not a comparison surface and are not changed by this story.
 - The project coverage endpoint's own contract states explicitly that no trend or prior-period delta is returned. Nothing upstream supplies a delta this story could reuse.
 
 ## Starting position in the data model
@@ -52,22 +52,18 @@ The implementing run must settle the pairing rule, and must decide what the comp
 
 ---
 
-## Fields
+## Traceability
 
-> Each rich-text field is a separate file in this folder.
+### Story (1)
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
+- [BK-513](https://jira.upexgalaxy.com/browse/BK-513): TMS-Run History | Browse every run in the workspace from one index _(Backlog)_
 
 ---
 
 ## Metadata
 
 - **Created:** 13/8/2026
-- **Updated:** 13/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Unassigned
 - **Labels:** discovery-2026-08-13, manual-execution-runs, run-comparison

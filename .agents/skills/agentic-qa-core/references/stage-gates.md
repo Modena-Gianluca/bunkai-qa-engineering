@@ -66,6 +66,10 @@ answered YES or a justified N/A) — not vibes. "N/A" is a valid answer only whe
     conditions — justified per test-design-doctrine)
 [ ] TC timing honored: native → outlines only; xray → Tests created+ready to execute
     (NO persistent regression set assumed here)
+[ ] Sprint altitude: the sprint **STP** (`STP: Sprint#{N}: {objective}`, Test Plan item, parent
+    QA Master Test Plan) is found-or-created on the sprint's FIRST ticket and updated on every
+    later ticket — skip-with-a-stated-note ONLY when the `Test Plan` work type is absent from the
+    instance (there is NO field fallback at sprint altitude)
 ```
 
 ### sprint-testing — Stage 2 Execution
@@ -76,9 +80,6 @@ answered YES or a justified N/A) — not vibes. "N/A" is a valid answer only whe
 [ ] Newly-discovered partition/boundary/transition folded back into the outline set
 [ ] Evidence captured under the PBI folder; outline/Test status updated
 [ ] Bugs filed with story + AC traceability where found
-[ ] All ATP scenarios have terminal status (PASS / FAIL / SKIP+N/A-justified) in
-    test-session-memory.md — no unchecked scenario may remain; orchestrator verifies
-    this against the ATP before advancing to Stage 3
 ```
 
 ### sprint-testing — Stage 3 Reporting
@@ -90,6 +91,18 @@ answered YES or a justified N/A) — not vibes. "N/A" is a valid answer only whe
     repro Test's run recorded PASSED/FAILED in the retest Execution
 [ ] Traceability verified — xray: Story↔ATS (`test` slug, coverage) + ATS membership complete +
     Story↔ATP / Story↔ATR (administrative); native: field/comment containers populated
+```
+
+### sprint-testing — Sprint close (batch close, or `/regression-testing` if it arrives first)
+
+```
+[ ] The sprint **STR** (`STR: Sprint#{N}: Regression Testing`, Test Execution item, parent
+    QA Test Artifacts) exists — first-to-arrive creates it, the other completes it
+[ ] The STR carries its **Test Environment** (same hard gate as the ATR): no environment → DoD failure
+[ ] The STR links to the sprint STP via the `testPlan` edge (`STR → STP`); the STP is closed out
+    with its final scope/progress and transitioned to its terminal state
+[ ] Skip-with-a-stated-note ONLY when the `Test Plan` / `Test Execution` work types are absent
+    (no field fallback at sprint altitude) — never a silent skip
 ```
 
 ### test-documentation — Analyze / Prioritize / Document
@@ -105,8 +118,9 @@ Prioritize:
 Document:
 [ ] Persist ONLY regression-worthy (Candidate/Manual); Deferred = report only,
     no TMS TC (native) / unpromoted sprint Test (xray)
-[ ] US ↔ ATP ↔ ATR ↔ TC links created; promoted TCs added to Test Set + Test Plan
-    (xray) or feature/Epic label (native)
+[ ] US ↔ ATS ↔ ATP ↔ ATR ↔ TC links created — the **ATS→Story** `test` edge is the coverage one
+    (a direct TC→Story link is the last-resort substitute when no ATS can exist); promoted TCs
+    added to the Story's ATS + the Test Plan (xray) or feature/Epic label (native)
 ```
 
 ### test-automation — Plan / Code / Review

@@ -6,24 +6,24 @@
 
 ### Gianluca Módena - 17/8/2026, 18:04:41
 
-## Acceptance Test Plan (ATP) - Shift-Left DRAFT ready for review
+1. 
 
 The ATP DRAFT lives in the 🧪 Acceptance Test Plan (ATP) field.
 
-***Action Required***: review ambiguities, answer critical questions, confirm edge-case behavior, validate parametrization.
+****Action Required****: review ambiguities, answer critical questions, confirm edge-case behavior, validate parametrization.
 
-***Refined on***: 2026-08-17 - QA Shift-Left batch session
+****Refined on****: 2026-08-17 - QA Shift-Left batch session
 
-***Local working copy***: .context/PBI/epics/EPIC-BK-30-manual-execution-runs/stories/STORY-BK-269-tms-run-execution-automatically-abort-abandoned-ru/shift-left-refinement.md
+****Local working copy****: .context/PBI/epics/EPIC-BK-30-manual-execution-runs/stories/STORY-BK-269-tms-run-execution-automatically-abort-abandoned-ru/shift-left-refinement.md
 
-***Critical Questions for PO*** (BLOCK sprint planning):
+****Critical Questions for PO**** (BLOCK sprint planning):
 1. What is the default inactivity threshold value? (suggested: 4 hours)
 2. What is the exact system-generated reason text?
 3. How is the sweep triggered - cron, serverless, or API call?
 
-***Technical Questions for Dev***:
+****Technical Questions for Dev****:
 1. Which timestamp column for inactivity check?
-2. Does sweep reuse BK-36 abort logic?
+2. Does sweep reuse [https://jira.upexgalaxy.com/browse/BK-36#icft=BK-36](https://jira.upexgalaxy.com/browse/BK-36#icft=BK-36) abort logic?
 3. Cascade behavior on sweep abort?
 
 ---
@@ -52,7 +52,7 @@ This is visually distinguishable from a person-typed reason because it starts wi
 
 ***3. How is the sweep triggered — cron, serverless, or API call? What is the frequency?***
 
-Answer: ***Supabase Edge Function**** triggered by a ****pg******_******cron**** job every ****15 minutes***.
+Answer: ***Supabase Edge Function**** triggered by a ****pg_cron**** job every ****15 minutes***.
 
 The cron calls `POST /api/v1/admin/sweep/run-timeout` with a service-role key. This keeps the sweep serverless and isolated from the main app. The 15-minute interval balances responsiveness (abandoned runs disappear within 15-19 minutes) against cost (cron executions). The endpoint is admin-only and will be documented in the API map.
 
@@ -102,7 +102,7 @@ Answer: ***Identical to manual abort (BK-36).***
 
 When the sweep aborts a run:
 
-| Table | What happens |
+| ***Table**** | ****What happens*** |
 | --- | --- |
 | `run*atcs` | Status computed from child `run*steps` (same logic as manual abort) |
 | `run_steps` | Pending steps set to "skipped" status |
@@ -136,7 +136,7 @@ Dev Task is Done.
 
 ### Ely - 24/8/2026, 15:37:53
 
-## AI Product Owner & AI Tech Lead — Decision: BK-269 open-question ruling
+## AI Product Owner & AI Tech Lead — Decision: [https://jira.upexgalaxy.com/browse/BK-269#icft=BK-269](https://jira.upexgalaxy.com/browse/BK-269#icft=BK-269) open-question ruling
 
 > ***NOTE:**** This ruling was produced by the project's ****AI decision panel***, not by a human Product Owner or a human developer. It is published under Critical Rule #18 (`CLAUDE.md`), which requires every AI decision on a ticket to name the deciding profile explicitly. The earlier `## PO Responses` / `## Dev Responses` comments on this ticket are signed `Confirmed by: PO (Ely)` and `Confirmed by: Dev` but were posted by neither — that attribution is what this heading exists to correct going forward. Where this ruling contradicts those comments, this ruling governs.
 
@@ -156,33 +156,33 @@ The Edge Function shape was rejected because it opens a ***third principal class
 
 ### Q1 — When the sweep and a step mark hit the same Run at once, which wins?
 
-| # | Candidate | Score |
+| ***#**** | ****Candidate**** | ****Score*** |
 | --- | --- | --- |
 | A | Collect candidate ids, then close each — predicate checked only in the outer `SELECT` (the shape implied by the Dev comment) | 12 |
-| ***B**** | `for update skip locked`**** on the candidate, then re-evaluate the idle predicate inside the lock**** | ****23*** |
+| ***B**** | `for update skip locked` ****on the candidate, then re-evaluate the idle predicate inside the lock**** | ****23*** |
 | C | One set-based `update`, cascade via CTEs | 16 |
 | D | Session advisory lock around the whole pass | 16 |
 
-***Decision******:**** Candidate B. The AC must stop offering a choice — ****the winner is decided by commit order, and the invariant is that real activity always beats the sweep.***
+***Decision:**** Candidate B. The AC must stop offering a choice — ****the winner is decided by commit order, and the invariant is that real activity always beats the sweep.***
 
-***Rationale******:**** Both operations already serialize on the same object. `bunkai*abort*run` takes `for update` on the `runs` header (`0067*run*finish*abort*via.sql` step 1), and `bunkai*mark*run*step` takes `for update of r` on that same header specifically so it serializes against a concurrent abort (`0042*run*step*mark.sql:122-130`, header at `:44-48`). The mark's status gate then raises `45212 run*step*marking_closed` on a Run that is no longer `running` (`0042:139-142`) — so the sweep-wins branch needs ****zero new code***. The sweep-loses branch is the one that needs care: Candidate A re-reads nothing after taking the lock, so a step marked between the candidate `SELECT` and the abort is silently discarded and a live Run is closed. That is the defect E1 exists to prevent.
+***Rationale:**** Both operations already serialize on the same object. `bunkai*abort*run` takes `for update` on the `runs` header (`0067*run*finish*abort*via.sql` step 1), and `bunkai*mark*run*step` takes `for update of r` on that same header specifically so it serializes against a concurrent abort (`0042*run*step*mark.sql:122-130`, header at `:44-48`). The mark's status gate then raises `45212 run*step*marking_closed` on a Run that is no longer `running` (`0042:139-142`) — so the sweep-wins branch needs ****zero new code***. The sweep-loses branch is the one that needs care: Candidate A re-reads nothing after taking the lock, so a step marked between the candidate `SELECT` and the abort is silently discarded and a live Run is closed. That is the defect E1 exists to prevent.
 
 ---
 
 ### Q2 — Should the sweep close a Run on which no step was ever marked?
 
-| # | Candidate | Score |
+| ***#**** | ****Candidate**** | ****Score*** |
 | --- | --- | --- |
 | A | Never sweep a Run with zero marked steps | 17 |
-| ***B**** | ****Sweep it; idle time = ****`coalesce(max(run*steps.executed*at), runs.started_at)`**** — no schema change**** | ****24*** |
+| ***B**** | ****Sweep it; idle time =**** `coalesce(max(run*steps.executed*at), runs.started_at)` ****— no schema change**** | ****24*** |
 | C | Sweep it; new `runs.last*step*activity*at` column + rewritten `bunkai*mark*run*step` (the Dev comment) | 15 |
 | D | Sweep it; fall back to `runs.updated_at` | 14 |
 
-***Decision******:**** Candidate B. ****Yes, it is closed.*** Idle time falls back to `runs.started_at`.
+***Decision:**** Candidate B. ****Yes, it is closed.*** Idle time falls back to `runs.started_at`.
 
-***Terminology correction the ATP needs******:**** a Run with ****zero ****`run*steps`**** rows cannot exist**** — `bunkai*create*run` raises `45202 no*executable*steps` for a chain with no executable steps. "0-step run" in the ATP means **zero steps marked*; every `run*steps` row sits at `pending`. That Run is the archetypal abandoned Run — someone opened the runner and walked away — so Candidate A would exempt precisely the case this story was written for.
+***Terminology correction the ATP needs:**** a Run with ****zero**** `run*steps` ****rows cannot exist**** — `bunkai*create*run` raises `45202 no*executable*steps` for a chain with no executable steps. "0-step run" in the ATP means **zero steps marked*; every `run*steps` row sits at `pending`. That Run is the archetypal abandoned Run — someone opened the runner and walked away — so Candidate A would exempt precisely the case this story was written for.
 
-***Rationale******:**** `run*steps.executed*at` is written ****only*** by the mark (`0042:155`); abort and finish only flip `status` to `skipped` and never touch it. It is already a clean "last human activity" signal with nothing to keep in sync, and it is the same signal `lib/home/active-runs.ts:47-54` computes — so the sweep and the Home widget cannot disagree about what counts as idle. `runs.started*at` is `not null default now()` (`0031*runs.sql:86`), so the fallback can never be null.
+***Rationale:**** `run*steps.executed*at` is written ****only*** by the mark (`0042:155`); abort and finish only flip `status` to `skipped` and never touch it. It is already a clean "last human activity" signal with nothing to keep in sync, and it is the same signal `lib/home/active-runs.ts:47-54` computes — so the sweep and the Home widget cannot disagree about what counts as idle. `runs.started*at` is `not null default now()` (`0031*runs.sql:86`), so the fallback can never be null.
 
 Candidate D is disqualified outright: the `runs*set*updated*at` before-update trigger (`0031:96-98`) fires on the sweep's own abort — the self-reference flagged as QA edge case #5. Candidate C is the Dev comment's answer and is ***overridden***: it requires a `create or replace` on the live `bunkai*mark*run*step`, and because that RPC never writes the `runs` row today it would start firing `runs*set*updated*at` mid-run for the first time, changing `runs.updated*at` semantics for `lib/home/recent-projects.ts` — a behaviour change to shipped code bought for nothing.
 
@@ -190,31 +190,31 @@ Candidate D is disqualified outright: the `runs*set*updated*at` before-update tr
 
 ### Q3 — Is any Run status other than `running` ever swept?
 
-| # | Candidate | Score |
+| ***#**** | ****Candidate**** | ****Score*** |
 | --- | --- | --- |
 | A | Keep E3 as written ("pending or created") | 10 |
-| ***B**** | ****Rewrite E3 to the real vocabulary — only ****`running`**** is swept**** | ****25*** |
+| ***B**** | ****Rewrite E3 to the real vocabulary — only**** `running` ****is swept**** | ****25*** |
 | C | Delete E3 as redundant with AC2/AC3 | 20 |
 | D | Add a `created` status so E3 becomes testable | 5 |
 
-***Decision******:**** Candidate B. ****No status other than ****`running`**** is ever swept — and ****`pending`**** and ****`created`**** do not exist on a Run.***
+***Decision:**** Candidate B. ****No status other than**** `running` ****is ever swept — and**** `pending` ****and**** `created` ****do not exist on a Run.***
 
 The constraint is `check (status in ('running', 'passed', 'failed', 'aborted'))` with `default 'running'` (`0031*runs.sql:79-80`). A Run is born running: `bunkai*create*run` inserts the literal `running`, and `started*at` stamps that same instant. ***E3 as written asserts a state the database refuses to store*** — an unrunnable ATC, not a gap in the implementation.
 
-`domain-glossary.md` §3 records the same four values and notes the entry exists **because** BK-45 AC-01 shipped an incomplete run-status list. This is the second time the same class of error reached an AC, which is why E3 is rewritten as an exhaustive outline rather than quietly dropped.
+`domain-glossary.md` §3 records the same four values and notes the entry exists **because** [https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45](https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45) AC-01 shipped an incomplete run-status list. This is the second time the same class of error reached an AC, which is why E3 is rewritten as an exhaustive outline rather than quietly dropped.
 
 ---
 
 ### Q4 — How is a sweep-generated reason made distinguishable from a person-typed one?
 
-| # | Candidate | Score |
+| ***#**** | ****Candidate**** | ****Score*** |
 | --- | --- | --- |
 | A | Text prefix in `runs.abort_reason` only | 19 |
 | ***B**** | ****Text prefix plus structural markers on the audit row — no schema change**** | ****25*** |
 | C | New `runs.closed*by*sweep` boolean + `bunkai*run*json` rewrite + UI branch | 15 |
 | D | New Run status distinct from `aborted` | 5 |
 
-***Decision******:*** Candidate B. Final text, ASCII-only:
+***Decision:*** Candidate B. Final text, ASCII-only:
 
 ```
 Auto-closed by inactivity sweep: no step activity for {N}h (closed {YYYY-MM-DD HH:MM} UTC)
@@ -222,7 +222,7 @@ Auto-closed by inactivity sweep: no step activity for {N}h (closed {YYYY-MM-DD H
 
 Structural markers: `activity*log.actor*user_id = NULL`, `payload->>'via' = 'sweep'`, `action = 'run.aborted'`.
 
-***Rationale******:**** 86 characters at a 4-hour threshold, well inside `runs*abort*reason*chk`'s `between 3 and 500` (`0036*run*abort.sql:38-44`). The em dash from the original proposal is replaced by a colon — the string is stored, transported and asserted by tests, so the safer glyph wins and reads identically. The timestamp stays in the string despite duplicating `finished*at`, because `RunnerView.tsx:639-653` renders the abort-reason block for an aborted Run while the closure-time block at `:656` renders only for `passed`/`failed` — on the runner, the reason text is the only place a QA Lead sees **when* the Run closed.
+***Rationale:**** 86 characters at a 4-hour threshold, well inside `runs*abort*reason*chk`'s `between 3 and 500` (`0036*run*abort.sql:38-44`). The em dash from the original proposal is replaced by a colon — the string is stored, transported and asserted by tests, so the safer glyph wins and reads identically. The timestamp stays in the string despite duplicating `finished*at`, because `RunnerView.tsx:639-653` renders the abort-reason block for an aborted Run while the closure-time block at `:656` renders only for `passed`/`failed` — on the runner, the reason text is the only place a QA Lead sees **when* the Run closed.
 
 A prefix alone satisfies Scenario 6.1 as written, but it is spoofable by anyone who types it into the manual abort dialog and nothing machine-readable can branch on it. The structural markers close that at zero cost: `actor*user*id` is already nullable (`0009*cross*cutting.sql:82`), `lib/activity/view.ts:28-33` already anticipates a system-originated row with no actor, and `via`'s contract explicitly tolerates new values (`0067` header: an unrecognised value "behaves identically to NULL from the trigger's point of view ... never a new failure mode").
 
@@ -230,21 +230,21 @@ A prefix alone satisfies Scenario 6.1 as written, but it is spoofable by anyone 
 
 ### Q5 — How is the inactivity threshold supplied, with no Node process to read `.env`?
 
-| # | Candidate | Score |
+| ***#**** | ****Candidate**** | ****Score*** |
 | --- | --- | --- |
 | A | Env var `SWEEP*INACTIVITY*THRESHOLD_HOURS` (the PO comment) | ***not implementable*** |
-| ***B**** | `p*threshold*hours int default 4`****, operational value as a literal in ****`cron.schedule` | ****23*** |
+| ***B**** | `p*threshold*hours int default 4`****, operational value as a literal in**** `cron.schedule` | ****23*** |
 | C | A `public.app_settings` table read by the function | 17 |
 | D | Postgres GUC via `alter database ... set` | 14 |
 
-***Decision******:**** Candidate B. Default threshold ****4 hours****, cadence ****every 15 minutes*** — both carried over from the `## PO Responses` comment, which was right about the numbers even though it was wrong about the mechanism.
+***Decision:**** Candidate B. Default threshold ****4 hours****, cadence ****every 15 minutes*** — both carried over from the `## PO Responses` comment, which was right about the numbers even though it was wrong about the mechanism.
 
 ```sql
 select cron.schedule('bunkai-sweep-abandoned-runs', '**/15 ** ** ** *',
   $$select public.bunkai*sweep*abandoned_runs(4)$$);
 ```
 
-***Rationale******:*** Candidate A cannot be built at all — a `SECURITY DEFINER` function running inside Postgres has no `process.env`. Candidate B splits the value across two layers with different change costs: the signature default is migration-tracked and code-reviewed, while the operational value lives in the `cron.job` row, so retuning the threshold is a re-`cron.schedule` under the same `jobname` — an upsert on a data row, not a rewrite of a live function. Candidate C was rejected as speculative: per-Workspace configurability is explicitly out of scope, so the table would carry new RLS surface and a seed row for a single integer no UI reads. Candidate D is invisible to the migration ledger and does not survive a project restore.
+***Rationale:*** Candidate A cannot be built at all — a `SECURITY DEFINER` function running inside Postgres has no `process.env`. Candidate B splits the value across two layers with different change costs: the signature default is migration-tracked and code-reviewed, while the operational value lives in the `cron.job` row, so retuning the threshold is a re-`cron.schedule` under the same `jobname` — an upsert on a data row, not a rewrite of a live function. Candidate C was rejected as speculative: per-Workspace configurability is explicitly out of scope, so the table would carry new RLS surface and a seed row for a single integer no UI reads. Candidate D is invisible to the migration ledger and does not survive a project restore.
 
 `p*threshold*hours < 1` raises `45215 sweep*threshold*invalid`, which also settles ATP edge case #4 — a threshold of 0 would close every running Run on the next tick.
 
@@ -256,7 +256,7 @@ The Out of Scope field defers **"notifying a Run's owner when their Run is close
 
 The live `activity*log*notify*run*event` trigger (`0066`) fires on any `run.aborted` row. With `actor*user*id = NULL`, its suppression predicate `v*recipient is not distinct from new.actor*user_id and (new.payload ->> 'via') = 'cookie'` is ***false***, so exactly one notification goes to the Run's starter, scoped to the correct workspace. If the starter's account was deleted, the null-recipient early return fires first and nothing is written.
 
-Suppressing it would require an approval-gated rewrite of a live trigger to buy strictly less product value. ***Ruling******:****** let it notify, add no code for it.***
+Suppressing it would require an approval-gated rewrite of a live trigger to buy strictly less product value. ***Ruling:**** ****let it notify, add no code for it.***
 
 ---
 
@@ -325,7 +325,7 @@ The workspace Activity Stream renders a null-actor row as **"a workspace member"
 
 ### Ely - 24/8/2026, 17:03:21
 
-## Ready for QA — BK-269 merged and deployed to staging
+## Ready for QA — [https://jira.upexgalaxy.com/browse/BK-269#icft=BK-269](https://jira.upexgalaxy.com/browse/BK-269#icft=BK-269) merged and deployed to staging
 
 @@Gianluca Módena — assigned to you as the QA owner who ran this story's shift-left refinement on 2026-08-17.
 
@@ -333,7 +333,7 @@ The workspace Activity Stream renders a null-actor row as **"a workspace member"
 |  |
 | PR | [#206](https://github.com/upex-galaxy/upex-bunkai-tms/pull/206) — merged `bd3922d` |
 | Branch | `feature/BK-269-run-timeout-sweep` -> `staging` |
-| Staging | https://staging-upexbunkai.vercel.app (deploy `Ready`, smoke: `/api/v1/health` 200) |
+| Staging | [https://staging-upexbunkai.vercel.app](https://staging-upexbunkai.vercel.app/) (deploy `Ready`, smoke: `/api/v1/health` 200) |
 | Migration | `0075*run*inactivity_sweep` |
 | Automated coverage | 17/17 DB-integration cases, `lib/runs/inactivity-sweep-isolation.test.ts` |
 
@@ -387,7 +387,7 @@ The scheduler has recorded ***6 successful ticks*** since deploy, most recently 
 
 ### Gianluca Módena - 26/8/2026, 21:59:25
 
-## QA Testing Complete — BK-269 (Extended Coverage)
+## QA Testing Complete — [https://jira.upexgalaxy.com/browse/BK-269#icft=BK-269](https://jira.upexgalaxy.com/browse/BK-269#icft=BK-269) (Extended Coverage)
 
 ***Environment***: Staging
 ***Result***: PASSED (15/15 scenarios + 4 N/A deferred to automation)
@@ -395,7 +395,7 @@ The scheduler has recorded ***6 successful ticks*** since deploy, most recently 
 
 ### Scenarios Verified (15/15 PASSED)
 
-| # | Scenario | Method |
+| ***#**** | ****Scenario**** | ****Method*** |
 | --- | --- | --- |
 | 1.1 | Close idle Run | DB + cron |
 | 1.2 | Preserve active Run | DB + cron |
@@ -414,7 +414,7 @@ The scheduler has recorded ***6 successful ticks*** since deploy, most recently 
 
 ### Deferred to Test-Automation (4 N/A)
 
-| # | Scenario | Reason |
+| ***#**** | ****Scenario**** | ****Reason*** |
 | --- | --- | --- |
 | E1.1 | Sweep vs step-mark race (step wins) | Requires concurrent transaction control |
 | E1.2 | Sweep vs step-mark race (sweep wins) | Requires concurrent transaction control |
@@ -444,55 +444,57 @@ The scheduler has recorded ***6 successful ticks*** since deploy, most recently 
 
 ### Gianluca Módena - 27/8/2026, 18:32:05
 
-## QA Testing Complete — BK-269 (Extended Coverage)
+1. 
 
-***Environment***: Staging
-***Result***: PASSED (13/13 manual scenarios verified + 4 deferred to automation)
+****Environment****: Staging
+****Result****: PASSED (13/13 manual scenarios verified + 4 deferred to automation)
 
-### TEST DATA USED
+1. 
 
-| Run ID | Purpose | Pre-Sweep | Post-Sweep |
-|---|---|---|---|
-| ae6662c5 | Idle run, step marked 5h ago | running | aborted (swept) |
-| 01f81d35 | Active run (control) | running | running (untouched) |
-| 0380a859 | Passed run (control) | passed | passed (untouched) |
-| 86436da3 | Manually aborted (person reason) | aborted | aborted (untouched) |
-| a612f547 | Failed run (control) | failed | failed (untouched) |
-| 97246c9d | Running, 0 steps marked | running | aborted (swept) |
+| Run ID  | Purpose  | Pre-Sweep  | Post-Sweep  |
+| --- | --- | --- | --- |
+| --- | --- | --- | --- |
+| ae6662c5  | Idle run, step marked 5h ago  | running  | aborted (swept)  |
+| 01f81d35  | Active run (control)  | running  | running (untouched)  |
+| 0380a859  | Passed run (control)  | passed  | passed (untouched)  |
+| 86436da3  | Manually aborted (person reason)  | aborted  | aborted (untouched)  |
+| a612f547  | Failed run (control)  | failed  | failed (untouched)  |
+| 97246c9d  | Running, 0 steps marked  | running  | aborted (swept)  |
 
-### VERIFIED BEHAVIORS
+1. 
 
-| # | Scenario | Method | Result |
-|---|----------|--------|---|
-| 1.1 | Close idle running Run | DB + cron sweep | PASSED |
-| 1.2 | Don't close active Run | DB + API | PASSED |
-| 1.3 | Idle time from executed_at | DB | PASSED |
-| 2.1 | Skip passed Run | DB + sweep | PASSED |
-| 2.2 | Skip failed Run | DB + sweep | PASSED |
-| 3.1 | Skip manually aborted Run | DB + sweep | PASSED |
-| 4.1 | Widget removes swept Run | API | PASSED |
-| 4.2 | Widget count decrements | API | PASSED |
-| 5.1 | Idempotent | DB | PASSED |
-| 6.1 | Reason text exact format | DB | PASSED |
-| 6.2 | Audit row system-originated | DB | PASSED |
-| E2.1 | Close Run with 0 steps marked | DB + sweep | PASSED |
-| E3.1 | Never sweep non-running | DB + sweep | PASSED |
+|  | Scenario  | Method  | Result  |
+| --- | --- | --- |
+| --- | ---------- | -------- | --- |
+| 1.1  | Close idle running Run  | DB + cron sweep  | PASSED  |
+| 1.2  | Don't close active Run  | DB + API  | PASSED  |
+| 1.3  | Idle time from executed_at  | DB  | PASSED  |
+| 2.1  | Skip passed Run  | DB + sweep  | PASSED  |
+| 2.2  | Skip failed Run  | DB + sweep  | PASSED  |
+| 3.1  | Skip manually aborted Run  | DB + sweep  | PASSED  |
+| 4.1  | Widget removes swept Run  | API  | PASSED  |
+| 4.2  | Widget count decrements  | API  | PASSED  |
+| 5.1  | Idempotent  | DB  | PASSED  |
+| 6.1  | Reason text exact format  | DB  | PASSED  |
+| 6.2  | Audit row system-originated  | DB  | PASSED  |
+| E2.1  | Close Run with 0 steps marked  | DB + sweep  | PASSED  |
+| E3.1  | Never sweep non-running  | DB + sweep  | PASSED  |
 
-### DEFERRED TO AUTOMATION (4 — justified)
+1. 
 
-| Scenario | Why deferred |
-|----------|-------------|
-| E1.1/E1.2 Race condition | Requires two concurrent DB transactions (FOR UPDATE SKIP LOCKED) |
-| 8.1 Threshold floor | No EXECUTE privilege on sweep function from QA role |
-| 9.1 Notification delivery | Realtime-based system, no API to read notification inbox |
+| Scenario  | Why deferred  |
+| --- | --- |
+| ---------- | ------------- |
+| E1.1/E1.2 Race condition  | Requires two concurrent DB transactions (FOR UPDATE SKIP LOCKED)  |
+| 8.1 Threshold floor  | No EXECUTE privilege on sweep function from QA role  |
+| 9.1 Notification delivery  | Realtime-based system, no API to read notification inbox  |
 
-### KEY FINDINGS
+1. 
 
 - pg_cron cadence confirmed (15min ticks at 20:45 and 21:00 UTC)
 - coalesce(max(executed*at), started*at) fallback verified on 0-step run
 - Sweep never overwrites person-typed abort reasons
 - Activity log correctly marks sweep-originated rows (null actor, via=sweep)
-
 
 ---
 

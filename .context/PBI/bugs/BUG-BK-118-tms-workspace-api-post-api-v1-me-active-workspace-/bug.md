@@ -3,11 +3,7 @@
 **Jira Key:** [BK-118](https://jira.upexgalaxy.com/browse/BK-118)
 **Priority:** Low
 **Status:** Closed
-**Components:** Account & Settings, Project & Module Hierarchy
-**Severity:** Menor
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai Account, Bunkai Projects
 
 ---
 
@@ -64,12 +60,6 @@ Remove `ok: true` and `active*workspace*id` from the `jsonResponse` call.
 ## Related
 
 - [https://jira.upexgalaxy.com/browse/BK-83#icft=BK-83](https://jira.upexgalaxy.com/browse/BK-83#icft=BK-83) — original bug, now closed (fix verified on staging 2026-06-12)
-
----
-
-## 🔍 Root Cause
-
-**Category:** Code Error
 
 ---
 

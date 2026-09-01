@@ -4,11 +4,7 @@
 **Related Story:** [BK-19](https://jira.upexgalaxy.com/browse/BK-19) - TMS-ATC Builder | Build an ATC with ordered steps and assertions
 **Priority:** Low
 **Status:** Ready For QA
-**Components:** ATC Library (Acceptance Test Cases)
-**Severity:** Menor
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai ATCs
 
 ---
 
@@ -54,12 +50,6 @@ staging ([https://staging-upexbunkai.vercel.app](https://staging-upexbunkai.verc
 
 ---
 
-## 🔍 Root Cause
-
-**Category:** Code Error
-
----
-
 ## Related Issues
 
 - created: [BK-19](https://jira.upexgalaxy.com/browse/BK-19) - TMS-ATC Builder | Build an ATC with ordered steps and assertions
@@ -69,7 +59,7 @@ staging ([https://staging-upexbunkai.vercel.app](https://staging-upexbunkai.verc
 ## Metadata
 
 - **Created:** 18/6/2026
-- **Updated:** 12/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** maibeth vega
 - **Assignee:** maibeth vega
 - **Labels:** bk-19, sprint-testing

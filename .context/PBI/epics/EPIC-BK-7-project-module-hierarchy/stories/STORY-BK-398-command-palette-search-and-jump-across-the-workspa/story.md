@@ -3,15 +3,15 @@
 **Jira Key:** [BK-398](https://jira.upexgalaxy.com/browse/BK-398)
 **Epic:** [BK-7](https://jira.upexgalaxy.com/browse/BK-7) (Project & Module Hierarchy)
 **Type:** Story
-**Status:** QA Approved
+**Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 5
+**Story Points:** -
 
 ---
 
 ## Overview
 
-***Source spec******:*** FR-031
+***Source spec:*** FR-031
 
 ## User story
 
@@ -34,7 +34,7 @@
 
 ### Design note — no dedicated mockup (spec-only, per Critical Rule #14)
 
-`.context/design/master-design-plan.md` §4 describes the global App Shell (sidebar + topbar) but draws no dedicated screen for the command palette overlay itself — it is a cross-cutting affordance, not a routed screen with its own §8 US→Screen row. Per Critical Rule #14 (LIVE-UI-FIRST), the live `CommandPalette.tsx` markup (overlay container, input styling, `.kbd` hint chips) is the fidelity source for this story, used as-is; the only visual work is populating the results area beneath the existing input. This mirrors the same spec-only path Activity (BK-49) and other cross-cutting, mockup-less screens took in §5 of the design plan — built against `DESIGN.md`'s frozen §2 tokens plus the component's own existing markup, no new colors/radii/fonts/spacing invented.
+`.context/design/master-design-plan.md` §4 describes the global App Shell (sidebar + topbar) but draws no dedicated screen for the command palette overlay itself — it is a cross-cutting affordance, not a routed screen with its own §8 US→Screen row. Per Critical Rule #14 (LIVE-UI-FIRST), the live `CommandPalette.tsx` markup (overlay container, input styling, `.kbd` hint chips) is the fidelity source for this story, used as-is; the only visual work is populating the results area beneath the existing input. This mirrors the same spec-only path Activity ([https://jira.upexgalaxy.com/browse/BK-49#icft=BK-49](https://jira.upexgalaxy.com/browse/BK-49#icft=BK-49)) and other cross-cutting, mockup-less screens took in §5 of the design plan — built against `DESIGN.md`'s frozen §2 tokens plus the component's own existing markup, no new colors/radii/fonts/spacing invented.
 
 ---
 
@@ -44,7 +44,7 @@
 
 ### Edge Cases Identified
 
-| # | Edge case | In original Story? | Criticality | Action |
+| ***#**** | ****Edge case**** | ****In original Story?**** | ****Criticality**** | ****Action*** |
 | --- | --- | --- | --- | --- |
 | 1 | Below-threshold query | No | High | Add to AC after threshold confirmation. ***NEEDS PO/DEV CONFIRMATION*** |
 | 2 | Exact threshold query | No | High | Add BVA outline and confirm inclusive behavior. ***NEEDS PO/DEV CONFIRMATION*** |
@@ -92,14 +92,8 @@
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
+- [Mockup](./mockup.md)
 - [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
-- [Acceptance Test Results (QA)](./acceptance-test-results.md)
 
 ---
 
@@ -114,7 +108,7 @@
 ## Metadata
 
 - **Created:** 12/8/2026
-- **Updated:** 16/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Ely
 - **Labels:** app-shell, command-palette, navigation, shift-left-2026-08-14, shift-left-reviewed

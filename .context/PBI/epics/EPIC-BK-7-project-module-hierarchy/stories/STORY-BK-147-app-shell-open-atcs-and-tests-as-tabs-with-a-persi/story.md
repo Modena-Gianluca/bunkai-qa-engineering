@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For Release
 **Priority:** Highest
-**Story Points:** 5
+**Story Points:** -
 
 ---
 
@@ -25,14 +25,8 @@ Surfaced during the [https://jira.upexgalaxy.com/browse/BK-32#icft=BK-32](https:
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
+- [Mockup](./mockup.md)
 - [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
-- [Acceptance Test Results (QA)](./acceptance-test-results.md)
 
 ---
 

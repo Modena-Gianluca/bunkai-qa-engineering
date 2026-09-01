@@ -3,9 +3,9 @@
 **Jira Key:** [BK-315](https://jira.upexgalaxy.com/browse/BK-315)
 **Epic:** [BK-13](https://jira.upexgalaxy.com/browse/BK-13) (ATC Library (Acceptance Test Cases))
 **Type:** Story
-**Status:** Estimation
+**Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 1
+**Story Points:** -
 
 ---
 
@@ -13,13 +13,13 @@
 
 ## User story
 
-********As a**** QA Lead
-********I want to******** export a Project's ATC library as a CSV file
-****So that******** I can hand auditors and stakeholders a reviewable snapshot of the project's test-case inventory without assembling it by hand
+******As a**** **QA Lead*
+**********I want to****** ****export a Project's ATC library as a CSV file***
+**So that**** I can hand auditors and stakeholders a reviewable snapshot of the project's test-case inventory without assembling it by hand
 
 ## Context
 
-No export capability exists anywhere in the product today. The existing Jira import machinery (BK-17) only writes User Stories and Acceptance Criteria — it never touches ATCs. BK-50 exports a single User Story's evidence chain, a different entity boundary (see Out of Scope). This story is the first export capability at the ATC-library level.
+No export capability exists anywhere in the product today. The existing Jira import machinery ([https://jira.upexgalaxy.com/browse/BK-17#icft=BK-17](https://jira.upexgalaxy.com/browse/BK-17#icft=BK-17)) only writes User Stories and Acceptance Criteria — it never touches ATCs. [https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50](https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50) exports a single User Story's evidence chain, a different entity boundary (see Out of Scope). This story is the first export capability at the ATC-library level.
 
 ---
 
@@ -29,7 +29,7 @@ No export capability exists anywhere in the product today. The existing Jira imp
 
 ### Edge Cases Identified
 
-| # | Edge case | In original Story? | Criticality | Action |
+| ***#**** | ****Edge case**** | ****In original Story?**** | ****Criticality**** | ****Action*** |
 | --- | --- | --- | --- | --- |
 | 1 | Double-click / repeated "Export as CSV" trigger | No | Medium | Add to AC (PO confirm) |
 | 2 | Tag free-text containing comma/quote/line-break | No | High | Add to AC (PO confirm) |
@@ -40,7 +40,7 @@ No export capability exists anywhere in the product today. The existing Jira imp
 
 ### Clarified Business Rules
 
-- Every sibling project-scoped reporting endpoint (coverage, runs/report, bugs/heatmap, traceability, metrics/recovery-cycles) already implements the same non-disclosure 404 convention for inaccessible/nonexistent Projects — recommend BK-315 reuse it.
+- Every sibling project-scoped reporting endpoint (coverage, runs/report, bugs/heatmap, traceability, metrics/recovery-cycles) already implements the same non-disclosure 404 convention for inaccessible/nonexistent Projects — recommend [https://jira.upexgalaxy.com/browse/BK-315#icft=BK-315](https://jira.upexgalaxy.com/browse/BK-315#icft=BK-315) reuse it.
 - `atcs.module_id`, `atcs.layer`, `atcs.status` are all DB NOT NULL — no "unset field" scenario exists for the export.
 
 ### Critical Questions for PO
@@ -51,7 +51,7 @@ No export capability exists anywhere in the product today. The existing Jira imp
 
 ### Technical Questions for Dev
 
-1. ***Reuse the established non-disclosure 404 convention?*** Every sibling project-scoped reporting endpoint already implements `P0002` → `404` + ````` via a per-domain error mapper (`lib/coverage/errors.ts`). Recommend BK-315's export endpoint follow the identical pattern.
+1. ***Reuse the established non-disclosure 404 convention?*** Every sibling project-scoped reporting endpoint already implements `P0002` → `404` + {{```}} via a per-domain error mapper (`lib/coverage/errors.ts`). Recommend BK-315's export endpoint follow the identical pattern.
 2. ***Expected status for a fully unauthenticated request?*** Presumably standard `401`, distinct from the `404` non-disclosure path, but the Story only covers the authenticated-but-unauthorized case.
 3. ***Client-side lock on the export trigger?*** Is "Export as CSV" disabled while a request is in flight, or can it be triggered repeatedly?
 4. ***Performance/timeout budget for large exports?*** Even an informal "best-effort, no SLA" answer unblocks the slow-generation scenario's design.
@@ -64,19 +64,34 @@ No export capability exists anywhere in the product today. The existing Jira imp
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
+
+---
+
+## Traceability
+
+### Test Execution (1)
+
+- [BK-788](https://jira.upexgalaxy.com/browse/BK-788): ATR: BK-315: Story Testing _(ACTIVE)_
+
+### Improvement (1)
+
+- [BK-789](https://jira.upexgalaxy.com/browse/BK-789): ATC Library: Bunkai Runs: ATC status field (atcs.status) is never written by any code path — permanently 'unrun' _(Open)_
+
+### Test Plan (1)
+
+- [BK-787](https://jira.upexgalaxy.com/browse/BK-787): ATP: BK-315: TMS-ATC Library | Export a Project's ATCs to CSV _(Planning)_
+
+### Test Set (1)
+
+- [BK-786](https://jira.upexgalaxy.com/browse/BK-786): ATS: BK-315: TMS-ATC Library | Export a Project's ATCs to CSV _(Designing)_
 
 ---
 
 ## Metadata
 
 - **Created:** 6/8/2026
-- **Updated:** 17/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Alfonso Hernandez
 - **Labels:** atc, csv-export, mvp, shift-left-2026-08-16, shift-left-reviewed

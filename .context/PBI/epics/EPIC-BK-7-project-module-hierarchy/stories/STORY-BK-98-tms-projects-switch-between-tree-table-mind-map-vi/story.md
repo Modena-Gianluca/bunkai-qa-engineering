@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 1
+**Story Points:** -
 
 ---
 
@@ -40,8 +40,8 @@ Renders into the ***Projects**** screen — master-design-plan §4.3, mockup `sc
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Acceptance Test Results (QA)](./acceptance-test-results.md)
+- [Mockup](./mockup.md)
+- [Implementation Plan (Dev)](./implementation-plan.md)
 
 ---
 

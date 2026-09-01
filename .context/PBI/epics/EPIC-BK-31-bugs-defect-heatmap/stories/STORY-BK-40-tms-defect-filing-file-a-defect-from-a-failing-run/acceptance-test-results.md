@@ -10,13 +10,13 @@
 
 ## Description
 
-BK-40 TEST RESULTS
+[https://jira.upexgalaxy.com/browse/BK-40#icft=BK-40](https://jira.upexgalaxy.com/browse/BK-40#icft=BK-40) TEST RESULTS
 
 > ***SUCCESS:**** ****Result: PASSED (9/9)*** — all acceptance test cases verified on staging. No product defects found.
 
 ## Summary
 
-| Field | Value |  |
+| ***Field**** | ****Value*** |  |
 | --- | --- |
 | Tested | 2026-08-10 |  |
 | Environment | Staging |  |
@@ -29,7 +29,7 @@ BK-40 TEST RESULTS
 
 ## Test Cases
 
-|  | Test | Scenario | Status |
+|  | ***Test**** | ****Scenario**** | ****Status*** |
 | --- | --- | --- |
 | [BK-338: ATP-P1](https://jira.upexgalaxy.com/browse/BK-338) | Report bug action on failed step; dialog prefill | status:green | PASS |
 | [BK-339: ATP-P2](https://jira.upexgalaxy.com/browse/BK-339) | Run-linked defect filed (ff31c7e1) | status:green | PASS |
@@ -46,7 +46,7 @@ BK-40 TEST RESULTS
 ## Test Data
 
 - User: bunkai-staging-user@xenievzoau.resend.app (PAT-auth for API; UI session)
-- Workspace: BK-34 Sprint QA; Project: BK-34 QA Seed
+- Workspace: [https://jira.upexgalaxy.com/browse/BK-34#icft=BK-34](https://jira.upexgalaxy.com/browse/BK-34#icft=BK-34) Sprint QA; Project: [https://jira.upexgalaxy.com/browse/BK-34#icft=BK-34](https://jira.upexgalaxy.com/browse/BK-34#icft=BK-34) QA Seed
 - Run-linked preconditions: run `866e6f5c` (running) with failed step `30fd6410`
 - Defects created this run (test data, queued for cleanup): ff31c7e1-0397-46bb-ae07-8fb1785f5e11, ebe7edd5-f1f6-4ff1-b06f-f56c4bb08f55, ea659874-f43b-4b1c-9463-fcc128d763c0
 
@@ -71,16 +71,16 @@ BK-40 TEST RESULTS
 
 ## Related Issues
 
-- is tested by: [BK-40](https://jira.upexgalaxy.com/browse/BK-40) - TMS-Defect Filing | File a defect from a failing run step
-- is executed by: [BK-338](https://jira.upexgalaxy.com/browse/BK-338) - BK-40: TC01: Open run-linked defect form (prefilled)
-- is executed by: [BK-339](https://jira.upexgalaxy.com/browse/BK-339) - BK-40: TC02: Save valid run-linked defect
 - is executed by: [BK-340](https://jira.upexgalaxy.com/browse/BK-340) - BK-40: TC03: Save standalone defect
 - is executed by: [BK-341](https://jira.upexgalaxy.com/browse/BK-341) - BK-40: TC04: Non-failed step has no report action
-- is executed by: [BK-342](https://jira.upexgalaxy.com/browse/BK-342) - BK-40: TC05: Reject invalid title length
-- is executed by: [BK-343](https://jira.upexgalaxy.com/browse/BK-343) - BK-40: TC06: Reject missing/cross-project module
 - is executed by: [BK-344](https://jira.upexgalaxy.com/browse/BK-344) - BK-40: TC07: Reject invalid severity
-- is executed by: [BK-345](https://jira.upexgalaxy.com/browse/BK-345) - BK-40: TC08: Enforce evidence link limit
+- is tested by: [BK-40](https://jira.upexgalaxy.com/browse/BK-40) - TMS-Defect Filing | File a defect from a failing run step
+- is executed by: [BK-343](https://jira.upexgalaxy.com/browse/BK-343) - BK-40: TC06: Reject missing/cross-project module
 - is executed by: [BK-346](https://jira.upexgalaxy.com/browse/BK-346) - BK-40: TC09: Defect remains TMS-native without Jira sync
+- is executed by: [BK-339](https://jira.upexgalaxy.com/browse/BK-339) - BK-40: TC02: Save valid run-linked defect
+- is executed by: [BK-345](https://jira.upexgalaxy.com/browse/BK-345) - BK-40: TC08: Enforce evidence link limit
+- is executed by: [BK-338](https://jira.upexgalaxy.com/browse/BK-338) - BK-40: TC01: Open run-linked defect form (prefilled)
+- is executed by: [BK-342](https://jira.upexgalaxy.com/browse/BK-342) - BK-40: TC05: Reject invalid title length
 
 ---
 

@@ -5,8 +5,7 @@
 **Type:** Story
 **Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 5
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -223,12 +222,7 @@ Pending confirmation: Delivery/PO confirms whether [https://jira.upexgalaxy.com/
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 

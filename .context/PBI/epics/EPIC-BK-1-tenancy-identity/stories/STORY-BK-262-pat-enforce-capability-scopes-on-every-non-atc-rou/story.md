@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** ABORTED
 **Priority:** Medium
-**Story Points:** 21
+**Story Points:** -
 
 ---
 
@@ -57,11 +57,7 @@ Grouped into 2 PRs — Group 1 (Foundation + Authoring writes), Group 2 (Reporti
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
@@ -71,17 +67,17 @@ Grouped into 2 PRs — Group 1 (Foundation + Authoring writes), Group 2 (Reporti
 
 - [BK-84](https://jira.upexgalaxy.com/browse/BK-84): [Staging] PAT bearer auth rejected on member/owned-resource routes (Imports, Projects, Modules, Tokens) — requireAuth middleware regression _(Closed)_
 - [BK-92](https://jira.upexgalaxy.com/browse/BK-92): BK-7: Module: PAT bearer token rejected on module/workspace resource endpoints (401) _(Duplicated)_
-- [BK-93](https://jira.upexgalaxy.com/browse/BK-93): BK-7: Module: PAT bearer token rejected on module/workspace resource endpoints (401) _(Duplicated)_
 - [BK-182](https://jira.upexgalaxy.com/browse/BK-182): Bearer run creation cannot resolve active workspace _(Ready For QA)_
+- [BK-93](https://jira.upexgalaxy.com/browse/BK-93): BK-7: Module: PAT bearer token rejected on module/workspace resource endpoints (401) _(Duplicated)_
 - [BK-118](https://jira.upexgalaxy.com/browse/BK-118): TMS-Workspace: API: POST /api/v1/me/active-workspace returns legacy fields {ok, active_workspace_id} alongside fix fields _(Closed)_
 - [BK-83](https://jira.upexgalaxy.com/browse/BK-83): WorkspaceSwitch: API: POST /api/v1/me/active-workspace response missing workspace fields (id, slug, name, role) _(Closed)_
 - [BK-135](https://jira.upexgalaxy.com/browse/BK-135): POST /api/v1/tokens issues workspace:admin tokens to member-role users without 403 enforcement _(Closed)_
 
 ### Storys (3)
 
-- [BK-497](https://jira.upexgalaxy.com/browse/BK-497): PAT | Require every API route to declare its capability posture _(Ready For QA)_
-- [BK-498](https://jira.upexgalaxy.com/browse/BK-498): PAT | Enforce capability scopes on the authoring domain _(Ready For Dev)_
-- [BK-499](https://jira.upexgalaxy.com/browse/BK-499): PAT | Enforce capability scopes on read, identity and notification routes _(Backlog)_
+- [BK-497](https://jira.upexgalaxy.com/browse/BK-497): PAT | Require every API route to declare its capability posture _(Ready For Release)_
+- [BK-498](https://jira.upexgalaxy.com/browse/BK-498): PAT | Enforce capability scopes on the authoring domain _(Ready For Release)_
+- [BK-499](https://jira.upexgalaxy.com/browse/BK-499): PAT | Enforce capability scopes on read, identity and notification routes _(Ready For Release)_
 
 ### Improvement (1)
 

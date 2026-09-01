@@ -3,10 +3,9 @@
 **Jira Key:** [BK-36](https://jira.upexgalaxy.com/browse/BK-36)
 **Epic:** [BK-30](https://jira.upexgalaxy.com/browse/BK-30) (Manual Execution & Runs)
 **Type:** Story
-**Status:** QA Approved
+**Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 8
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -36,13 +35,8 @@
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
-- [Acceptance Test Results (QA)](./acceptance-test-results.md)
+- [Mockup](./mockup.md)
+- [Implementation Plan (Dev)](./implementation-plan.md)
 
 ---
 
@@ -58,7 +52,7 @@
 ## Metadata
 
 - **Created:** 28/5/2026
-- **Updated:** 24/7/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Ely
 - **Labels:** shift-left-2026-06-23, shift-left-reviewed

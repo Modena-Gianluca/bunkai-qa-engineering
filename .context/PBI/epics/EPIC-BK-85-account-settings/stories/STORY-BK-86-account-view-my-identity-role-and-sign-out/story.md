@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 3
+**Story Points:** -
 
 ---
 
@@ -39,10 +39,7 @@ Re-validation of the codebase against the real ACs' "global chrome" / "account a
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
@@ -54,7 +51,7 @@ Re-validation of the codebase against the real ACs' "global chrome" / "account a
 
 ### Story (1)
 
-- [BK-87](https://jira.upexgalaxy.com/browse/BK-87): Settings | Open a settings hub and view my account _(Ready For QA)_
+- [BK-87](https://jira.upexgalaxy.com/browse/BK-87): Settings | Open a settings hub and view my account _(Ready For Release)_
 
 ---
 

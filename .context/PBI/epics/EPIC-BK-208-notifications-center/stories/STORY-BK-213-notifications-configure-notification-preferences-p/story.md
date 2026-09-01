@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For QA
 **Priority:** Medium
-**Story Points:** 3
+**Story Points:** -
 
 ---
 
@@ -25,29 +25,23 @@ Once run and bug events flow into the inbox, volume becomes the enemy: a busy wo
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
 
 ---
 
 ## Traceability
 
-### Storys (3)
+### Storys (2)
 
+- [BK-214](https://jira.upexgalaxy.com/browse/BK-214): Notifications | Receive an email digest of unread notifications _(Ready For QA)_
 - [BK-209](https://jira.upexgalaxy.com/browse/BK-209): Notifications | View an inbox of workspace events _(Ready For QA)_
-- [BK-87](https://jira.upexgalaxy.com/browse/BK-87): Settings | Open a settings hub and view my account _(Ready For QA)_
-- [BK-214](https://jira.upexgalaxy.com/browse/BK-214): Notifications | Receive an email digest of unread notifications _(Estimation)_
 
 ---
 
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 4/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Carlos Alberto Chiavassa
 - **Labels:** new-feature, post-mvp

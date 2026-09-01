@@ -5,24 +5,23 @@
 **Type:** Story
 **Status:** Backlog
 **Priority:** Medium
-**Story Points:** 3
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
 ## Overview
 
-***Source spec******:*** BK-028
+***Source spec:*** BK-028
 
 ## User story
 
-********As a**** QA Lead
-********I want to******** point a Project at a destination Jira project and turn the defect sync on or off
-****So that******** the team decides where its defects land before any defect is ever sent
+******As a**** **QA Lead*
+**********I want to****** ****point a Project at a destination Jira project and turn the defect sync on or off***
+**So that**** the team decides where its defects land before any defect is ever sent
 
 ## Context
 
-First of the three slices BK-43 was split into by ruling 12170. It delivers the configuration surface every other slice leans on, and nothing else: ***no defect is sent to Jira by this story***.
+First of the three slices [https://jira.upexgalaxy.com/browse/BK-43#icft=BK-43](https://jira.upexgalaxy.com/browse/BK-43#icft=BK-43) was split into by ruling 12170. It delivers the configuration surface every other slice leans on, and nothing else: ***no defect is sent to Jira by this story***.
 
 BK-43's own Out of Scope disclaimed "configuring or connecting the external tracker integration itself", yet no story on the board delivered it. Ruling 12170 converted that unowned gap into slice 1 of a sequence, which is why this story exists.
 
@@ -37,21 +36,7 @@ BK-43's own Out of Scope disclaimed "configuring or connecting the external trac
 
 ## Provenance
 
-Materialized from BK-43 (ruling 12170, AI Product Owner slicing decision) with the architecture constraints of ruling 12177 (AI Tech Lead), decision 6: the destination lives in project-scoped settings, and credentials stay deployment-level — this story introduces no per-workspace secret storage.
-
----
-
-## Fields
-
-> Each rich-text field is a separate file in this folder.
-
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Mockup](./mockup.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+Materialized from [https://jira.upexgalaxy.com/browse/BK-43#icft=BK-43](https://jira.upexgalaxy.com/browse/BK-43#icft=BK-43) (ruling 12170, AI Product Owner slicing decision) with the architecture constraints of ruling 12177 (AI Tech Lead), decision 6: the destination lives in project-scoped settings, and credentials stay deployment-level — this story introduces no per-workspace secret storage.
 
 ---
 
@@ -66,7 +51,7 @@ Materialized from BK-43 (ruling 12170, AI Product Owner slicing decision) with t
 ## Metadata
 
 - **Created:** 11/8/2026
-- **Updated:** 11/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Unassigned
 

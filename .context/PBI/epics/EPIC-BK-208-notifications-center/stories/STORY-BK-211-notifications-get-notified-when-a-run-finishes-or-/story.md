@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For QA
 **Priority:** Medium
-**Story Points:** 5
+**Story Points:** -
 
 ---
 
@@ -25,13 +25,7 @@ Runs already end in exactly two final verdicts — passed or failed — or get a
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
 
 ---
 
@@ -40,15 +34,15 @@ Runs already end in exactly two final verdicts — passed or failed — or get a
 ### Storys (3)
 
 - [BK-39](https://jira.upexgalaxy.com/browse/BK-39): TMS-Run Execution | Finish a run with a final verdict _(Ready For Release)_
+- [BK-36](https://jira.upexgalaxy.com/browse/BK-36): TMS-Run Execution | Abort a run in progress with a reason _(Ready For Release)_
 - [BK-209](https://jira.upexgalaxy.com/browse/BK-209): Notifications | View an inbox of workspace events _(Ready For QA)_
-- [BK-36](https://jira.upexgalaxy.com/browse/BK-36): TMS-Run Execution | Abort a run in progress with a reason _(QA Approved)_
 
 ---
 
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 6/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Carlos Alberto Chiavassa
 - **Labels:** new-feature, post-mvp

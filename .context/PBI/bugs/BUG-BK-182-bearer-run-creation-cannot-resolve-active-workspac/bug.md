@@ -3,11 +3,7 @@
 **Jira Key:** [BK-182](https://jira.upexgalaxy.com/browse/BK-182)
 **Priority:** Medium
 **Status:** Ready For QA
-**Components:** Manual Execution & Runs
-**Severity:** Moderada
-**Error Type:** Integration
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai Runs
 
 ---
 
@@ -83,58 +79,19 @@ Bearer callers with valid workspace membership and `run:execute` should resolve 
 
 ---
 
-## 🐞 Actual Result
-
-`POST /api/v1/runs` with a valid Bearer PAT returns `No active workspace could be resolved for this request.` This happens even after `/api/v1/me` confirms an active workspace, role, and `run:execute` scope for the same token.
-
----
-
-## ✅ Expected Result
-
-Bearer callers with valid workspace membership and `run:execute` should resolve active workspace context and create a Run, while still enforcing membership and scope checks.
-
----
-
-## 🔍 Root Cause
-
-**Category:** Integration Error
-
----
-
-## 🚩 Workaround
-
-> ***SUCCESS:**** ****[ PARTIAL WORKAROUND ]*** Manual QA can create the Run through cookie-session UI/API flow, then use Bearer to validate finish behavior on the existing Run. This does not unblock AI/CI/PAT Run creation.
-
----
-
-## 🧫 Evidence
-
-## Evidence attachments - [https://jira.upexgalaxy.com/browse/BK-182#icft=BK-182](https://jira.upexgalaxy.com/browse/BK-182#icft=BK-182)
-
-| ***Evidence**** | ****Attachment**** | ****Result*** |
-| --- | --- | --- |
-| Bearer `/api/v1/me` active workspace | `BK-182-step02-bearer-me-active-workspace.png` | HTTP 200; active workspace `545d5efe-a168-4f32-a4be-a148a2fc96db`; role `owner`; scopes include `run:execute`. |
-| Bearer `POST /api/v1/runs` workspace-resolution failure | `BK-182-step03-bearer-run-creation-fails.png` | HTTP 422 `validation_failed`: `No active workspace could be resolved for this request.` |
-
-***Classification:*** QA-formal product defect represented operationally as Jira issue type `Bug`.
-
-***Scope note:*** Existing bug report/description unchanged; attachments and inline evidence comment added only.
-
----
-
 ## Related Issues
 
-- is dependency for: [BK-49](https://jira.upexgalaxy.com/browse/BK-49) - TMS-Activity | Stream a read-side feed over the existing activity log
-- relates to: [BK-39](https://jira.upexgalaxy.com/browse/BK-39) - TMS-Run Execution | Finish a run with a final verdict
-- relates to: [BK-262](https://jira.upexgalaxy.com/browse/BK-262) - PAT | Enforce capability scopes on every non-ATC route
 - relates to: [BK-316](https://jira.upexgalaxy.com/browse/BK-316) - WorkspaceSwitch: API: active-workspace switch not reflected in Bearer/PAT-authenticated GET /me
+- relates to: [BK-39](https://jira.upexgalaxy.com/browse/BK-39) - TMS-Run Execution | Finish a run with a final verdict
+- is dependency for: [BK-49](https://jira.upexgalaxy.com/browse/BK-49) - TMS-Activity | Stream a read-side feed over the existing activity log
+- relates to: [BK-262](https://jira.upexgalaxy.com/browse/BK-262) - PAT | Enforce capability scopes on every non-ATC route
 
 ---
 
 ## Metadata
 
 - **Created:** 25/6/2026
-- **Updated:** 6/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** jesusgpythondev
 - **Assignee:** jesusgpythondev
 - **Labels:** bk-39-follow-up, pat, run-creation, workspace-resolution

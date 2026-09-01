@@ -4,11 +4,7 @@
 **Related Story:** [BK-19](https://jira.upexgalaxy.com/browse/BK-19) - TMS-ATC Builder | Build an ATC with ordered steps and assertions
 **Priority:** Low
 **Status:** Ready For QA
-**Components:** ATC Library (Acceptance Test Cases)
-**Severity:** Menor
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai ATCs
 
 ---
 
@@ -52,12 +48,6 @@ Input stays enabled. 11th tag is added to state. ATC saves successfully with unl
 
 ---
 
-## 🔍 Root Cause
-
-**Category:** Code Error
-
----
-
 ## Related Issues
 
 - created: [BK-19](https://jira.upexgalaxy.com/browse/BK-19) - TMS-ATC Builder | Build an ATC with ordered steps and assertions
@@ -67,7 +57,7 @@ Input stays enabled. 11th tag is added to state. ATC saves successfully with unl
 ## Metadata
 
 - **Created:** 18/6/2026
-- **Updated:** 10/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** maibeth vega
 - **Assignee:** maibeth vega
 - **Labels:** bk-19, sprint-testing

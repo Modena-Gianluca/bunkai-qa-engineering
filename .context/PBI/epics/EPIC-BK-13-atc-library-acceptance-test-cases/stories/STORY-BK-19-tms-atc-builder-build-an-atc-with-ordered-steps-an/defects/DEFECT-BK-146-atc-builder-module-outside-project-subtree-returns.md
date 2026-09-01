@@ -4,11 +4,7 @@
 **Related Story:** [BK-19](https://jira.upexgalaxy.com/browse/BK-19) - TMS-ATC Builder | Build an ATC with ordered steps and assertions
 **Priority:** Medium
 **Status:** Closed
-**Components:** ATC Library (Acceptance Test Cases)
-**Severity:** Moderada
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai ATCs
 
 ---
 
@@ -38,12 +34,6 @@ staging ([https://staging-upexbunkai.vercel.app](https://staging-upexbunkai.verc
 ## Related Story
 
 [https://jira.upexgalaxy.com/browse/BK-19#icft=BK-19](https://jira.upexgalaxy.com/browse/BK-19#icft=BK-19) — TMS-ATC Builder
-
----
-
-## 🔍 Root Cause
-
-**Category:** Code Error
 
 ---
 

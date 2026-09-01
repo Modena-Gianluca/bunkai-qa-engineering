@@ -3,10 +3,9 @@
 **Jira Key:** [BK-40](https://jira.upexgalaxy.com/browse/BK-40)
 **Epic:** [BK-31](https://jira.upexgalaxy.com/browse/BK-31) (Bugs & Defect Heatmap)
 **Type:** Story
-**Status:** QA Approved
+**Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 5
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -76,11 +75,7 @@ Ready for estimation after expert-panel refinement. QA recommends 5 SP with conf
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
+- [Mockup](./mockup.md)
 
 ---
 
@@ -92,12 +87,12 @@ Ready for estimation after expert-panel refinement. QA recommends 5 SP with conf
 
 ### Storys (6)
 
-- [BK-42](https://jira.upexgalaxy.com/browse/BK-42): TMS-Defect Heatmap | View count and week-over-week trend per module _(QA Approved)_
-- [BK-41](https://jira.upexgalaxy.com/browse/BK-41): TMS-Defect List | List and filter defects by module, status, severity _(In Test)_
+- [BK-35](https://jira.upexgalaxy.com/browse/BK-35): TMS-Run Execution | Mark each step pass, fail, or block _(Ready For Release)_
 - [BK-258](https://jira.upexgalaxy.com/browse/BK-258): TMS-Home | Show open bug count and severity breakdown _(Ready For QA)_
-- [BK-35](https://jira.upexgalaxy.com/browse/BK-35): TMS-Run Execution | Mark each step pass, fail, or block _(QA Approved)_
-- [BK-43](https://jira.upexgalaxy.com/browse/BK-43): TMS-Defect Sync | Sync defects one-way to the external tracker _(ABORTED)_
 - [BK-372](https://jira.upexgalaxy.com/browse/BK-372): TMS-Defect Sync | Send a newly filed defect to Jira _(Backlog)_
+- [BK-42](https://jira.upexgalaxy.com/browse/BK-42): TMS-Defect Heatmap | View count and week-over-week trend per module _(Ready For Release)_
+- [BK-43](https://jira.upexgalaxy.com/browse/BK-43): TMS-Defect Sync | Sync defects one-way to the external tracker _(ABORTED)_
+- [BK-41](https://jira.upexgalaxy.com/browse/BK-41): TMS-Defect List | List and filter defects by module, status, severity _(In Test)_
 
 ### Test Plan (1)
 
@@ -108,7 +103,7 @@ Ready for estimation after expert-panel refinement. QA recommends 5 SP with conf
 ## Metadata
 
 - **Created:** 28/5/2026
-- **Updated:** 11/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** jesusgpythondev
 - **Labels:** shift-left-2026-06-17, shift-left-reviewed

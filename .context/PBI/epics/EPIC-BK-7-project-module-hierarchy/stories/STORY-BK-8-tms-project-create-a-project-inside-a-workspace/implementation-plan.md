@@ -2,55 +2,43 @@
 
 > Jira field: `customfield_10165` · [View in Jira](https://jira.upexgalaxy.com/browse/BK-8)
 
-## Summary
+## Acceptance Test Results (ATR) — [https://jira.upexgalaxy.com/browse/BK-8#icft=BK-8](https://jira.upexgalaxy.com/browse/BK-8#icft=BK-8)
 
-API-first plus UI. Add `POST` and `GET` `/api/v1/workspaces/{id}/projects`, mirroring the workspace-invites route pattern, plus a Create-Project UI that replaces the current "Phase E" placeholder. The DB layer (`projects` table plus RLS policies) already enforces the membership and role rule, so no migration and no type regeneration are required.
+***Verdict: FAILED — NO-GO.*** Date: 2026-06-04 · Env: staging · Modality: Jira-native · Tester: QA (automated session).
 
-## Resolved shift-left blockers
+Core input validation, auth, membership, duplicate handling, description-size, slug derivation, DB integrity and the create UI all PASS against the as-built contract. Two Major defects + one Minor block sign-off.
 
-- Workspace path param: UUID (matches every existing `[id]` route).
-- Auth: cookie session plus RLS gate (mirror invites). No bearer token.
-- Error model: HYBRID. House enum `code` (`validation_failed`, `conflict`, `forbidden`) plus a granular `details.reason` so QA can still distinguish each rule.
-* Slug: auto-derived lowercase kebab, unique per workspace, length 3 to 40 (reuse the workspace slug rule). Duplicate raises 409, no auto-suffix.
-* Non-member: 403 (RLS `42501`).
-* UI: in scope (Create-Project form).
+### Coverage
 
-- Success: `201` with {{{ project: { id, slug, name, description, workspace*id, created*at } }}} (`project_id` equals `project.id`).
-- Name shorter than 3, longer than 80, or with no alphanumeric char: `422` `code=validation*failed`, `details.reason` one of `name*too*short`, `name*too*long`, `name*no_alphanumeric`.
-- Description larger than 5KB: `422` `code=validation*failed`, `details.reason=description*too_large`.
-- Duplicate slug in the same workspace: `409` `code=conflict`, `details.reason=slug*duplicate*in_workspace`.
-- Caller not a member or insufficient role: `403` `code=forbidden`, `details.reason=not*a*member`.
-- Malformed or non-UUID workspace id, or invalid JSON body: `400` `code=bad_request`.
-- Unauthenticated: `401` `code=unauthorized`.
+| Area  | Result  |
+| --- | --- |
+| ------ | -------- |
+| Happy path 201 + slug  | PASS  |
+| Name validation (min 3 / max 80 / alphanumeric / boundaries)  | PASS (422 validation_failed)  |
+| Duplicate slug same workspace  | PASS (409 conflict)  |
+| Same slug different workspace  | PASS (201)  |
+| Non-member / ghost workspace  | PASS (403 forbidden, enumeration-safe)  |
+| Unauthenticated / bad UUID / invalid JSON  | PASS (401 / 400 / 400)  |
+| Description size (5120 ok / 5121 rejected)  | PASS (byte-exact)  |
+| Slug derivation (accents, punctuation, emoji, 40-char truncation)  | PASS  |
+| DB integrity (per-workspace uniqueness)  | PASS  |
+| Create UI + live slug preview + list refresh  | PASS  |
+| Reserved slugs (AC-11)  | ***FAIL***  |
+| Detail route workspace scoping (Workflow AC step 9)  | ***FAIL***  |
+| i18n names  | ***FAIL (minor)***  |
+| Viewer role 403  | DEFERRED (no viewer user; verified by code + RLS)  |
 
-## Tasks (AC-mapped)
+### Defects raised
 
-1. Shared slug utility `lib/utils/slug.ts` exporting `slugify(name)`: lowercase, strip accents, kebab, collapse repeated hyphens, trim to 40 chars, ensure alphanumeric boundaries. Generalize the client-only `slugify` currently inlined in the onboarding form. Enables AC 1 slug derivation.
-2. API route `app/api/v1/workspaces/[id]/projects/route.ts`:
+- [https://jira.upexgalaxy.com/browse/BK-54#icft=BK-54](https://jira.upexgalaxy.com/browse/BK-54#icft=BK-54) — Reserved project slugs are not rejected (AC-11) — created with HTTP 201
+- [https://jira.upexgalaxy.com/browse/BK-55#icft=BK-55](https://jira.upexgalaxy.com/browse/BK-55#icft=BK-55) — Project detail route /projects/{slug} is not workspace-scoped
+- [https://jira.upexgalaxy.com/browse/BK-56#icft=BK-56](https://jira.upexgalaxy.com/browse/BK-56#icft=BK-56) — Non-Latin (CJK/Cyrillic) project names rejected as name*no*alphanumeric
 
-- `POST`: extract and UUID-guard the workspace id; cookie `getUser` else 401; parse JSON else 400; Zod parse {{{ name, description? }}}; explicit rule checks that throw `validation*failed` with the matching `details.reason`; `slugify` the name; insert through the RLS-gated client; map `42501` to 403 `not*a*member` and `23505` to 409 `slug*duplicate*in*workspace`; return 201 {{{ project }}}. Covers AC 1, 2, 3, 4.
-- `GET`: list the workspace projects visible to the member (matches the invites route shipping both verbs).
+### Notes
 
-1. OpenAPI `app/api/v1/workspaces/[id]/projects/route.openapi.ts`: register both verbs with responses 201, 400, 401, 403, 409, 422 using the shared error envelope schema. Run `bun run api:sync`.
-2. UI: replace the placeholder in `app/(app)/projects/page.tsx` with a Create-Project form (name input, optional description textarea, live slug preview). On 201 navigate to the new project; render `details.reason` as an inline field error. Covers workflow steps 1 to 3 and 9.
-3. Unit tests with `bun test`: `slugify` (accents, length cap, hyphen collapse, boundary chars) plus body-validation reasons.
-
-## Out of scope
-
-Project rename, deletion or archival, transfer between workspaces, templates (per story OOS). No DB migration. No bearer-token auth path.
-
-## Verification
-
-- `bun run lint:check`, `bun run types:check`, and `bun test` all green (run in parallel, cap 3).
-- `bun run api:sync` leaves no uncommitted OpenAPI drift.
-- Stage 3 Spec Compliance Matrix maps each AC scenario to its test or evidence and documents the hybrid `code`/status refinement for QA.
-
-## Review Workload Forecast
-
-Estimated: about 240 additions plus 10 deletions, about 250 total lines.
-400-line budget risk: Medium.
-Chain strategy: single feature branch, one PR to staging.
-Decision needed before apply: No.
+- As-built error model is `422 validation_failed` (the original ATP assumed `400`); test assertions updated accordingly. This is acceptable.
+- Post-create UI stays on `/projects` instead of navigating to the project (Workflow step 9) — PO-acknowledged MVP, not a defect.
+- Story intentionally left in ***In Test*** pending the fixes above (defects originate from this story, not a pre-existing blocker).
 
 ---
 _Synced from Jira by sync-jira-issues_

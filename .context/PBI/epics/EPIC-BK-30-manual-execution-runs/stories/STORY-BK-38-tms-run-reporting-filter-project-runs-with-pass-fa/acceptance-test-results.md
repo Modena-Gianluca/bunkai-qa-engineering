@@ -10,15 +10,15 @@
 
 ## Description
 
-# BK-38 ATR — Test Results
+# [https://jira.upexgalaxy.com/browse/BK-38#icft=BK-38](https://jira.upexgalaxy.com/browse/BK-38#icft=BK-38) ATR — Test Results
 
- ***8/8 Test Cases*** — tested 2026-08-08 · environment `staging`
+***[ PASSED ]**** ****8/8 Test Cases*** — tested 2026-08-08 · environment `staging`
 
-> ***SUCCESS:**** Executed the full ATP (8 ATCs) for ****TMS-Run Reporting \| Filter project runs with pass/fail totals**** on staging via ****UI + API + DB*** triforce. All acceptance criteria verified against the expected contract; no defects found.
+> ***SUCCESS:**** Executed the full ATP (8 ATCs) for ****TMS-Run Reporting | Filter project runs with pass/fail totals**** on staging via ****UI + API + DB*** triforce. All acceptance criteria verified against the expected contract; no defects found.
 
 ## Summary
 
-| Field | Value |
+| ***Field**** | ****Value*** |
 | --- | --- |
 | Tested | 2026-08-08 |
 | Environment | staging |
@@ -27,7 +27,7 @@
 
 ## Test Cases
 
-| # | Test Case | Result |
+| ***#**** | ****Test Case**** | ****Result*** |
 | --- | --- | --- |
 | [BK-320](https://jira.upexgalaxy.com/browse/BK-320) | ATC-01 Happy baseline (nullable totals, 58 runs) | :white*check*mark: PASSED |
 | [BK-321](https://jira.upexgalaxy.com/browse/BK-321) | ATC-02 Filter contract (status + module combined recompute) | :white*check*mark: PASSED |
@@ -40,7 +40,7 @@
 
 ## Test Data
 
-| Entity | Name | ID |
+| ***Entity**** | ****Name**** | ****ID*** |
 | --- | --- | --- |
 | Project | `bk-38-final-report-project` | `9611b8f3-1eb8-427f-b585-b5d265668b0c` |
 | Workspace | — | `988e342e-28a7-49d1-b254-4cd44226ad71` |
@@ -65,15 +65,15 @@ ATC-01..08 are strong automation candidates (Run Reporting / filter contract) fo
 
 ## Related Issues
 
-- is tested by: [BK-38](https://jira.upexgalaxy.com/browse/BK-38) - TMS-Run Reporting | Filter project runs with pass/fail totals
-- is executed by: [BK-320](https://jira.upexgalaxy.com/browse/BK-320) - BK-38: TC01: should view all project Runs with row details and totals given authenticated workspace member
-- is executed by: [BK-321](https://jira.upexgalaxy.com/browse/BK-321) - BK-38: TC02: should narrow Run list and recompute totals when combined filters applied
 - is executed by: [BK-322](https://jira.upexgalaxy.com/browse/BK-322) - BK-38: TC03: should show zero rows and zero totals when empty filter result
 - is executed by: [BK-323](https://jira.upexgalaxy.com/browse/BK-323) - BK-38: TC04: should include start and end dates in started_at date range boundaries
-- is executed by: [BK-324](https://jira.upexgalaxy.com/browse/BK-324) - BK-38: TC05: should restore full list and totals when filters cleared
-- is executed by: [BK-325](https://jira.upexgalaxy.com/browse/BK-325) - BK-38: TC06: should show first-use empty state when project has no Runs
 - is executed by: [BK-326](https://jira.upexgalaxy.com/browse/BK-326) - BK-38: TC07: should exclude cross-project Runs from rows and totals
 - is executed by: [BK-327](https://jira.upexgalaxy.com/browse/BK-327) - BK-38: TC08: should return paginated performant report for large Run set
+- is executed by: [BK-324](https://jira.upexgalaxy.com/browse/BK-324) - BK-38: TC05: should restore full list and totals when filters cleared
+- is executed by: [BK-320](https://jira.upexgalaxy.com/browse/BK-320) - BK-38: TC01: should view all project Runs with row details and totals given authenticated workspace member
+- is executed by: [BK-321](https://jira.upexgalaxy.com/browse/BK-321) - BK-38: TC02: should narrow Run list and recompute totals when combined filters applied
+- is tested by: [BK-38](https://jira.upexgalaxy.com/browse/BK-38) - TMS-Run Reporting | Filter project runs with pass/fail totals
+- is executed by: [BK-325](https://jira.upexgalaxy.com/browse/BK-325) - BK-38: TC06: should show first-use empty state when project has no Runs
 
 ---
 

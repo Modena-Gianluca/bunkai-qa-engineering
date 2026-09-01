@@ -21,32 +21,19 @@ A plan that stays open forever is a to-do list, not evidence. Closing a plan fre
 
 ---
 
-## Fields
-
-> Each rich-text field is a separate file in this folder.
-
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Mockup](./mockup.md)
-
----
-
 ## Traceability
 
 ### Storys (2)
 
+- [BK-202](https://jira.upexgalaxy.com/browse/BK-202): TMS-Test Plan | Create a test plan grouping tests for a goal _(Ready For Release)_
 - [BK-204](https://jira.upexgalaxy.com/browse/BK-204): TMS-Test Plan | Track plan progress from run outcomes _(Backlog)_
-- [BK-202](https://jira.upexgalaxy.com/browse/BK-202): TMS-Test Plan | Create a test plan grouping tests for a goal _(Estimation)_
 
 ---
 
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 30/7/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Unassigned
 - **Labels:** new-feature, post-mvp

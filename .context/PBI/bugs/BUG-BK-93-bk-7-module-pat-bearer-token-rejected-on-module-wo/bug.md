@@ -3,11 +3,7 @@
 **Jira Key:** [BK-93](https://jira.upexgalaxy.com/browse/BK-93)
 **Priority:** Medium
 **Status:** Duplicated
-**Components:** Project & Module Hierarchy, Tenancy & Identity
-**Severity:** Moderada
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai API Tokens, Bunkai Projects
 
 ---
 
@@ -53,12 +49,6 @@ PAT bearer tokens are rejected with 401 on module and workspace resource endpoin
 
 ---
 
-## 🔍 Root Cause
-
-**Category:** Code Error
-
----
-
 ## Related Issues
 
 - duplicates: [BK-84](https://jira.upexgalaxy.com/browse/BK-84) - [Staging] PAT bearer auth rejected on member/owned-resource routes (Imports, Projects, Modules, Tokens) — requireAuth middleware regression
@@ -69,7 +59,7 @@ PAT bearer tokens are rejected with 401 on module and workspace resource endpoin
 ## Metadata
 
 - **Created:** 8/6/2026
-- **Updated:** 2/8/2026
+- **Updated:** 20/8/2026
 - **Reporter:** Jorgelina Abdo
 - **Assignee:** Jorgelina Abdo
 - **Labels:** api, bug, exploratory-testing

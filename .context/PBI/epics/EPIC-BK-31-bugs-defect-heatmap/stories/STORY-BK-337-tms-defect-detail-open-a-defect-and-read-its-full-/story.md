@@ -3,7 +3,7 @@
 **Jira Key:** [BK-337](https://jira.upexgalaxy.com/browse/BK-337)
 **Epic:** [BK-31](https://jira.upexgalaxy.com/browse/BK-31) (Bugs & Defect Heatmap)
 **Type:** Story
-**Status:** Ready For QA
+**Status:** Ready For Release
 **Priority:** Medium
 **Story Points:** -
 
@@ -36,7 +36,7 @@ Verdict: SIGNIFICANT ISSUES · Testability: PARTIAL · Risk: HIGH (score 11 + au
 
 ### Edge Cases Identified
 
-| # | Edge case | In original Story? | Criticality | Action |
+| ***#**** | ****Edge case**** | ****In original Story?**** | ****Criticality**** | ****Action*** |
 | --- | --- | --- | --- | --- |
 | 1 | Run deleted after filing, provenance nulled, record then reads "filed manually" (false) | No | High | Add to AC (PO confirm) |
 | 2 | Partial provenance — ATC nulled, run intact | No | High | Add to AC (PO confirm) |
@@ -62,9 +62,9 @@ Verdict: SIGNIFICANT ISSUES · Testability: PARTIAL · Risk: HIGH (score 11 + au
 
 ### Critical Questions for PO — these block estimation
 
-1. ***Expected vs Actual******:****** cut, capture, or derive?*** Recommendation: cut from this Story; open a separate one to capture at filing time.
+1. ***Expected vs Actual:**** ****cut, capture, or derive?*** Recommendation: cut from this Story; open a separate one to capture at filing time.
 2. ***What do layer and environment show for a standalone defect?*** Recommendation: drop both rows from the Details panel.
-3. ***A defect in an archived module******:****** render it, or answer 404?*** Recommendation: render it, and write the rule down.
+3. ***A defect in an archived module:**** ****render it, or answer 404?*** Recommendation: render it, and write the rule down.
 4. ***What identifier does the record show?*** Recommendation: keep the list's treatment (8-character prefix, full value on hover) and rewrite the criteria against it.
 
 ### Technical Questions for Dev
@@ -85,17 +85,15 @@ No single-defect read endpoint and no read RPC exist today. Scope names the page
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
 ## Traceability
+
+### Test Execution (1)
+
+- [BK-518](https://jira.upexgalaxy.com/browse/BK-518): ATR: BK-337: Story Testing _(Close)_
 
 ### Bug (1)
 
@@ -103,16 +101,24 @@ No single-defect read endpoint and no read RPC exist today. Scope names the page
 
 ### Storys (3)
 
-- [BK-43](https://jira.upexgalaxy.com/browse/BK-43): TMS-Defect Sync | Sync defects one-way to the external tracker _(ABORTED)_
 - [BK-372](https://jira.upexgalaxy.com/browse/BK-372): TMS-Defect Sync | Send a newly filed defect to Jira _(Backlog)_
+- [BK-43](https://jira.upexgalaxy.com/browse/BK-43): TMS-Defect Sync | Sync defects one-way to the external tracker _(ABORTED)_
 - [BK-465](https://jira.upexgalaxy.com/browse/BK-465): TMS-Defect Filing | Capture expected and actual results at filing _(Backlog)_
+
+### Test Plan (1)
+
+- [BK-516](https://jira.upexgalaxy.com/browse/BK-516): ATP: BK-337: TMS-Defect Detail | Open a defect and read its full record _(READY)_
+
+### Test Set (1)
+
+- [BK-541](https://jira.upexgalaxy.com/browse/BK-541): Suite: BK-337: TMS-Defect Detail | Open a defect and read its full record _(Designing)_
 
 ---
 
 ## Metadata
 
 - **Created:** 10/8/2026
-- **Updated:** 14/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Ely
 - **Labels:** shift-left-2026-08-11, shift-left-reviewed

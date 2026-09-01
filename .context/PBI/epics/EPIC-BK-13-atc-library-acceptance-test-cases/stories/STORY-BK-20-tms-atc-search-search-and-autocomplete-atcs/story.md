@@ -3,10 +3,9 @@
 **Jira Key:** [BK-20](https://jira.upexgalaxy.com/browse/BK-20)
 **Epic:** [BK-13](https://jira.upexgalaxy.com/browse/BK-13) (ATC Library (Acceptance Test Cases))
 **Type:** Story
-**Status:** QA Approved
+**Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 5
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -33,13 +32,8 @@
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
-- [Acceptance Test Results (QA)](./acceptance-test-results.md)
+- [Mockup](./mockup.md)
+- [Implementation Plan (Dev)](./implementation-plan.md)
 
 ---
 
@@ -58,9 +52,9 @@
 ## Metadata
 
 - **Created:** 19/5/2026
-- **Updated:** 7/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
-- **Assignee:** Facu Barea
+- **Assignee:** Ely
 - **Labels:** atc, fts, mvp, search, shift-left-2026-06-01, shift-left-reviewed, wave-2
 
 ---

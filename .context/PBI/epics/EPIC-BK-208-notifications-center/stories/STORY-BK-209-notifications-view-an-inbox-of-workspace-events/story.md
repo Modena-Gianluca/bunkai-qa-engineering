@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For QA
 **Priority:** Medium
-**Story Points:** 13
+**Story Points:** -
 
 ---
 
@@ -87,13 +87,7 @@ Today nothing in Bunkai tells Elena that something happened; she discovers outco
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
 
 ---
 
@@ -101,18 +95,18 @@ Today nothing in Bunkai tells Elena that something happened; she discovers outco
 
 ### Storys (5)
 
+- [BK-214](https://jira.upexgalaxy.com/browse/BK-214): Notifications | Receive an email digest of unread notifications _(Ready For QA)_
+- [BK-217](https://jira.upexgalaxy.com/browse/BK-217): Team Chat | Mention a teammate to get their attention _(Backlog)_
 - [BK-212](https://jira.upexgalaxy.com/browse/BK-212): Notifications | Get notified on bug assignment and status changes _(Ready For QA)_
 - [BK-213](https://jira.upexgalaxy.com/browse/BK-213): Notifications | Configure notification preferences per event type _(Ready For QA)_
 - [BK-211](https://jira.upexgalaxy.com/browse/BK-211): Notifications | Get notified when a run finishes or is aborted _(Ready For QA)_
-- [BK-214](https://jira.upexgalaxy.com/browse/BK-214): Notifications | Receive an email digest of unread notifications _(Estimation)_
-- [BK-217](https://jira.upexgalaxy.com/browse/BK-217): Team Chat | Mention a teammate to get their attention _(Backlog)_
 
 ---
 
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 3/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** yxsinell acosta zambrano
 - **Labels:** new-feature, post-mvp, shift-left-2026-07-15, shift-left-reviewed

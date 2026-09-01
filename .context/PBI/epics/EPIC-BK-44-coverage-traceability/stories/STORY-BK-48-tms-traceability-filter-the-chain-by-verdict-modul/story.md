@@ -3,10 +3,9 @@
 **Jira Key:** [BK-48](https://jira.upexgalaxy.com/browse/BK-48)
 **Epic:** [BK-44](https://jira.upexgalaxy.com/browse/BK-44) (Coverage & Traceability)
 **Type:** Story
-**Status:** Ready For QA
+**Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 5
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -63,11 +62,11 @@ As a Senior QA Engineer, I want to filter the evidence chain by result, module a
 
 ## QA Refinements (Shift-Left Analysis) — Updated 2026-08-10
 
-> ***Supersedes 2026-06-16 analysis.*** All dependencies (BK-45, BK-24, BK-30, BK-31, BK-50) are now SHIPPED.
+> ***Supersedes 2026-06-16 analysis.*** All dependencies ([https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45](https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45), [https://jira.upexgalaxy.com/browse/BK-24#icft=BK-24](https://jira.upexgalaxy.com/browse/BK-24#icft=BK-24), [https://jira.upexgalaxy.com/browse/BK-30#icft=BK-30](https://jira.upexgalaxy.com/browse/BK-30#icft=BK-30), [https://jira.upexgalaxy.com/browse/BK-31#icft=BK-31](https://jira.upexgalaxy.com/browse/BK-31#icft=BK-31), [https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50](https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50)) are now SHIPPED.
 
 ### Design Contract Status
 
-| # | Ambiguity | Resolution | Source |
+| ***#**** | ****Ambiguity**** | ****Resolution**** | ****Source*** |
 | --- | --- | --- | --- |
 | 1 | Result filter target | RESOLVED: Row `data-status` (latest-run outcome). Six-value set (pass/fail/blocked/skipped/aborted/running). | HTML lines 559-563; D27 |
 | 2 | Tree-pruning vs row-level | RESOLVED: ROW-LEVEL filtering. AC card hidden only when ALL rows filtered out. | HTML lines 939-949 |
@@ -79,24 +78,24 @@ As a Senior QA Engineer, I want to filter the evidence chain by result, module a
 
 ### Still Open (3 items)
 
-| # | Item | Why open |
+| ***#**** | ****Item**** | ****Why open*** |
 | --- | --- | --- |
 | 1 | Filter-state persistence (URL params vs local) | Mockup is static; no AC addresses this |
 | 2 | Archived-module behavior | Picker shows demo modules only; undefined |
-| 3 | Shipped-chain alignment | Verify BK-45 exposes latest-Run date and six outcomes per row |
+| 3 | Shipped-chain alignment | Verify [https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45](https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45) exposes latest-Run date and six outcomes per row |
 
 ### Coverage Estimate: 14 outlines
 
 - Positive: 6 (single-verdict, multi-verdict, six-value, module, date, AND)
 - Negative: 3 (inverted date, zero-match, zero-coverage precedence)
 - Boundary: 3 (date inclusive edges, empty-date exclusion, AC card hide rule)
-- Integration: 2 (real BK-45 data, Clear-all reset)
+- Integration: 2 (real [https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45](https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45) data, Clear-all reset)
 
 ### Critical Questions for PO
 
-1. ***Filter-state persistence******:****** URL query params vs local component state?***
-2. ***Archived-module behavior******:****** excluded from picker, or resolves to empty-result state?***
-3. ***Shipped-chain alignment******:****** does BK-45 expose latest-Run date per row and all six outcomes?***
+1. ***Filter-state persistence:**** ****URL query params vs local component state?***
+2. ***Archived-module behavior:**** ****excluded from picker, or resolves to empty-result state?***
+3. ***Shipped-chain alignment:**** ****does BK-45 expose latest-Run date per row and all six outcomes?***
 
 > Full refinement in the ATP DRAFT field and shift-left-refinement.md.
 
@@ -106,26 +105,39 @@ As a Senior QA Engineer, I want to filter the evidence chain by result, module a
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
 ## Traceability
 
+### Test Execution (1)
+
+- [BK-716](https://jira.upexgalaxy.com/browse/BK-716): ATR: BK-48: Story Testing _(ACTIVE)_
+
+### Defects (2)
+
+- [BK-717](https://jira.upexgalaxy.com/browse/BK-717): Traceability filters drop the ?story param from the URL, breaking filter persistence and sharing (AC5.1/5.2) _(Closed)_
+- [BK-717](https://jira.upexgalaxy.com/browse/BK-717): Traceability filters drop the ?story param from the URL, breaking filter persistence and sharing (AC5.1/5.2) _(Closed)_
+
 ### Epic (1)
 
 - [BK-30](https://jira.upexgalaxy.com/browse/BK-30): Manual Execution & Runs _(Planning)_
+
+### Test Plan (1)
+
+- [BK-715](https://jira.upexgalaxy.com/browse/BK-715): ATP: BK-48: TMS-Traceability | Filter the chain by verdict, module, and date range _(Planning)_
+
+### Test Set (1)
+
+- [BK-714](https://jira.upexgalaxy.com/browse/BK-714): ATS: BK-48: TMS-Traceability | Filter the chain by verdict, module, and date range _(Designing)_
 
 ---
 
 ## Metadata
 
 - **Created:** 1/6/2026
-- **Updated:** 12/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** pinto.lucas.nahuel
 - **Labels:** +shift-left-2026-08-10, new-feature, shift-left-2026-06-16, shift-left-reviewed, sprint-planning-estimated

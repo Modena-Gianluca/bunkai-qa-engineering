@@ -3,11 +3,7 @@
 **Jira Key:** [BK-135](https://jira.upexgalaxy.com/browse/BK-135)
 **Priority:** Highest
 **Status:** Closed
-**Components:** Tenancy & Identity
-**Severity:** Crítica
-**Error Type:** Security
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai API Tokens
 
 ---
 
@@ -130,12 +126,6 @@ Este bug reemplaza a BK-117, que se elimina por consolidación de US clonada (BK
 
 ---
 
-## 🔍 Root Cause
-
-**Category:** Code Error
-
----
-
 ## Related Issues
 
 - relates to: [BK-97](https://jira.upexgalaxy.com/browse/BK-97) - Enforce per-route PAT capabilities on non-ATC API routes (ADR-0001 follow-up)
@@ -148,7 +138,7 @@ Este bug reemplaza a BK-117, que se elimina por consolidación de US clonada (BK
 ## Metadata
 
 - **Created:** 12/6/2026
-- **Updated:** 2/8/2026
+- **Updated:** 20/8/2026
 - **Reporter:** Carlos Alberto Chiavassa
 - **Assignee:** Carlos Alberto Chiavassa
 

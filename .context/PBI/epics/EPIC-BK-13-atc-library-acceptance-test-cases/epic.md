@@ -3,7 +3,7 @@
 **Jira Key:** [BK-13](https://jira.upexgalaxy.com/browse/BK-13)
 **Priority:** Medium
 **Status:** Planning
-**Total Story Points:** 42
+**Total Story Points:** 0
 
 ---
 
@@ -66,20 +66,22 @@ Maps PRD EPIC-BK-004 (US 4.1..4.6) and SRS FR-010..FR-014.
 
 | Key | Story | Points | Priority | Status |
 | --- | ----- | ------ | -------- | ------ |
-| [BK-18](https://jira.upexgalaxy.com/browse/BK-18) | TMS-ATC API | Create and edit ATCs with steps and assertions | 5 | Medium | Ready For Release |
-| [BK-19](https://jira.upexgalaxy.com/browse/BK-19) | TMS-ATC Builder | Build an ATC with ordered steps and assertions | 5 | Medium | Ready For Release |
-| [BK-20](https://jira.upexgalaxy.com/browse/BK-20) | TMS-ATC Search | Search and autocomplete ATCs | 5 | Medium | QA Approved |
-| [BK-21](https://jira.upexgalaxy.com/browse/BK-21) | TMS-ATC Propagation | Cascade ATC edits to all tests | 5 | Medium | QA Approved |
-| [BK-22](https://jira.upexgalaxy.com/browse/BK-22) | TMS-ATC Usage | See a "Used in N tests" report | 3 | Medium | QA Approved |
-| [BK-23](https://jira.upexgalaxy.com/browse/BK-23) | TMS-ATC Duplicate | Duplicate an ATC with steps and assertions | 5 | Medium | QA Approved |
-| [BK-267](https://jira.upexgalaxy.com/browse/BK-267) | TMS-ATC Library | Browse, search, and filter ATCs across every project | 1 | Medium | ABORTED |
-| [BK-315](https://jira.upexgalaxy.com/browse/BK-315) | TMS-ATC Library | Export a Project's ATCs to CSV | 1 | Medium | Estimation |
+| [BK-18](https://jira.upexgalaxy.com/browse/BK-18) | TMS-ATC API | Create and edit ATCs with steps and assertions | - | Medium | Ready For Release |
+| [BK-19](https://jira.upexgalaxy.com/browse/BK-19) | TMS-ATC Builder | Build an ATC with ordered steps and assertions | - | Medium | Ready For Release |
+| [BK-20](https://jira.upexgalaxy.com/browse/BK-20) | TMS-ATC Search | Search and autocomplete ATCs | - | Medium | Ready For Release |
+| [BK-21](https://jira.upexgalaxy.com/browse/BK-21) | TMS-ATC Propagation | Cascade ATC edits to all tests | - | Medium | Ready For Release |
+| [BK-22](https://jira.upexgalaxy.com/browse/BK-22) | TMS-ATC Usage | See a "Used in N tests" report | - | Medium | Ready For Release |
+| [BK-23](https://jira.upexgalaxy.com/browse/BK-23) | TMS-ATC Duplicate | Duplicate an ATC with steps and assertions | - | Medium | Ready For Release |
+| [BK-267](https://jira.upexgalaxy.com/browse/BK-267) | TMS-ATC Library | Browse, search, and filter ATCs across every project | - | Medium | ABORTED |
+| [BK-315](https://jira.upexgalaxy.com/browse/BK-315) | TMS-ATC Library | Export a Project's ATCs to CSV | - | Medium | Ready For Release |
 | [BK-399](https://jira.upexgalaxy.com/browse/BK-399) | TMS-ATC Classification | Classify by test-design technique and priority | - | Medium | Backlog |
-| [BK-439](https://jira.upexgalaxy.com/browse/BK-439) | TMS-ATC Library | Browse every ATC in the workspace from one index | 5 | Medium | Backlog |
-| [BK-440](https://jira.upexgalaxy.com/browse/BK-440) | TMS-ATC Library | Find an ATC by name as you type | 3 | Medium | Backlog |
-| [BK-441](https://jira.upexgalaxy.com/browse/BK-441) | TMS-ATC Library | Narrow the index by Project, Module, layer and anchor | 3 | Medium | Backlog |
-| [BK-467](https://jira.upexgalaxy.com/browse/BK-467) | 🚀 TMS-ATC Library | Export a Project's ATCs to CSV | 1 | Medium | Ready For QA |
+| [BK-439](https://jira.upexgalaxy.com/browse/BK-439) | TMS-ATC Library | Browse every ATC in the workspace from one index | - | Medium | Backlog |
+| [BK-440](https://jira.upexgalaxy.com/browse/BK-440) | TMS-ATC Library | Find an ATC by name as you type | - | Medium | Backlog |
+| [BK-441](https://jira.upexgalaxy.com/browse/BK-441) | TMS-ATC Library | Narrow the index by Project, Module, layer and anchor | - | Medium | Backlog |
+| [BK-467](https://jira.upexgalaxy.com/browse/BK-467) | 🚀 TMS-ATC Library | Export a Project's ATCs to CSV | - | Medium | Ready For QA |
 | [BK-507](https://jira.upexgalaxy.com/browse/BK-507) | TMS-ATC Library | Bulk-edit tags, Module and layer on selected ATCs | - | Medium | Backlog |
+| [BK-571](https://jira.upexgalaxy.com/browse/BK-571) | TMS-ATC Library | Archive an ATC and restore it from the archive | - | Medium | Backlog |
+| [BK-595](https://jira.upexgalaxy.com/browse/BK-595) | TMS-ATC API | Read a single ATC by id | - | Medium | Backlog |
 
 ---
 

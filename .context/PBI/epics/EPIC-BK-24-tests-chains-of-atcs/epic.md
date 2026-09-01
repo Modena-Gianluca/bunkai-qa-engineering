@@ -3,7 +3,7 @@
 **Jira Key:** [BK-24](https://jira.upexgalaxy.com/browse/BK-24)
 **Priority:** Medium
 **Status:** Planning
-**Total Story Points:** 24
+**Total Story Points:** 0
 
 ---
 
@@ -50,10 +50,13 @@ See `.context/SRS/functional-specs.md`.
 
 | Key | Story | Points | Priority | Status |
 | --- | ----- | ------ | -------- | ------ |
-| [BK-27](https://jira.upexgalaxy.com/browse/BK-27) | TMS-Test Builder | Assemble a test by chaining ATCs | 8 | Medium | Ready For Release |
-| [BK-28](https://jira.upexgalaxy.com/browse/BK-28) | TMS-Test Builder | Reorder ATCs inside a test | 5 | Medium | Ready For Release |
-| [BK-32](https://jira.upexgalaxy.com/browse/BK-32) | TMS-Test View | View a test with all chained ATCs expanded | 3 | Medium | Ready For Release |
-| [BK-33](https://jira.upexgalaxy.com/browse/BK-33) | TMS-Test Tags | Assign reserved and custom tags to a test | 8 | Medium | Ready For Release |
+| [BK-27](https://jira.upexgalaxy.com/browse/BK-27) | TMS-Test Builder | Assemble a test by chaining ATCs | - | Medium | Ready For Release |
+| [BK-28](https://jira.upexgalaxy.com/browse/BK-28) | TMS-Test Builder | Reorder ATCs inside a test | - | Medium | Ready For Release |
+| [BK-32](https://jira.upexgalaxy.com/browse/BK-32) | TMS-Test View | View a test with all chained ATCs expanded | - | Medium | Ready For Release |
+| [BK-33](https://jira.upexgalaxy.com/browse/BK-33) | TMS-Test Tags | Assign reserved and custom tags to a test | - | Medium | Ready For Release |
+| [BK-596](https://jira.upexgalaxy.com/browse/BK-596) | TMS-Test | Rename a Test, archive it and restore it | - | Medium | Backlog |
+| [BK-666](https://jira.upexgalaxy.com/browse/BK-666) | TMS-Test List | Browse, filter and sort every Test in a Project | - | Medium | Backlog |
+| [BK-742](https://jira.upexgalaxy.com/browse/BK-742) | TMS-Test Tags | Page through a large tag-filtered Test list | - | Medium | Backlog |
 
 ---
 

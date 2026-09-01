@@ -2,63 +2,79 @@
 
 > Jira field: `customfield_10165` · [View in Jira](https://jira.upexgalaxy.com/browse/BK-50)
 
-## Goal
+# Acceptance Test Results — [https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50](https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50)
 
-Add a client-initiated "Export snapshot" download to the traceability chain screen. Clicking it re-fetches the story's evidence chain through the already-shipped, authenticated `GET /api/v1/projects/{id}/traceability?story={id}` route, renders the response into one self-contained HTML document (inline CSS, zero external references, zero network calls), and triggers a browser download named `trace-<story-slug>-YYYYMMDD-HHMM.html`. A confirmation toast fires on success. No migration, no new route, no new dependency, no storage, no anonymous access.
+***Environment****: staging (`https://staging-upexbunkai.vercel.app`) · ****Build****: PR #145, merge `7b16c0c` · ****Date****: 2026-08-09 · ****QA***: Benjamin Segovia
 
-## Governing decisions
+## Summary
 
-This plan implements Jira BK-50 comments ***12238**** (AI Tech Lead) and ****12239*** (AI Product Owner), dated 2026-08-08. Both supersede comments 11047 (Q1/Q3) and 11048 in full; 11047 Q2 (no snapshots table) is reaffirmed. Do not re-derive Option E — it is already decided (Option E scored 103 vs a runner-up of 67 on both panels).
+***[ PASSED ]**** — ****21 of 23 executed, 0 FAILED, 2 BLOCKED***. Two non-blocking findings filed. Sign-off is not gated on either.
 
-## Technical Decisions
+Smoke: ***GO***. Export control present on the traceability screen, chain rendered, download fired on first click.
 
-1. ***No new API route.*** The Export button calls the SAME `GET /api/v1/projects/{id}/traceability?story={id}` route the screen already uses for its initial load / retry, via a fresh client-side `fetch` at click time (not a re-use of the already-rendered React state) — this is what makes AC2.1 (point-in-time freeze) and E3 (chain-assembly failure surfaces cleanly) correct: a fresh fetch captures the true state at the moment of the click, and a fetch failure has a real error path to render into a toast instead of a corrupted download.
-2. ***Rendering is pure and framework-agnostic.*** `lib/traceability/export-snapshot.ts` exports `renderTraceabilitySnapshotHtml`, `buildSnapshotFilename`, and `formatSnapshotTimestamp` — no React, no DOM, no Next — mirroring the existing split in `lib/traceability/chain-view.ts`. This keeps the new logic unit-testable with `bun:test` per this repo's convention (no `.test.tsx` component tests exist anywhere in the repo; testable logic always lives in a pure `lib/` module, components stay thin and are validated live). The renderer reuses `chain-view.ts`'s own state-resolution helpers (`resolveStoryChainViewState`, `isAcUncovered`, `resolveAtcRowState`, `storyRollupCounts`, the placeholder-copy helpers) so the exported document can never disagree with what the live screen renders for the same payload — one source of truth for chain-state logic, not two.
-3. ***Empty-chain case renders prose, not an empty array (AC3.1).*** The `zero-ac` view state renders the story's existing `ZERO*AC*TITLE`/`ZERO*AC*BODY` copy plus an explicit "This story had no coverage as of `<timestamp>`" line, literal-matching AC3.1's Gherkin. The `zero-coverage` view state (ACs exist, 0 ATCs bound anywhere) keeps the existing on-screen banner + per-AC "Uncovered" strip copy, since it is a different, already-distinct on-screen state per BK-45 — the export mirrors the screen rather than collapsing the two.
-4. ***The download is client-side, no new server code.*** `Blob` + `URL.createObjectURL` + a transient `<a download>` click, matching the Tech Lead ruling's "or an equivalent client-side Blob + object URL" clause. No `Content-Disposition` route is added — it would be a new server surface for zero benefit over the client path.
-5. ***Filename and toast composition follow the mockup exactly, with one deliberate departure.*** Filename: `trace-<slugified-story-title>-YYYYMMDD-HHMM.html` (mockup pattern is `trace-<story>-YYYYMMDD-HHMM.json` — the `.html` swap is the one ratified departure, logged as `master-design-plan.md` §5 row D26 in this same change, per Critical Rule #15 and the PO ruling §4). Toast: `sonner`'s `toast.success('Snapshot exported', { description: ... })`, reusing the exact `toast.success(title, { description })` shape already used by `login-error-toast.tsx` — no new toast primitive.
-6. ***Workspace/project identity for the document header.*** The PO ruling requires "the workspace / project / story identity" in the exported document. `app/(app)/projects/[projectSlug]/traceability/page.tsx` already resolves `activeWorkspaceId` and `project` server-side (mirroring `layout.tsx`'s own duplicate resolution, an existing pattern in this route, not introduced here); this plan widens the existing `project` select to include `name` and adds one more `.select('name')` read on `workspaces`, then threads `projectName`/`workspaceName` down as two new required string props on `TraceabilityChainView`. No new query shape, no new table read.
-7. ***No RPC change, no widened exposure.*** `bunkai*report*story_traceability` and `mapTraceabilityRpcError`'s 404 non-disclosure contract are untouched. AC1.2 and E2 are satisfied by the ALREADY-SHIPPED behavior of the route this story reuses (foreign-workspace/non-member -> 404 via `mapTraceabilityRpcError`; unauthenticated API caller -> 401 via `withApiHandler`'s `auth: 'required'`; unauthenticated browser navigation to the traceability PAGE -> login redirect via `middleware.ts`'s existing `/projects` protected-prefix gate). This story adds no code to any of those three paths — it is proven by BK-45's existing test coverage (`lib/traceability/story-traceability-isolation.test.ts`), not re-tested here as new coverage, and the compliance matrix cites that file rather than duplicating the assertion.
-8. ***RPC-authorization gate***: N/A. This story writes or modifies no Postgres function. `bunkai*report*story_traceability` (0068) is unchanged.
-9. ***No ADR.*** No schema, auth model, or cross-cutting invariant is touched; the `.html` filename departure is fully reversible (fails ADR gate 1) and is recorded as a §5 divergence row instead, per the PO ruling's own instruction.
+Every fidelity verdict below was made by opening the downloaded document, not by observing that a download occurred. One assertion was made with all network traffic aborted at the browser context, to prove self-containment rather than assume it.
 
-## Files touched
+## Test cases
 
-- `lib/traceability/export-snapshot.ts` (new) — pure render/format/filename functions.
-- `lib/traceability/export-snapshot.test.ts` (new) — `bun:test` coverage for the pure functions (filename slugging, timestamp formatting, HTML escaping, zero-ac prose, zero-coverage banner, has-chain table rows, archived-story banner).
-- `components/traceability/TraceabilityChainView.tsx` (edit) — add `projectName`/`workspaceName` props, the Export button inside `StoryHead`, the `handleExport` fetch->render->download->toast handler, an `exporting` state flag.
-- `app/(app)/projects/[projectSlug]/traceability/page.tsx` (edit) — widen the `project` select to `id, name`; add a `workspaces.name` read; pass `projectName`/`workspaceName` to every `TraceabilityChainView` call site.
-- `.context/design/master-design-plan.md` (edit) — add §5 divergence row D26 (filename `.html` vs mockup `.json`) and flip the BK-50 §8/§4.7 build-status note from "Estimation" to built, per this change landing.
+| ***TC**** | ****Title**** | ****Status*** |
+| --- | --- | --- |
+| TC-BK50-01 | Populated story exports every AC/ATC/Test/Run/Defect visible on screen | PASSED |
+| TC-BK50-02 | Header carries workspace, project, story identity + export timestamp | PASSED |
+| TC-BK50-03 | All six run states render as readable labels | PASSED (5 of 6 states available in seed data — see Observations) |
+| TC-BK50-04 | ATC bound to two ACs repeats under each, no dedup | PASSED |
+| TC-BK50-05 | Multiple defects listed with title and status | PASSED (with finding — see Observations) |
+| TC-BK50-06 | "Awaiting data" placeholder carried into the file, not a blank cell | PASSED |
+| TC-BK50-07 | Uncovered AC carries its indicator, distinct from the placeholder | PASSED |
+| TC-BK50-08 | File is self-contained — renders offline, zero external requests | ******PASSED — priority item, clean**** |
+| TC-BK50-09 | Foreign-workspace story rejected, no file produced | BLOCKED — coverage gap |
+| TC-BK50-10 | Nonexistent story returns the same response as TC-09 | ******PASSED — priority item, clean**** |
+| TC-BK50-11 | Export at T0 survives a later mutation of the live chain | ******PASSED — Critical, clean**** |
+| TC-BK50-12 | Printed timestamp matches the export moment | PASSED |
+| TC-BK50-13 | Two exports in quick succession produce two independent files | PASSED |
+| TC-BK50-14 | Same-minute exports — filename granularity boundary | PASSED WITH FINDING ([https://jira.upexgalaxy.com/browse/BK-330#icft=BK-330](https://jira.upexgalaxy.com/browse/BK-330#icft=BK-330) filed) |
+| TC-BK50-15 | Zero-AC story exports prose, not an empty table | PASSED |
+| TC-BK50-16 | Zero-coverage story is distinct from the zero-AC case | PASSED |
+| TC-BK50-17 | No-coverage prose carries the export timestamp | PASSED |
+| TC-BK50-18 | Downloaded file survives loss of the source story | PASSED (by construction — see Observations) |
+| TC-BK50-19 | Signed-out browser redirects to login, no data rendered first | ******PASSED — priority item, clean**** |
+| TC-BK50-20 | Unauthenticated API caller receives 401 | ******PASSED — priority item, clean**** |
+| TC-BK50-21 | No hosted artifact, public link, signed URL or share control | ******PASSED — scope guard**** |
+| TC-BK50-22 | Chain-assembly failure surfaces a clear error, no partial file | BLOCKED — pre-declared at planning |
+| TC-BK50-23 | Filename matches the D26 pattern | PASSED |
 
-## AC -> implementation mapping
+## Test data
 
-| AC scenario | Implementation |
-| --- | --- |
-| 1.1 | `handleExport` fetch + `renderTraceabilitySnapshotHtml` + `triggerHtmlDownload` |
-| 1.2 | Reused, unchanged: existing route's `mapTraceabilityRpcError` -> 404 |
-| 2.1 | Fresh fetch at click time; downloaded file makes zero network calls after download (inert HTML) |
-| 2.2 | Each click is an independent fetch/render/download cycle with its own timestamp |
-| 3.1 | `renderNoCoverageSection` (zero-ac view state) |
-| E1 | Static file, no dependency on the API after download (proven by construction, not a runtime check) |
-| E2 | Reused, unchanged: `withApiHandler({ auth: 'required' })` -> 401; `middleware.ts` protected-prefix -> login redirect |
-| E3 | `handleExport`'s catch/`!result.ok` branch -> `toast.error(...)`, no `triggerHtmlDownload` call on that path |
+Reused the fixtures seeded during the [https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45](https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45) session rather than re-seeding, per the ATP. Project `BK-23 Test Project` (`129cbc2a-…`), module `bk-45-fixtures`.
 
-## Verification plan
+| ***Fixture**** | ****Story**** | ****Used for*** |
+| --- | --- | --- |
+| Fully covered, 2 ACs / 5 ATCs / 4 tests / 3 runs | `d57804e8-…` | TC-01..04, 06, 08, 11..14, 23 |
+| Zero-coverage banner (1 AC, 0 ATCs) | `d6e3c9f4-…` | TC-16 |
+| Zero-AC authoring gap | `b977a5b9-…` | TC-15, TC-17 |
+| Mixed coverage + 3 defects + fail/pass/running runs | `27223d20-…` | TC-03, 05, 07 |
 
-1. `bun test lib/traceability/export-snapshot.test.ts` — new pure-function coverage.
-2. `bun test lib/traceability` — full existing suite stays green (no regressions in `chain-view.test.ts` / `errors.test.ts` / `story-traceability-isolation.test.ts`).
-3. `bun run types:check` — clean.
-4. `bun run lint:check` — clean.
-5. Live-UI pass (`bun run dev`, Playwright CLI) against the declared `testing.automation_identity`: open the traceability screen for a populated story, click Export, confirm a `.html` file downloads, open it, confirm it renders standalone (no console errors, no network tab activity) and matches on-screen content; repeat for a zero-AC story and confirm the "no coverage" prose; confirm the toast text and dismiss control.
+***Mutation performed and reverted.*** TC-11 required the live chain to change between two exports. The story title of `d57804e8-…` was amended via `PATCH /api/v1/user-stories/{id`}, the second export taken, and the title restored to its exact original value in the same session. The fixture is intact; no run, ATC, Test or defect was touched.
 
-## Review Workload Forecast
+## Findings filed
 
-Estimated: ~260 additions + ~15 deletions = ~275 total lines
-400-line budget risk: Low
-Chain strategy: single-pr
-Decision trace: n/a (risk not High)
-Decided by: n/a
-Decision needed before apply: No
+- ******BK-329 (Defect, Menor)**** — the traceability route ignores its `{projectId`} path segment: any well-formed UUID returns the requested story's chain with `200 OK`. Not a proven leak (the story stays RLS-scoped to the caller, and BK-45's isolation suite covers the cross-workspace case), but the project segment enforces nothing, so an authorization bug in the story-scoping layer would have no second gate behind it. The UI route is unaffected — it correctly 404s on a bogus slug. Originates in BK-45's route, found here because [https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50](https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50) reuses it verbatim.
+- ******BK-330 (Mejora, Trivial)**** — the snapshot filename is minute-granular, so two exports of one story inside the same clock minute collide and their contents are byte-identical. Not an AC violation: AC2.2 asks only that two independent files exist, and browser download de-duplication delivers that. It is filed because the dev handoff's own suggested check asks QA to confirm "different timestamps in the name", which cannot hold at this granularity. Recommended fix is seconds precision — a one-line change that preserves everything D26 ratified.
+
+## Observations — no ticket filed
+
+- ***Defect IDs are absent from the export.*** The Defects column renders title + status, no identifier. This is faithful to the live screen, which omits the ID too, so BK-50's AC1.1 ("every field visible on screen") holds and this is not a [https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50](https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50) defect. It is worth noting because BK-45's AC-01 says defects render with "their ID, title, and current status". If an auditor is expected to trace a defect back to Jira from the exported file, today they cannot. Raised for BK-45's owner to judge, not re-opened from here.
+- `skipped` ***was the one run state no fixture could produce.*** Five of six derived states were exercised end to end — `pass`, `fail`, `blocked`, `aborted`, `running` — across two documents. No seeded chain resolves to `skipped` at the run grain, which is consistent with the grain split recorded under [https://jira.upexgalaxy.com/browse/BK-317#icft=BK-317](https://jira.upexgalaxy.com/browse/BK-317#icft=BK-317): `skipped` is a position-grain value. The mapping is covered at unit level by the green `chain-view.test.ts` guard.
+- ***"1 ACs" reads ungrammatically*** in the meta line of a single-criterion story. Present on the live screen as well as in the export, so it is inherited, not introduced here. Cosmetic; not filed.
+- ***TC-18 was proven by construction, not by deletion.*** The document issues zero network requests — verified with every non-`file:` request aborted at the browser context — so its readability cannot depend on the source story existing. A literal delete-then-open was not performed: the only candidate stories are load-bearing [https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45](https://jira.upexgalaxy.com/browse/BK-45#icft=BK-45) regression fixtures, and no archive affordance is exposed through the API. The stronger property (no dependency on Bunkai at all) was demonstrated directly.
+
+## Coverage gaps carried to regression (BLOCKED — not failures)
+
+- ******TC-09**** **(foreign-workspace story rejected) — no second workspace can be constructed. Settings → Members still reads "Coming soon", so there is no invite mechanism and no way to create an actor outside the current workspace. This is the same blocker BK-45 recorded against its TC-15. The case is covered by** `lib/traceability/story-traceability-isolation.test.ts` **at DB-integration level (11/11 green), so it is not unverified — it is unverified** end to end*.* ******Re-attempt once the Members/invite feature ships.****
+- ******TC-22**** (chain-assembly failure) — pre-declared BLOCKED at planning time. The traceability fetch executes server-side under SSR on Vercel, outside the browser context where request interception operates, and no fault-injection flag exists. Identical to BK-45's TC-21. Tooling gap, not a product gap.
+
+## Verdict
+
+***PASSED.*** All six Critical-priority cases are clean, including the immutability guarantee that is the story's central promise and the two non-disclosure paths. The two findings are non-blocking and neither contradicts an acceptance criterion. [https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50](https://jira.upexgalaxy.com/browse/BK-50#icft=BK-50) is recommended for QA sign-off.
 
 ---
 _Synced from Jira by sync-jira-issues_

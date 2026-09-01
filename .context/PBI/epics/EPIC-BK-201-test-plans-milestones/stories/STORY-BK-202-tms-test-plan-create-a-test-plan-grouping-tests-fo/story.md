@@ -3,7 +3,7 @@
 **Jira Key:** [BK-202](https://jira.upexgalaxy.com/browse/BK-202)
 **Epic:** [BK-201](https://jira.upexgalaxy.com/browse/BK-201) (Test Plans & Milestones)
 **Type:** Story
-**Status:** Estimation
+**Status:** Ready For Release
 **Priority:** Medium
 **Story Points:** -
 
@@ -27,7 +27,7 @@ Bunkai teams already assemble Tests and execute them through manual Runs. A Test
 
 ### Edge Cases Identified
 
-| # | Edge case | In original Story? | Criticality | Action |
+| ***#**** | ****Edge case**** | ****In original Story?**** | ****Criticality**** | ****Action*** |
 | --- | --- | --- | --- | --- |
 | 1 | Concurrent duplicate-name creation race | No | High | Add to AC (PO confirm) |
 | 2 | Double-click / double-submit on create dialog (idempotency) | No | Medium | Test only |
@@ -44,7 +44,7 @@ Bunkai teams already assemble Tests and execute them through manual Runs. A Test
 ### Clarified Business Rules
 
 - ***Edit is not creator-restricted***: business rule "member role or higher" carries no owner qualifier — any project member with role ≥ member may edit any plan, not only its own creator (ties to Scenario 4.3; still flagged as Ambiguity #1 for explicit PO confirmation).
-- ***"Creating and editing plans requires the member role or higher" is already PO-ratified****: comment T2 (Ely, 2026-07-11) confirms — **"T2 confirmed***:**** creating and editing plans stays member role and above."** No open question on this specific point.
+- ***"Creating and editing plans requires the member role or higher" is already PO-ratified****: comment T2 (Ely, 2026-07-11) confirms — **"T2 confirmed:** **creating and editing plans stays member role and above."* No open question on this specific point.
 - ***Name length bounds are inclusive***: the stated "1 to 100 characters" range includes both the 1-character (post-trim) and the 100-character boundary as valid.
 - ***Uniqueness is scoped per project, not global***: the same plan name may be reused across different projects.
 - ***Trim applies before the uniqueness check***: "compared after trimming spaces" affects both the minimum-length check and the duplicate-name check, not only the minimum-length check in isolation.
@@ -82,33 +82,40 @@ Bunkai teams already assemble Tests and execute them through manual Runs. A Test
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
 
 ---
 
 ## Traceability
 
+### Test Execution (1)
+
+- [BK-590](https://jira.upexgalaxy.com/browse/BK-590): ATR: BK-202: Story Testing _(Close)_
+
+### Defects (2)
+
+- [BK-591](https://jira.upexgalaxy.com/browse/BK-591): Test Plan uniqueness check incorrectly treats NBSP-padded names as duplicates (violates AC 2.4 / ratified whitespace rule) _(Closed)_
+- [BK-592](https://jira.upexgalaxy.com/browse/BK-592): Test Plan validation errors return raw Zod message instead of ratified user-facing copy (AC 1.4, 3.1-3.3) _(Closed)_
+
 ### Storys (2)
 
-- [BK-203](https://jira.upexgalaxy.com/browse/BK-203): TMS-Test Plan | Add and remove tests from a plan _(Backlog)_
+- [BK-203](https://jira.upexgalaxy.com/browse/BK-203): TMS-Test Plan | Add and remove tests from a plan _(Ready For Release)_
 - [BK-207](https://jira.upexgalaxy.com/browse/BK-207): TMS-Test Plan | Close a plan with an outcome summary _(Backlog)_
 
 ### Epic (1)
 
 - [BK-24](https://jira.upexgalaxy.com/browse/BK-24): Tests (chains of ATCs) _(Planning)_
 
+### Test Plan (1)
+
+- [BK-573](https://jira.upexgalaxy.com/browse/BK-573): ATP: BK-202: TMS-Test Plan | Create a test plan grouping tests for a goal _(Planning)_
+
 ---
 
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 15/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Alfonso Hernandez
 - **Labels:** new-feature, post-mvp, shift-left-2026-08-14, shift-left-reviewed

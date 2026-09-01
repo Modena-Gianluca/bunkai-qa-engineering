@@ -5,7 +5,7 @@
 **Type:** Story
 **Status:** Ready For QA
 **Priority:** Medium
-**Story Points:** 8
+**Story Points:** -
 
 ---
 
@@ -60,14 +60,7 @@ Refined Acceptance Criteria live in the Acceptance Criteria field. Full ATP DRAF
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
 - [Mockup](./mockup.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
 
 ---
 
@@ -76,7 +69,7 @@ Refined Acceptance Criteria live in the Acceptance Criteria field. Full ATP DRAF
 ### Storys (2)
 
 - [BK-209](https://jira.upexgalaxy.com/browse/BK-209): Notifications | View an inbox of workspace events _(Ready For QA)_
-- [BK-264](https://jira.upexgalaxy.com/browse/BK-264): TMS-Defect Triage | Assign a defect to a workspace member and update its status _(QA Approved)_
+- [BK-264](https://jira.upexgalaxy.com/browse/BK-264): TMS-Defect Triage | Assign a defect to a workspace member and update its status _(Ready For Release)_
 
 ### Epic (1)
 
@@ -87,7 +80,7 @@ Refined Acceptance Criteria live in the Acceptance Criteria field. Full ATP DRAF
 ## Metadata
 
 - **Created:** 11/7/2026
-- **Updated:** 14/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** yxsinell acosta zambrano
 - **Labels:** new-feature, post-mvp, shift-left-2026-07-19, shift-left-reviewed

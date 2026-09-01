@@ -3,11 +3,7 @@
 **Jira Key:** [BK-52](https://jira.upexgalaxy.com/browse/BK-52)
 **Priority:** High
 **Status:** Closed
-**Components:** Project & Module Hierarchy
-**Severity:** Mayor
-**Error Type:** Functional
-**Test Environment:** Staging
-**Fix Type:** Bugfix
+**Components:** Bunkai Projects
 
 ---
 
@@ -48,12 +44,6 @@ Per-workspace slug uniqueness (a core design rule, and an explicit AC: "same slu
 ## Evidence
 
 `test-session-memory.md` (UI-3 row) + screenshot `evidence/bug-crossworkspace-checkout-v2.png`.
-
----
-
-## 🔍 Root Cause
-
-**Category:** Code Error
 
 ---
 

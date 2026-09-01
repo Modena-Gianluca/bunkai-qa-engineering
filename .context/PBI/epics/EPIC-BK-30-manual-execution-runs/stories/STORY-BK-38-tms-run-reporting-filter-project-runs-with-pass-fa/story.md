@@ -3,10 +3,9 @@
 **Jira Key:** [BK-38](https://jira.upexgalaxy.com/browse/BK-38)
 **Epic:** [BK-30](https://jira.upexgalaxy.com/browse/BK-30) (Manual Execution & Runs)
 **Type:** Story
-**Status:** QA Approved
+**Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 3
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -14,15 +13,15 @@
 
 # TMS-Run Reporting | Filter project runs with pass/fail totals
 
- ***Shift-Left Reviewed*** — expert panel applied · ready for estimation
+***[ READY FOR ESTIMATION ]**** ****Shift-Left Reviewed*** — expert panel applied · ready for estimation
 
 > ***SUCCESS:**** This Story has been refined through the shift-left workflow with the expert-panel decisions below applied. Expert story point recommendation: ****3 points***.
 
 ## Source
 
-- ***Source spec******:*** [BK-023](https://jira.upexgalaxy.com/browse/BK-023)
-- ***Parent/module******:*** [BK-70](https://jira.upexgalaxy.com/browse/BK-70) — Test Repository / Run Reporting
-- ***Dependencies******:*** [BK-34](https://jira.upexgalaxy.com/browse/BK-34) Start manual run; [BK-39](https://jira.upexgalaxy.com/browse/BK-39) final run verdict semantics
+- ***Source spec:*** [BK-023](https://jira.upexgalaxy.com/browse/BK-023)
+- ***Parent/module:*** [BK-70](https://jira.upexgalaxy.com/browse/BK-70) — Test Repository / Run Reporting
+- ***Dependencies:*** [BK-34](https://jira.upexgalaxy.com/browse/BK-34) Start manual run; [BK-39](https://jira.upexgalaxy.com/browse/BK-39) final run verdict semantics
 
 ## User Story
 
@@ -30,7 +29,7 @@ As a QA Lead, I want to filter and review all Runs across the Project by date ra
 
 ## Key Contract Decisions
 
-| Decision | Contract |
+| ***Decision**** | ****Contract*** |
 | --- | --- |
 | Reporting scope | Project-scoped Runs only. Cross-project and cross-workspace Runs never appear in rows or totals. |
 | Reporting endpoint | `GET /api/v1/projects/{projectId}/runs/report` returns rows, totals, applied filters, and pagination from the same query contract. |
@@ -64,7 +63,7 @@ As a QA Lead, I want to filter and review all Runs across the Project by date ra
 
 ## Acceptance Criteria
 
-```gherkin
+```
 Background:
   Given an authenticated workspace member with access to the Project
     And Runs exist as execution instances of Tests in that Project
@@ -134,7 +133,7 @@ Scenario: Unauthorized or cross-project Runs are not exposed
 
 ## ATP Draft
 
-| ID | Type | Scenario | Coverage target | Priority | Automation hint |
+| ***ID**** | ****Type**** | ****Scenario**** | ****Coverage target**** | ****Priority**** | ****Automation hint*** |
 | --- | --- | --- | --- | --- | --- |
 | BK-38-ATC-01 | Happy | View all project Runs with row details and totals | Project report baseline | High | UI/API/DB |
 | BK-38-ATC-02 | Integration | Combined filters narrow rows and recompute totals | Filter contract | High | UI/API/DB |
@@ -147,7 +146,7 @@ Scenario: Unauthorized or cross-project Runs are not exposed
 
 ## Readiness Gates
 
-| Gate | Status | Evidence |
+| ***Gate**** | ****Status**** | ****Evidence*** |
 | --- | --- | --- |
 | PO contract | Pass | Expert panel resolved status totals, date semantics, and empty-state rules. |
 | Dev feasibility | Pass with dependency | Requires Runs schema/API implementation in this Story or prerequisite branch. |
@@ -172,12 +171,7 @@ AC, ATP, and Business Rules are included in this description because the Jira cu
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
@@ -201,7 +195,7 @@ AC, ATP, and Business Rules are included in this description because the Jira cu
 ## Metadata
 
 - **Created:** 28/5/2026
-- **Updated:** 9/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** Ely
 - **Labels:** implementation-plan-ready, shift-left-2026-06-15, shift-left-reviewed

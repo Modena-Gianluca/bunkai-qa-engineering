@@ -137,5 +137,36 @@ Scenario: Running an export leaves the workspace exactly as it was
   Then every one of those records is unchanged
 ```
 
+## AC-14 — A prior ready archive stays valid on its own expiry after a new export is requested — NEEDS PO/DEV CONFIRMATION
+
+```gherkin
+Scenario: A newer export does not invalidate a still-valid prior archive early
+  Given a ready, unexpired archive exists from a prior export
+  And I request a fresh export which finishes preparing
+  When I return to the Data export section
+  Then only the newest archive is offered for download
+  And the prior archive's own expiry is not independently tracked once superseded
+```
+
+## AC-15 — Export access for API tokens (PATs) is resolved explicitly (confirmed: rejected)
+
+```gherkin
+Scenario: A Personal Access Token cannot request or download a workspace export
+  Given I hold a Personal Access Token scoped "workspace:admin" for a workspace I do not own
+  When I call the export request endpoint using that token
+  Then the request is rejected
+  And the rejection reflects that this action is cookie-session (Owner) only
+```
+
+## AC-16 — An export of an empty workspace still succeeds — NEEDS PO/DEV CONFIRMATION
+
+```gherkin
+Scenario: A brand-new workspace with no content can still be exported
+  Given I am the Owner of a workspace with no Projects, Modules, Tests, Runs or Bugs
+  When I request and download an export
+  Then the archive is produced successfully
+  And it is structurally valid, containing no content records
+```
+
 ---
 _Synced from Jira by sync-jira-issues_

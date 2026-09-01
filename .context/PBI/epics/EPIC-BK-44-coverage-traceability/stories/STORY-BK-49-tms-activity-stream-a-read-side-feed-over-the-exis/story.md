@@ -5,8 +5,7 @@
 **Type:** Story
 **Status:** Ready For QA
 **Priority:** Medium
-**Story Points:** 5
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -88,11 +87,7 @@ As a QA Lead, I want a live feed of what changed across the workspace — who cr
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
@@ -104,7 +99,7 @@ As a QA Lead, I want a live feed of what changed across the workspace — who cr
 
 ### Story (1)
 
-- [BK-260](https://jira.upexgalaxy.com/browse/BK-260): TMS-Home | Show a condensed recent activity feed _(Ready For QA)_
+- [BK-260](https://jira.upexgalaxy.com/browse/BK-260): TMS-Home | Show a condensed recent activity feed _(Ready For Release)_
 
 ### Tech Debt (1)
 
@@ -115,7 +110,7 @@ As a QA Lead, I want a live feed of what changed across the workspace — who cr
 ## Metadata
 
 - **Created:** 1/6/2026
-- **Updated:** 2/8/2026
+- **Updated:** 31/8/2026
 - **Reporter:** Ely
 - **Assignee:** José Andrés Lorca
 - **Labels:** implementation-plan-ready, new-feature, shift-left-2026-06-29, shift-left-reviewed

@@ -5,8 +5,7 @@
 **Type:** Story
 **Status:** Ready For Release
 **Priority:** Medium
-**Story Points:** 5
-**Web Link:** https://staging-upexbunkai.vercel.app/
+**Story Points:** -
 
 ---
 
@@ -72,13 +71,7 @@ Se produjeron 13 Gherkin scenarios (Happy 2 / Negative 7 / Boundary 2 / Integrat
 
 > Each rich-text field is a separate file in this folder.
 
-- [Acceptance Criteria](./acceptance-criteria.md)
-- [Business Rules](./business-rules.md)
-- [Scope](./scope.md)
-- [Out Of Scope](./out-of-scope.md)
-- [Workflow](./workflow.md)
-- [Implementation Plan (Dev)](./implementation-plan.md)
-- [Acceptance Test Plan (QA)](./acceptance-test-plan.md)
+- [Mockup](./mockup.md)
 
 ---
 
@@ -86,18 +79,18 @@ Se produjeron 13 Gherkin scenarios (Happy 2 / Negative 7 / Boundary 2 / Integrat
 
 ### Tests (12)
 
-- [BK-156](https://jira.upexgalaxy.com/browse/BK-156): BK-18: TC08: should return 200, bump version and cascade-replace children when PATCH /atcs/{id} full-replaces with X-If-Match (BK-96 regression) _(Candidate)_
-- [BK-159](https://jira.upexgalaxy.com/browse/BK-159): BK-18: TC11: should treat PATCH /atcs/{id} with an empty body as a 200 no-op without version bump or event _(Candidate)_
-- [BK-160](https://jira.upexgalaxy.com/browse/BK-160): BK-18: TC12: should keep slug, user_story_id and module_id immutable when PATCH /atcs/{id} attempts to change them _(Candidate)_
+- [BK-154](https://jira.upexgalaxy.com/browse/BK-154): BK-18: TC06: should enforce POST /atcs body boundaries for title length, step count, tag count and layer enum _(Candidate)_
+- [BK-157](https://jira.upexgalaxy.com/browse/BK-157): BK-18: TC09: should honor optimistic locking on PATCH /atcs/{id} (200 matching X-If-Match / 409 stale / 200 absent) _(Candidate)_
 - [BK-149](https://jira.upexgalaxy.com/browse/BK-149): BK-18: TC01: should create an ATC and return 201 with steps, assertions, slug and version 1 when POST /atcs receives a valid payload _(Candidate)_
 - [BK-150](https://jira.upexgalaxy.com/browse/BK-150): BK-18: TC02: should reject POST /atcs with 401 when auth is missing/invalid and 403 when the token lacks atc:write scope _(Candidate)_
 - [BK-151](https://jira.upexgalaxy.com/browse/BK-151): BK-18: TC03: should reject POST /atcs with 422 ac_outside_user_story when an acceptance criterion belongs to a different user story _(Candidate)_
 - [BK-152](https://jira.upexgalaxy.com/browse/BK-152): BK-18: TC04: should reject POST /atcs with 422 module_outside_project_subtree when the module is outside the user story subtree _(Candidate)_
-- [BK-153](https://jira.upexgalaxy.com/browse/BK-153): BK-18: TC05: should reject POST /atcs with 422 steps_position_invalid when step positions are not strictly increasing from 1 _(Candidate)_
-- [BK-154](https://jira.upexgalaxy.com/browse/BK-154): BK-18: TC06: should enforce POST /atcs body boundaries for title length, step count, tag count and layer enum _(Candidate)_
-- [BK-155](https://jira.upexgalaxy.com/browse/BK-155): BK-18: TC07: should write zero rows across atcs/atc_steps/atc_assertions when POST /atcs fails a cross-entity check given a transactional rollback _(Candidate)_
-- [BK-157](https://jira.upexgalaxy.com/browse/BK-157): BK-18: TC09: should honor optimistic locking on PATCH /atcs/{id} (200 matching X-If-Match / 409 stale / 200 absent) _(Candidate)_
+- [BK-159](https://jira.upexgalaxy.com/browse/BK-159): BK-18: TC11: should treat PATCH /atcs/{id} with an empty body as a 200 no-op without version bump or event _(Candidate)_
 - [BK-158](https://jira.upexgalaxy.com/browse/BK-158): BK-18: TC10: should return 404 not_found when PATCH /atcs/{id} targets a non-existent ATC id _(Candidate)_
+- [BK-153](https://jira.upexgalaxy.com/browse/BK-153): BK-18: TC05: should reject POST /atcs with 422 steps_position_invalid when step positions are not strictly increasing from 1 _(Candidate)_
+- [BK-155](https://jira.upexgalaxy.com/browse/BK-155): BK-18: TC07: should write zero rows across atcs/atc_steps/atc_assertions when POST /atcs fails a cross-entity check given a transactional rollback _(Candidate)_
+- [BK-156](https://jira.upexgalaxy.com/browse/BK-156): BK-18: TC08: should return 200, bump version and cascade-replace children when PATCH /atcs/{id} full-replaces with X-If-Match (BK-96 regression) _(Candidate)_
+- [BK-160](https://jira.upexgalaxy.com/browse/BK-160): BK-18: TC12: should keep slug, user_story_id and module_id immutable when PATCH /atcs/{id} attempts to change them _(Candidate)_
 
 ### Test Execution (1)
 
@@ -109,13 +102,13 @@ Se produjeron 13 Gherkin scenarios (Happy 2 / Negative 7 / Boundary 2 / Integrat
 
 ### Storys (7)
 
-- [BK-19](https://jira.upexgalaxy.com/browse/BK-19): TMS-ATC Builder | Build an ATC with ordered steps and assertions _(Ready For Release)_
-- [BK-23](https://jira.upexgalaxy.com/browse/BK-23): TMS-ATC Duplicate | Duplicate an ATC with steps and assertions _(QA Approved)_
 - [BK-15](https://jira.upexgalaxy.com/browse/BK-15): TMS-AC | Manage criteria under a user story _(Ready For Release)_
-- [BK-20](https://jira.upexgalaxy.com/browse/BK-20): TMS-ATC Search | Search and autocomplete ATCs _(QA Approved)_
 - [BK-27](https://jira.upexgalaxy.com/browse/BK-27): TMS-Test Builder | Assemble a test by chaining ATCs _(Ready For Release)_
-- [BK-21](https://jira.upexgalaxy.com/browse/BK-21): TMS-ATC Propagation | Cascade ATC edits to all tests _(QA Approved)_
-- [BK-22](https://jira.upexgalaxy.com/browse/BK-22): TMS-ATC Usage | See a "Used in N tests" report _(QA Approved)_
+- [BK-19](https://jira.upexgalaxy.com/browse/BK-19): TMS-ATC Builder | Build an ATC with ordered steps and assertions _(Ready For Release)_
+- [BK-21](https://jira.upexgalaxy.com/browse/BK-21): TMS-ATC Propagation | Cascade ATC edits to all tests _(Ready For Release)_
+- [BK-23](https://jira.upexgalaxy.com/browse/BK-23): TMS-ATC Duplicate | Duplicate an ATC with steps and assertions _(Ready For Release)_
+- [BK-22](https://jira.upexgalaxy.com/browse/BK-22): TMS-ATC Usage | See a "Used in N tests" report _(Ready For Release)_
+- [BK-20](https://jira.upexgalaxy.com/browse/BK-20): TMS-ATC Search | Search and autocomplete ATCs _(Ready For Release)_
 
 ### Test Plan (1)
 
