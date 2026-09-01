@@ -52,7 +52,7 @@
 - `API_BASE_URL=` → set to `https://staging-upexbunkai.vercel.app` (agentic curl base)
 - `OPENAPI_SPEC_PATH=` → set to local spec path `C:\Users\redes\Desktop\projects\dojo\bunkai-qa-engineering\api\openapi.json` (or the staged copy)
 - `DBHUB_*` ✓ (already set — Supabase pooler)
-- `ATLASSIAN_URL` ✓ (upexgalaxy71.atlassian.net), `ATLASSIAN_EMAIL`/`ATLASSIAN_API_TOKEN` present in `.env`
+- `ATLASSIAN_URL` ✓ (upexgalaxy72.atlassian.net), `ATLASSIAN_EMAIL`/`ATLASSIAN_API_TOKEN` present in `.env`
 - `AUTO_SYNC` — keep `false` until TMS modality confirmed.
 
 ### 4.3 `config/variables.ts`

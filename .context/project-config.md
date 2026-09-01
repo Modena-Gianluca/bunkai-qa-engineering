@@ -14,7 +14,7 @@ Project config discovered by `/project-discovery` (Brownfield scope, 2026-08-15)
 - **Name**: Bunkai — Test Management System (分解)
 - **Key**: `BK`
 - **Web domain**: `upexbunkai.vercel.app` (production) / `staging-upexbunkai.vercel.app` (staging)
-- **Tracker**: Jira Cloud — https://upexgalaxy71.atlassian.net/
+- **Tracker**: Jira Cloud — https://upexgalaxy72.atlassian.net/
 
 ## Tech Stack
 

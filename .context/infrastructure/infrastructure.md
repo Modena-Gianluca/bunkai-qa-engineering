@@ -63,7 +63,7 @@ Nombres desde `.env.example` + `lib/env.ts` (¡el runtime usa nombres LEGACY, ve
 | `VERCEL_ENV` | detección local/staging/production | `lib/urls.ts:17-25` (la inyecta Vercel) |
 
 - `automation_identity.per_env: {}` — el MISMO fixture QA vale en local/staging/production (single-project tenancy) — `project.yaml:40`
-- Jira: `upexgalaxy71.atlassian.net` (`project.yaml:32`), key `BK` (`:12`)
+- Jira: `upexgalaxy72.atlassian.net` (`project.yaml:28`), key `BK` (`:9`)
 
 ## Discovery Gaps
 
