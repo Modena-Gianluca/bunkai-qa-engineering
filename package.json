@@ -86,6 +86,8 @@
     "vars:check": "bun scripts/lint-vars.ts",
     "vars:env:check": "bun scripts/check-vars.ts",
     "xray": "bun cli/xray/index.ts",
+    "xray:guard": "bun scripts/check-xray-guard.ts",
+    "xray:guard:changed": "bun scripts/check-xray-guard.ts --changed-only",
     "git:policy": "bun scripts/git-policy.ts",
     "jira:url": "bun scripts/atlassian-url.ts",
     "agents:compat": "bun scripts/agent-compatibility.ts",
