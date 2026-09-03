@@ -5,6 +5,17 @@ bun run types:check
 bun run vars:check
 bun run skills:check
 
+# Xray guard — quality over speed, Set-first + TC01 nomenclature (AGENTS.md §1#9 + traceability-linking.md:23)
+# Runs only when an ATP is staged; ~2s, blocks commit on ERROR (e.g. T1 without TC01 or missing ATS)
+if echo "$STAGED" | grep -q "acceptance-test-plan.md"; then
+  bun run xray:guard:changed || {
+    echo ""
+    echo "❌ xray:guard failed — fix TC nomenclature and ATS/ATP references before commit"
+    echo "   See: agentic-qa-core/references/traceability-linking.md:23 (ATS mandatory) + BK-256 example"
+    exit 1
+  }
+fi
+
 # kata-manifest freshness gate — only runs when staged files affect it.
 STAGED=$(git diff --cached --name-only --diff-filter=ACMRD)
 if echo "$STAGED" | grep -qE '^(tests/components/|scripts/kata-manifest\.ts$|kata-manifest\.json$)'; then
