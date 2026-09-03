@@ -29,7 +29,7 @@ issue_tracker:
 
 testing:
   default_env: staging # Default testing environment — must match a key under `environments:` (e.g. staging)
-  tms_cli: acli # Test management CLI command — Modality jira-native (no Xray API keys; user lacks Xray admin role). acli covers TCs/ATP/ATR via Story fields + Test issues. Migrate to `bun xray` (jira-xray) once XRAY_CLIENT_ID/SECRET are provisioned.
+  tms_cli: bun xray # Test management CLI command — Modality jira-xray (Xray API keys provisioned via XRAY_CLIENT_ID/SECRET). TMS operations via Xray GraphQL (`/xray-cli`), ATP/ATR as Test Plan/Test Execution issues.
 
 qa:
   qa_artifact_label: QA-Process # label applied to QA process epics so sync-jira-issues indexes them under qa-artifacts/ instead of product epics
