@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "aliases": [
+    {
+      "alias": "btw",
+      "skill": "btw",
+      "mode": "side-question",
+      "description": "Side question — ask something without adding to main conversation context.",
+      "argumentHint": "<question>",
+      "forwardArguments": true,
+      "mutability": "read-only"
+    }
+  ]
+}

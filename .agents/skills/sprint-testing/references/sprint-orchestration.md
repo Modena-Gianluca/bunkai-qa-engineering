@@ -426,17 +426,24 @@ Report format:
       "db": [{ "query": "...", "result": "PASSED|FAILED", "evidence": [...] }]
     },
     "tc_results": { "passed": <int>, "failed": <int>, "total": <int> },
+    "tc_detail": [
+      { "key": "<XRAY_TC_KEY>", "type": "Positive|Negative|Boundary|Integration", "status": "PASSED|FAILED", "notes": "<1-line deviation description or 'OK'>" }
+    ],
     "pass_completed": true|false,
     "bugs_found": [{ "summary": "...", "severity": "Critical|High|Medium|Low", "blocking": true|false, "evidence_paths": [...], "repro_steps": "..." }],
     "blockers": [...],
     "checklist": "X/Y"
   }
 
+  MANDATORY: `tc_detail` MUST list EVERY Xray Test key (e.g. BK-891...BK-912) with individual PASS/FAIL status. "2 deviations" without per-key detail is NOT acceptable. If your report does not contain one entry per TC, it is incomplete — complete it before returning.
+
 Rules:
-  - Do NOT file the bug in the issue tracker yet — Stage 3 handles filing per the bug-report template in reporting-templates.md.
-  - Do NOT modify production data; for write-side checks use staging entities flagged in the ATP.
-  - Critical Rule #1 (Login Credentials): credentials always from .env; never hardcode.
-  - A blocking finding (env down, auth failure, infra issue, data corruption, security-exploitable) STOPS the pass — surface to orchestrator, do NOT auto-retry. A non-blocking finding does NOT stop the pass — log it, finish the remaining TCs, and report it at the end (set pass_completed=true).
+   - Do NOT file the bug in the issue tracker yet — Stage 3 handles filing per the bug-report template in reporting-templates.md.
+   - Do NOT modify production data; for write-side checks use staging entities flagged in the ATP.
+   - Critical Rule #1 (Login Credentials): credentials always from .env; never hardcode.
+   - A blocking finding (env down, auth failure, infra issue, data corruption, security-exploitable) STOPS the pass — surface to orchestrator, do NOT auto-retry. A non-blocking finding does NOT stop the pass — log it, finish the remaining TCs, and report it at the end (set pass_completed=true).
+   - MANDATORY: update `<SESSION_DIR>/progress.md` with the Stage 2 checkpoint BEFORE returning. Entry: `## Stage 2 — Execution — <ts>` with `status: completed`, `artifacts_touched: [<evidence_paths>]`, `next: Stage 3 — Reporting`.
+   - MANDATORY: name every deviation specifically — "2 deviations" is not acceptable. Each deviation MUST describe what was expected, what was observed, and which TC key it affects.
 ```
 
 ### Briefing 4 — Stage 3 Reporting subagent

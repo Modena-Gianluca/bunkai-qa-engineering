@@ -1,6 +1,6 @@
 # Skill Registry (auto-generated)
 
-> Generated: `2026-09-01T18:46:17.483Z`
+> Generated: `2026-09-09T02:03:05.214Z`
 > Generator: `bun scripts/build-skill-registry.ts`
 > Protocol: `.agents/skills/agentic-qa-core/references/skill-resolver.md`
 
@@ -8,7 +8,7 @@ This file is the per-session compact-rules cache for the Skill Resolver protocol
 The orchestrator copies one or more `## Skill: <slug>` blocks below into every subagent briefing under `## Project Standards (auto-resolved)`.
 Subagents trust those compact rules and only read the full SKILL.md when explicitly instructed.
 
-Skills indexed: 22
+Skills indexed: 23
 
 ---
 ## Skill: acli
@@ -100,6 +100,19 @@ Skills indexed: 22
 **Read full SKILL.md when**: the compact rules above are insufficient (e.g. novel scenario, debugging, or the briefing tells you to load the full skill).
 
 > Source: `.agents\skills\agentic-qa-onboard\SKILL.md` · phase: `bootstrap` · extraction strategy: B
+
+---
+
+## Skill: btw
+
+**Purpose**: Side question — answer something briefly without adding to the main conversation context.
+
+**Compact Rules**:
+- `side-question`: answer a brief, self-contained question without modifying files or mentioning it was a side question.
+
+**Read full SKILL.md when**: the compact rules above are insufficient (e.g. novel scenario, debugging, or the briefing tells you to load the full skill).
+
+> Source: `.agents\skills\btw\SKILL.md` · phase: `unknown` · extraction strategy: B
 
 ---
 
@@ -436,6 +449,8 @@ Skills indexed: 22
 - 1:N is the default: a non-trivial AC implies multiple outlines (valid partition + each distinct invalid + boundaries + states). A 1-outline AC requires a written "trivially atomic" justification — never the default.
 - Tag each refinement gap to a technique: ranges/limits → BVA; status/lifecycle fields → State-Transition; 2+ interacting conditions → Decision Table; 3+ combinable factors → Pairwise.
 - A refined AC (Given/When/Then) is the business assertion; the outline (`Should <behavior> <condition>`) is its exploration. Keep them distinct.
+- **CODE IS SOURCE OF TRUTH.** When a refined scenario asserts API behavior (endpoints, HTTP verbs, query params, required/optional fields, error codes), UI structure (testids, control types, empty states), or data shapes (ID formats, enum values), verify against the **actual source code** — NEVER against generated docs (`business-api-map.md`), narrative context (`workflow.md`, `scope.md`), or memory of the codebase. Generated docs can be stale; the code cannot.
+- The verification is a **hard gate before declaring a scenario refined**: if you cannot name the source file you read to confirm an assumption, that assumption stays flagged `NEEDS PO/DEV CONFIRMATION` — it does not become a refined assertion.
 - Stories ONLY (no bugs — nothing to refine upstream). Entry status Backlog / Shift-Left QA / Estimation / Ready For Dev.
 - Output = refined ACs + gap/ambiguity questions + the pre-sprint ATP in the `{{jira.acceptance_test_plan}}` field (outline NAMES + coverage estimate, no test code, no execution, NO Test Plan item — `/sprint-testing` Stage 1 creates the item from the field) + the closed `[QA] Shift-Left Review` subtask + the batch report.
 - Tracking subtask `[QA] Shift-Left Review` per accepted Story: find-or-create in Phase 1 (transition to In Progress), close in Phase 3 handoff (transition to Done). Exhaustive session annotations (long analysis, refinement traces) go on the SUBTASK, keeping the Story clean. Work type + transitions resolved from `.agents/jira-workflows.json`; no subtask work type in the catalog → skip with a warning, never block.

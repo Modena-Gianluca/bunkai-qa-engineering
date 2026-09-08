@@ -75,6 +75,11 @@ Requires `agentic-qa-core`. Loads on demand:
 - Tag each refinement gap to a technique: ranges/limits → BVA; status/lifecycle fields → State-Transition; 2+ interacting conditions → Decision Table; 3+ combinable factors → Pairwise.
 - A refined AC (Given/When/Then) is the business assertion; the outline (`Should <behavior> <condition>`) is its exploration. Keep them distinct.
 
+**Verification gate (binding — learned from BK-399 root cause):**
+
+- **CODE IS SOURCE OF TRUTH.** When a refined scenario asserts API behavior (endpoints, HTTP verbs, query params, required/optional fields, error codes), UI structure (testids, control types, empty states), or data shapes (ID formats, enum values), verify against the **actual source code** — NEVER against generated docs (`business-api-map.md`), narrative context (`workflow.md`, `scope.md`), or memory of the codebase. Generated docs can be stale; the code cannot.
+- The verification is a **hard gate before declaring a scenario refined**: if you cannot name the source file you read to confirm an assumption, that assumption stays flagged `NEEDS PO/DEV CONFIRMATION` — it does not become a refined assertion.
+
 **Shift-left operational rules:**
 
 - Stories ONLY (no bugs — nothing to refine upstream). Entry status Backlog / Shift-Left QA / Estimation / Ready For Dev.
@@ -274,6 +279,19 @@ For each accepted Story, dispatch ONE Refinement subagent. The subagent loads th
 
 **Staging file**: `.context/PBI/epics/EPIC-<EPIC_KEY>-<slug>/stories/STORY-<STORY_KEY>-<slug>/shift-left-refinement.md` (module = Epic, 1:1). Author it locally; it is NOT a Jira mirror, so the hand-write ban does not apply to it.
 
+**Verification gate before scenario writing (MANDATORY):** before the subagent writes any scenario that asserts API, UI, or data behavior, it runs this checklist against the actual source code. Each item names the file that was read — "verified" without a file name is NOT accepted:
+
+| # | Verify against code | Confirm |
+|---|---------------------|---------|
+| V1 | **Endpoint existence + HTTP verb** — `app/api/v1/.../route.ts` | Does the endpoint exist? Is the verb GET/POST/PATCH/PUT/DELETE? |
+| V2 | **Required + optional params** — `lib/.../validation.ts` or `search-validation.ts` | Which params are required? Which are optional? What is the exact Zod shape? |
+| V3 | **Error contract** — `lib/api/error-envelope.ts` + `lib/.../errors.ts` | What HTTP status + error code does an invalid value return? Is there a discriminator field? |
+| V4 | **UI control type + testids** — the `.tsx` component that renders the surface | What control renders this (select/chips/segmented)? What testid names does it use? Do they match `implementation-plan.md`? |
+| V5 | **ID format + enum values** — `supabase/migrations/...sql` for the table | Is the ID a uuid, a slug, a numeric key? What are the exact CHECK constraint values? |
+| V6 | **Data shape / return shape** — the RPC that composes the response (`bunkai_*.sql`) | What fields does the response actually include? Is the shape additive-safe per ADR-0009? |
+
+Anything that cannot be verified against a source file stays flagged `NEEDS PO/DEV CONFIRMATION`. No file read = no refined assertion. See Compact Rules §Verification gate + Anti-pattern L7.
+
 **It is a buffer, not a deliverable.** Phase 2 writes it, Phase 3 publishes its full body to the Jira `acceptance_test_plan` field. After that, Jira holds the canonical copy and the synced `acceptance-test-plan.md` is the readable one. The staging file lives under `.context/PBI/**`, which is gitignored, so it exists only on the machine that ran the batch.
 
 Two consequences that are easy to get wrong:
@@ -434,6 +452,8 @@ After the batch report lands, append the final progress entry `## Phase 3 — Ha
 
 **L8.** NEVER create the Test Plan item pre-sprint. The pre-sprint ATP's only home is the `{{jira.acceptance_test_plan}}` field (or its fallback comment); `/sprint-testing` Stage 1 creates the Test Plan issue FROM that field content once the Story enters the sprint. A pre-sprint item wastes an artifact on a Story whose scope may still shrink and creates a second copy Stage 1 must reconcile.
 
+**L7.** NEVER trust generated documentation as source of truth for API/UI behavior. `business-api-map.md`, `workflow.md`, `scope.md`, and `business-feature-map.md` are narrative context — they can be stale or incomplete. Every endpoint verb, query param, testid, control type, ID format, and error contract asserted in a refined scenario MUST be verified against the actual source file (route.ts, validation.ts, component.tsx, migration .sql). If the file was not read, the assertion stays flagged `NEEDS PO/DEV CONFIRMATION`. Violating this produces refinement errors that survive into implementation and get corrected by the Dev — wasting both QA and Dev time. See Compact Rules §Verification gate.
+
 **L6.** NEVER refine more than ~10-12 Stories in a single batch. Refinement quality degrades past that — user attention budget collapses, summaries blur, the batch report loses signal. Split larger groomings into multiple sessions with distinct `<descriptor>` values.
 
 **L7.** NEVER add a PO/Dev question that the AC body already answers in plain text. The reader's bandwidth is the scarcest resource in a grooming session; redundant questions train the team to skim future shift-left output.
@@ -496,7 +516,7 @@ All references are self-contained. Load one at a time.
 - [ ] Session folder `.session/shift-left-testing/<YYYY-MM-DD>-<descriptor>/` created with `plan.md` written
 - [ ] Phase 1 produced the ranked candidate table, user OK'd the refinement set
 - [ ] Phase 1 found-or-created the `[QA] Shift-Left Review` subtask per accepted Story → In Progress (or skipped with warning — no subtask work type)
-- [ ] Phase 2 ran ONE refinement subagent per accepted Story, user OK'd each summary
+- [ ] Phase 2 ran ONE refinement subagent per accepted Story with verification gate completed (V1-V6, each item naming the source file read), user OK'd each summary
 - [ ] Per-Story `shift-left-refinement.md` written under each Story's PBI folder
 - [ ] Phase 3 handoff applied per Story: Jira description + ATP field (`{{jira.acceptance_test_plan}}`, both modalities) + handoff comment + labels + transition (stops at `estimation`) — NO Test Plan item created
 - [ ] Subtask closed per Story: session annotations posted on it + transitioned to Done (or skipped with warning)
